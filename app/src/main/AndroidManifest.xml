@@ -50,7 +50,7 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
         <activity
-            android:name=".activity.LoginOrSignUpActivity"
+            android:name=".activity.LoginOrSignupActivity"
             android:label="@string/title_activity_login_or_signup"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait"

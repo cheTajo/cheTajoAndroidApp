@@ -30,7 +30,7 @@ import com.teamlz.cheTajo.adapter.SampleFragmentPagerAdapter;
 public class MainActivity extends AppCompatActivity {
 
     public static FloatingActionButton fab_add;
-    private BottomBar mBottomBar;
+    public static BottomBar mBottomBar;
 
 
     @Override

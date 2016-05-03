@@ -26,7 +26,7 @@
         android:background="@color/colorPrimaryExtraLight"
         android:layout_margin="@dimen/fab_margin"
         android:fitsSystemWindows="true"
-        tools:context=".activity.LoginOrSignUpActivity">
+        tools:context=".activity.LoginOrSignupActivity">
 
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/email"
