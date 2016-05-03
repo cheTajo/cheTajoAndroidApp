@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardElevation="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_margin="@dimen/fab_margin"
+            android:id="@+id/dresser_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/home_list_item_name_surname"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"/>
+
+        <ImageView
+            android:contentDescription="@string/home_list_item_description"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <LinearLayout
+            android:baselineAligned="false"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:layout_marginStart="@dimen/fab_margin"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:clickable="true"
+                android:id="@+id/relative_follow"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:orientation="horizontal"
+                android:layout_weight="3">
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/follow_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/home_list_item_follow"
+                    android:textStyle="bold"/>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/icon_follow"
+                    android:layout_marginStart="6dp"
+                    android:layout_toEndOf="@id/follow_text"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:iiv_color="@color/colorPrimaryDark"
+                    app:iiv_icon="gmd-favorite" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_like"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="3">
+
+                <TextView
+                    android:paddingStart="25dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/like_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/home_list_item_like"
+                    android:textStyle="bold"/>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/icon_like"
+                    android:layout_toEndOf="@id/like_text"
+                    android:layout_marginStart="6dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:iiv_color="@color/colorPrimaryDark"
+                    app:iiv_icon="gmd-thumb_up" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relative_map"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_weight="3">
+
+                <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:id="@+id/map_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimaryDark"
+                    android:text="@string/home_list_item_map"
+                    android:textStyle="bold"
+                    android:gravity="end"/>
+
+                <com.mikepenz.iconics.view.IconicsImageView
+                    android:layout_centerVertical="true"
+                    android:id="@+id/icon_map"
+                    android:layout_marginStart="6dp"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_toEndOf="@id/map_text"
+                    app:iiv_color="@color/colorPrimaryDark"
+                    app:iiv_icon="gmd-room" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

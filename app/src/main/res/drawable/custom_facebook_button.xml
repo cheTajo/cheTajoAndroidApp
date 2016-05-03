@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true" >
+        <shape>
+            <gradient
+                android:startColor="@color/com_facebook_button_background_color_pressed"
+                android:endColor="@color/com_facebook_button_background_color_pressed"
+                android:angle="270" />
+            <stroke
+                android:width="3dp"
+                android:color="@color/com_facebook_button_background_color_pressed" />
+            <corners
+                android:radius="3dp" />
+            <padding
+                android:left="10dp"
+                android:top="10dp"
+                android:right="10dp"
+                android:bottom="10dp" />
+        </shape>
+    </item>
+
+    <item android:state_focused="true" >
+        <shape>
+            <gradient
+                android:endColor="@color/com_facebook_button_background_color_focused"
+                android:startColor="@color/com_facebook_button_background_color_focused"
+                android:angle="270" />
+            <stroke
+                android:width="3dp"
+                android:color="@color/com_facebook_button_background_color_focused" />
+            <corners
+                android:radius="3dp" />
+            <padding
+                android:left="10dp"
+                android:top="10dp"
+                android:right="10dp"
+                android:bottom="10dp" />
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <gradient
+                android:endColor="@color/com_facebook_button_background_color"
+                android:startColor="@color/com_facebook_button_background_color"
+                android:angle="270" />
+            <stroke
+                android:width="3dp"
+                android:color="@color/com_facebook_button_background_color" />
+            <corners
+                android:radius="3dp" />
+            <padding
+                android:left="10dp"
+                android:top="10dp"
+                android:right="10dp"
+                android:bottom="10dp" />
+        </shape>
+    </item>
+</selector>
