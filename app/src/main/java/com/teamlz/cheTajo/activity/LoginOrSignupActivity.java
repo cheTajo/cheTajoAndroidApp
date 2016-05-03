@@ -104,7 +104,7 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
 
             @Override
             public void onError(FirebaseError firebaseError) {
-                Toast.makeText(getApplicationContext(), "Errore di autenticazione", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Errore di autenticazione!", Toast.LENGTH_LONG).show();
                 return;
             }
         });
