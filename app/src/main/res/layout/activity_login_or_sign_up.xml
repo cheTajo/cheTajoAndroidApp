@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:background="@color/colorPrimaryExtraLight"
+    android:background="@color/white"
     tools:context=".activity.UserProfileActivity">
 
     <android.support.design.widget.AppBarLayout
@@ -23,7 +23,7 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:background="@color/colorPrimaryExtraLight"
+        android:background="@color/white"
         android:layout_margin="@dimen/fab_margin"
         android:fitsSystemWindows="true"
         tools:context=".activity.LoginOrSignUpActivity">
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/prompt_email"
             android:inputType="textEmailAddress"
-            android:textColorHint="@color/colorPrimaryLight"
+            android:textColorHint="@color/colorGrey"
             android:textColor="@color/colorPrimaryDark"
             android:singleLine="true"
             android:layout_marginTop="80dp"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/prompt_password"
             android:inputType="textPassword"
-            android:textColorHint="@color/colorPrimaryLight"
+            android:textColorHint="@color/colorGrey"
             android:textColor="@color/colorPrimaryDark"
             android:singleLine="true"
             android:layout_below="@+id/email"

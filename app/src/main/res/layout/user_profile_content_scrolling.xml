@@ -31,7 +31,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     app:iiv_icon="gmd-mail_outline"
-                    app:iiv_color="@color/grey"/>
+                    app:iiv_color="@color/colorGrey"/>
 
                 <TextView
                     android:id="@+id/email"
@@ -52,7 +52,7 @@
                     android:layout_toEndOf="@id/emailIcon"
                     android:text="@string/email"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey" />
+                    android:textColor="@color/colorGrey" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -67,7 +67,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginEnd="@dimen/activity_horizontal_margin"
                     app:iiv_icon="gmd-place"
-                    app:iiv_color="@color/grey"/>
+                    app:iiv_color="@color/colorGrey"/>
 
                 <TextView
                     android:id="@+id/position"
@@ -88,7 +88,7 @@
                     android:layout_toEndOf="@id/positionIcon"
                     android:text="@string/user_profile_address"
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    android:textColor="@color/grey" />
+                    android:textColor="@color/colorGrey" />
             </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>

@@ -26,7 +26,6 @@
                 android:layout_gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:tabIndicatorColor="@color/colorPrimaryLight"
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/colorPrimaryExtraLight"
                 app:tabTextColor="@color/colorPrimaryLight"
@@ -47,9 +46,9 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_white_24dp"
-        app:fab_colorNormal="@color/red"
-        app:fab_colorPressed="@color/red_pressed"
-        app:fab_colorRipple="@color/red_shadow"/>
+        app:fab_colorNormal="@color/colorRed"
+        app:fab_colorPressed="@color/colorRedDark"
+        app:fab_colorRipple="@color/colorRedExtraDark"/>
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab_location"
@@ -57,9 +56,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:fab_colorNormal="@color/red"
+        app:fab_colorNormal="@color/colorRed"
         android:visibility="invisible"
-        app:fab_colorPressed="@color/red_pressed"
-        app:fab_colorRipple="@color/red_shadow"/>
+        app:fab_colorPressed="@color/colorRedDark"
+        app:fab_colorRipple="@color/colorRedExtraDark"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -96,8 +96,8 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         final Animation resize_small = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.resize_small);
         final Animation resize_big = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.resize_big);
         int blueColor = holder.itemView.getResources().getColor(R.color.blue);
-        int redColor = holder.itemView.getResources().getColor(R.color.red);
-        int greyColor = holder.itemView.getResources().getColor(R.color.grey);
+        int redColor = holder.itemView.getResources().getColor(R.color.colorRed);
+        int greyColor = holder.itemView.getResources().getColor(R.color.colorGrey);
 
         switch (id){
 

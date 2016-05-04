@@ -1,7 +1,6 @@
 package com.teamlz.cheTajo.activity;
 
 import android.content.Intent;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -98,8 +97,6 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
     }
 
     private void verifyCredentials (String email, String password) {
-         /*myFirebase.child("message").setValue("Do you have data? You'll love Firebase.");
-         myFirebase.child("user").setValue(true);*/
 
         myFirebase.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
             @Override
