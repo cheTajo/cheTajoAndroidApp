@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimaryExtraLight"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/colorPrimaryExtraLight">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -16,7 +17,7 @@
             android:id="@+id/main_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:titleTextColor="@color/colorPrimaryExtraLight"
+            android:background="@color/colorPrimaryDark"
             app:layout_scrollFlags="scroll|enterAlways"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.AppCompat.Dark" />
@@ -26,10 +27,11 @@
                 android:layout_gravity="bottom"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimaryDark"
                 app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/colorPrimaryExtraLight"
+                app:tabSelectedTextColor="@color/white"
                 app:tabTextColor="@color/colorPrimaryLight"
-                android:background="@color/colorPrimary"/>
+                app:tabTextAppearance="@style/CustomTabText"/>
 
     </android.support.design.widget.AppBarLayout>
 
@@ -46,7 +48,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_white_24dp"
-        app:fab_colorNormal="@color/colorRed"
+        app:fab_colorNormal="@color/colorRedDark"
         app:fab_colorPressed="@color/colorRedDark"
         app:fab_colorRipple="@color/colorRedExtraDark"/>
 
@@ -56,9 +58,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:fab_colorNormal="@color/colorRed"
+        app:fab_colorNormal="@color/colorRedDark"
         android:visibility="invisible"
-        app:fab_colorPressed="@color/colorRedDark"
+        app:fab_colorPressed="@color/colorRedExtraDark"
         app:fab_colorRipple="@color/colorRedExtraDark"/>
 
 </android.support.design.widget.CoordinatorLayout>

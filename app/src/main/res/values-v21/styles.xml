@@ -12,7 +12,11 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorPrimary</item>
-        <item name="android:navigationBarColor">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorPrimaryLight</item>
+        <item name="android:navigationBarColor">@color/colorPrimaryExtraDark</item>
+        <item name="android:statusBarColor">@color/colorPrimaryExtraDark</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColorPrimaryInverse">@color/black</item>
     </style>
 </resources>

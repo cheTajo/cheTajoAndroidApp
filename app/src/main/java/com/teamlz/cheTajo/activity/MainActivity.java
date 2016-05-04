@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mBottomBar.noTopOffset();
         mBottomBar.useFixedMode();
         mBottomBar.setActiveTabColor(ContextCompat.getColor(this, R.color.colorPrimaryExtraDark));
-        mBottomBar.setActiveTabColor(getResources().getColor(R.color.colorRed));
+        mBottomBar.setActiveTabColor(getResources().getColor(R.color.colorRedDark));
         mBottomBar.setItems(
                 new BottomBarTab(new IconicsDrawable(this, "gmd-person").sizeDp(24), "Profilo"),
                 new BottomBarTab(new IconicsDrawable(this, "gmd-history").sizeDp(24), "Recenti"),
