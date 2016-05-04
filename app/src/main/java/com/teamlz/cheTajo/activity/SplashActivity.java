@@ -16,7 +16,7 @@ import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
 
-    public static int SPLASH_TIMER = 2000;
+    public static int SPLASH_TIMER = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
