@@ -1,7 +1,6 @@
 package com.teamlz.cheTajo.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,10 @@ import com.teamlz.cheTajo.R;
 
 import java.util.List;
 
-/**
+/*
  * Created by francesco on 02/05/16.
  */
+
 public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.HairViewHolder>{
 
     private List dressers;

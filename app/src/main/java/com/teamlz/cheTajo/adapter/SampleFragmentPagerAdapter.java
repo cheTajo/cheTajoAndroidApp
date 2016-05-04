@@ -14,7 +14,7 @@ import com.teamlz.cheTajo.fragment.HomeListFragment;
 
 public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "Home", "Map"};
+    private String tabTitles[] = new String[] { "Lista", "Mappa"};
 
     public SampleFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
