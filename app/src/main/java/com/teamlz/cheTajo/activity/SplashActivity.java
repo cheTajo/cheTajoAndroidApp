@@ -45,9 +45,7 @@ public class SplashActivity extends AppCompatActivity {
                 //start e new activity
                 Intent intent = new Intent(SplashActivity.this, LoginOrSignUpActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 // Close the activity so the user won't able to go back this
                 // activity pressing Back button
                 finish();

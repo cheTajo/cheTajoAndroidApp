@@ -13,6 +13,7 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.teamlz.cheTajo.R;
@@ -53,6 +54,7 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
                 if (email.equals("test")) {
                     Intent i = new Intent (getApplicationContext(), MainActivity.class);
                     startActivity(i);
+                    return;
                 }
 
                 else if (email.equals("") || password.equals("")) {
@@ -60,7 +62,7 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                verifyCredentials(email, password);
+                logInOrSignUp (email, password);
             }
         });
 
@@ -96,19 +98,33 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
         });
     }
 
-    private void verifyCredentials (String email, String password) {
+    private void logInOrSignUp (String email, String password) {
+        final String signUpEmail = email;
+        final String signUpPassword = password;
 
-        myFirebase.createUser(email, password, new Firebase.ValueResultHandler<Map<String, Object>>() {
+        myFirebase.authWithPassword(email, password, new Firebase.AuthResultHandler() {
             @Override
-            public void onSuccess(Map<String, Object> stringObjectMap) {
-                Intent i = new Intent (getApplicationContext(), MainActivity.class);
+            public void onAuthenticated(AuthData authData) {
+                Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                finish();
                 startActivity(i);
             }
 
             @Override
-            public void onError(FirebaseError firebaseError) {
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                myFirebase.createUser(signUpEmail, signUpPassword, new Firebase.ValueResultHandler<Map<String, Object>>() {
+                    @Override
+                    public void onSuccess(Map<String, Object> stringObjectMap) {
+                        Intent i = new Intent (getApplicationContext(), MainActivity.class);
+                        finish();
+                        startActivity(i);
+                    }
 
-                Toast.makeText(getApplicationContext(), "Errore di autenticazione", Toast.LENGTH_LONG).show();
+                    @Override
+                    public void onError(FirebaseError firebaseError) {
+                        Toast.makeText(getApplicationContext(), "Errore di autenticazione", Toast.LENGTH_LONG).show();
+                    }
+                });
             }
         });
     }
