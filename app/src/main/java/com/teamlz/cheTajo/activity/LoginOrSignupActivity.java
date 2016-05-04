@@ -110,8 +110,6 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
             @Override
             public void onError(FirebaseError firebaseError) {
                 Toast.makeText(getApplicationContext(), "Errore di autenticazione", Toast.LENGTH_LONG).show();
-                Intent i = new Intent (getApplicationContext(), MainActivity.class);
-                startActivity(i);
             }
         });
     }

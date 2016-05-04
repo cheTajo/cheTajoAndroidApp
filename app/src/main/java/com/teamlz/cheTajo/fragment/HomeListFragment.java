@@ -62,7 +62,7 @@ public class HomeListFragment extends Fragment {
         examples.add("Il pezzo");
         examples.add("La Madonna Sciarra");
         examples.add("Angelo Trentulli");
-        examples.add("giuggy94");
+        examples.add("giuggy93");
         examples.add("Dottor Sheldon");
         examples.add("Mia cugina");
 

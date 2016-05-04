@@ -49,6 +49,6 @@
         android:src="@drawable/ic_add_white_24dp"
         app:fab_colorNormal="@color/colorPrimaryDark"
         app:fab_colorPressed="@color/colorPrimaryExtraDark"
-        app:fab_colorRipple="@color/colorPrimaryExtraDark"/>
+        app:fab_colorRipple="@color/colorPrimaryExtraLight"/>
 
 </android.support.design.widget.CoordinatorLayout>

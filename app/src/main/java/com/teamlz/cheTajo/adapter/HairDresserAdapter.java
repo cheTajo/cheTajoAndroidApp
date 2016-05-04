@@ -80,7 +80,7 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
                         follow = true;
                     }
                     else {
-                        icon_follow.setColor(itemView.getResources().getColor(R.color.colorPrimaryDark));
+                        icon_follow.setColor(itemView.getResources().getColor(R.color.grey));
                         follow = false;
                     }
                     break;
@@ -95,7 +95,7 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
                         like = true;
                     }
                     else {
-                        icon_like.setColor(itemView.getResources().getColor(R.color.colorPrimaryDark));
+                        icon_like.setColor(itemView.getResources().getColor(R.color.grey));
                         like = false;
                     }
                     break;

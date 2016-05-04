@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/home_list_item_name_surname"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/red"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_gravity="center"/>
@@ -50,7 +50,7 @@
                     android:id="@+id/follow_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/red"
                     android:text="@string/home_list_item_follow"
                     android:textStyle="bold"/>
 
@@ -61,7 +61,7 @@
                     android:layout_toEndOf="@id/follow_text"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    app:iiv_color="@color/colorPrimaryDark"
+                    app:iiv_color="@color/grey"
                     app:iiv_icon="gmd-favorite" />
 
             </RelativeLayout>
@@ -79,7 +79,7 @@
                     android:id="@+id/like_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/red"
                     android:text="@string/home_list_item_like"
                     android:textStyle="bold"/>
 
@@ -90,7 +90,7 @@
                     android:layout_marginStart="6dp"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
-                    app:iiv_color="@color/colorPrimaryDark"
+                    app:iiv_color="@color/grey"
                     app:iiv_icon="gmd-thumb_up" />
 
             </RelativeLayout>
@@ -108,7 +108,7 @@
                     android:id="@+id/map_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/red"
                     android:text="@string/home_list_item_map"
                     android:textStyle="bold"
                     android:gravity="end"/>
@@ -120,7 +120,7 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:layout_toEndOf="@id/map_text"
-                    app:iiv_color="@color/colorPrimaryDark"
+                    app:iiv_color="@color/grey"
                     app:iiv_icon="gmd-room" />
 
             </RelativeLayout>
