@@ -47,8 +47,19 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_white_24dp"
-        app:fab_colorNormal="@color/colorPrimaryDark"
-        app:fab_colorPressed="@color/colorPrimaryExtraDark"
-        app:fab_colorRipple="@color/colorPrimaryExtraLight"/>
+        app:fab_colorNormal="@color/red"
+        app:fab_colorPressed="@color/red_pressed"
+        app:fab_colorRipple="@color/red_shadow"/>
+
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/fab_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:fab_colorNormal="@color/red"
+        android:visibility="invisible"
+        app:fab_colorPressed="@color/red_pressed"
+        app:fab_colorRipple="@color/red_shadow"/>
 
 </android.support.design.widget.CoordinatorLayout>

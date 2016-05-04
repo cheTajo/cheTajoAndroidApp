@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.teamlz.cheTajo.R;
+import com.teamlz.cheTajo.activity.MainActivity;
 
 public class BlankFragment extends Fragment {
 

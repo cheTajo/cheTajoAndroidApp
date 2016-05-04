@@ -20,7 +20,6 @@
             android:text="@string/home_list_item_name_surname"
             android:textColor="@color/red"
             android:textSize="20sp"
-            android:textStyle="bold"
             android:layout_gravity="center"/>
 
         <ImageView

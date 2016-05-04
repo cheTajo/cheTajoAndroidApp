@@ -1,6 +1,7 @@
 package com.teamlz.cheTajo.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         this.dressers = list;
     }
 
-    public static class HairViewHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemClickListener, View.OnClickListener{
+    public static class HairViewHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemClickListener{
 
         protected TextView name;
         protected RelativeLayout relative_follow;
@@ -45,9 +46,6 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
             relative_follow = (RelativeLayout) itemView.findViewById(R.id.relative_follow);
             relative_like = (RelativeLayout) itemView.findViewById(R.id.relative_like);
             relative_map = (RelativeLayout) itemView.findViewById(R.id.relative_map);
-            relative_follow.setOnClickListener(this);
-            relative_like.setOnClickListener(this);
-            relative_map.setOnClickListener(this);
             icon_follow = (IconicsImageView) itemView.findViewById(R.id.icon_follow);
             icon_like = (IconicsImageView) itemView.findViewById(R.id.icon_like);
             icon_map = (IconicsImageView) itemView.findViewById(R.id.icon_map);
@@ -59,51 +57,6 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         }
-
-        @Override
-        public void onClick(View v) {
-
-            final Animation resize_small = AnimationUtils.loadAnimation(itemView.getContext(), R.anim.resize_small);
-            final Animation resize_big = AnimationUtils.loadAnimation(itemView.getContext(), R.anim.resize_big);
-
-            switch (v.getId()){
-
-                case R.id.relative_follow:
-
-                    icon_follow.startAnimation(resize_big);
-                    icon_follow.startAnimation(resize_small);
-
-                    if (!follow) {
-                        icon_follow.setColor(itemView.getResources().getColor(R.color.red));
-                        icon_follow.startAnimation(resize_big);
-                        icon_follow.startAnimation(resize_small);
-                        follow = true;
-                    }
-                    else {
-                        icon_follow.setColor(itemView.getResources().getColor(R.color.grey));
-                        follow = false;
-                    }
-                    break;
-
-                case R.id.relative_like:
-
-                    icon_like.startAnimation(resize_big);
-                    icon_like.startAnimation(resize_small);
-
-                    if (!like) {
-                        icon_like.setColor(itemView.getResources().getColor(R.color.blue));
-                        like = true;
-                    }
-                    else {
-                        icon_like.setColor(itemView.getResources().getColor(R.color.grey));
-                        like = false;
-                    }
-                    break;
-
-                case R.id.relative_map:
-                    break;
-            }
-        }
     }
 
     @Override
@@ -113,8 +66,76 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
     }
 
     @Override
-    public void onBindViewHolder(HairViewHolder holder, int position) {
+    public void onBindViewHolder(final HairViewHolder holder, int position) {
         holder.name.setText(dressers.get(position).toString());
+
+        holder.relative_follow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickHolder(v.getId(), holder);
+            }
+        });
+
+        holder.relative_like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickHolder(v.getId(), holder);
+            }
+        });
+
+        holder.relative_map.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemClickHolder(v.getId(), holder);
+            }
+        });
+    }
+
+    public void onItemClickHolder(int id, HairViewHolder holder){
+
+        final Animation resize_small = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.resize_small);
+        final Animation resize_big = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.resize_big);
+        int blueColor = holder.itemView.getResources().getColor(R.color.blue);
+        int redColor = holder.itemView.getResources().getColor(R.color.red);
+        int greyColor = holder.itemView.getResources().getColor(R.color.grey);
+
+        switch (id){
+
+            case R.id.relative_follow:
+
+                holder.icon_follow.startAnimation(resize_big);
+                holder.icon_follow.startAnimation(resize_small);
+
+                if (!holder.follow) {
+                    holder.icon_follow.setColor(redColor);
+                    holder.icon_follow.startAnimation(resize_big);
+                    holder.icon_follow.startAnimation(resize_small);
+                    holder.follow = true;
+                }
+                else {
+                    holder.icon_follow.setColor(greyColor);
+                    holder.follow = false;
+                }
+                break;
+
+            case R.id.relative_like:
+
+                holder.icon_like.startAnimation(resize_big);
+                holder.icon_like.startAnimation(resize_small);
+
+                if (!holder.like) {
+                    holder.icon_like.setColor(blueColor);
+                    holder.like = true;
+                }
+                else {
+                    holder.icon_like.setColor(greyColor);
+                    holder.like = false;
+                }
+                break;
+
+            case R.id.relative_map:
+                break;
+        }
     }
 
 

@@ -27,9 +27,9 @@ import com.teamlz.cheTajo.adapter.SampleFragmentPagerAdapter;
  * Created by francesco on 02/05/16.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
 
-    public static FloatingActionButton fab_add;
+    public static FloatingActionButton fab_add, fab_location;
     public static BottomBar mBottomBar;
     private boolean startBar = false;
 
@@ -52,7 +52,15 @@ public class MainActivity extends AppCompatActivity {
         assert tabLayout != null;
         tabLayout.setupWithViewPager(viewPager);
 
+        viewPager.addOnPageChangeListener(this);
+
         fab_add = (FloatingActionButton) findViewById(R.id.fab_add);
+        fab_location = (FloatingActionButton) findViewById(R.id.fab_location);
+        fab_location.setImageDrawable(new IconicsDrawable(this, "gmd-gps_fixed")
+                .sizeDp(24)
+                .color(getResources().getColor(R.color.white)));
+        fab_location.hide();
+
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         mBottomBar.noTopOffset();
         mBottomBar.useFixedMode();
         mBottomBar.setActiveTabColor(ContextCompat.getColor(this, R.color.colorPrimaryExtraDark));
+        mBottomBar.setActiveTabColor(getResources().getColor(R.color.red));
         mBottomBar.setItems(
                 new BottomBarTab(new IconicsDrawable(this, "gmd-person").sizeDp(24), "Profilo"),
                 new BottomBarTab(new IconicsDrawable(this, "gmd-history").sizeDp(24), "Recenti"),
@@ -143,6 +152,38 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         startBar = false;
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        switchFab(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    public void switchFab(int position){
+
+        switch (position){
+
+            case 0:
+                fab_location.hide();
+                fab_add.show();
+                break;
+
+            case 1:
+                fab_add.hide();
+                fab_location.setVisibility(View.VISIBLE);
+                fab_location.show();
+                break;
+        }
     }
 }
 

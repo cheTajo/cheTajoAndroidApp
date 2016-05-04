@@ -4,6 +4,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.teamlz.cheTajo.activity.MainActivity;
 import com.teamlz.cheTajo.fragment.BlankFragment;
 import com.teamlz.cheTajo.fragment.HomeListFragment;
 
@@ -32,6 +33,7 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return HomeListFragment.newIstance();
 
+
             case 1:
                 return BlankFragment.newInstance(position);
         }
@@ -44,4 +46,5 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
         // Generate title based on item position
         return tabTitles[position];
     }
+
 }

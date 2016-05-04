@@ -7,7 +7,9 @@
     <color name="colorPrimaryExtraDark">#0D47A1</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
-    <color name="red">#C62828</color>
+    <color name="red">#F44336</color>
+    <color name="red_pressed">#D32F2F</color>
+    <color name="red_shadow">#B71C1C</color>
     <color name="blue">#3b5998</color>
     <color name="grey">#757575</color>
 
