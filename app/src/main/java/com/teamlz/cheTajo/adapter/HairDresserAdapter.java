@@ -38,6 +38,8 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         protected IconicsImageView icon_map;
         protected boolean like;
         protected boolean follow;
+        protected TextView num_thumb;
+        protected TextView num_follow;
 
         public HairViewHolder(View itemView) {
             super(itemView);
@@ -49,6 +51,8 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
             icon_follow = (IconicsImageView) itemView.findViewById(R.id.icon_follow);
             icon_like = (IconicsImageView) itemView.findViewById(R.id.icon_like);
             icon_map = (IconicsImageView) itemView.findViewById(R.id.icon_map);
+            num_follow = (TextView) itemView.findViewById(R.id.num_follow);
+            num_thumb = (TextView) itemView.findViewById(R.id.num_thumb);
             like = false;
             follow = false;
         }
@@ -98,6 +102,8 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         int blueColor = holder.itemView.getResources().getColor(R.color.blue);
         int redColor = holder.itemView.getResources().getColor(R.color.colorRed);
         int greyColor = holder.itemView.getResources().getColor(R.color.colorGrey);
+        int num_thumbs = Integer.valueOf(holder.num_thumb.getText().toString());
+        int num_follows = Integer.valueOf(holder.num_follow.getText().toString());
 
         switch (id){
 
@@ -108,12 +114,12 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
 
                 if (!holder.follow) {
                     holder.icon_follow.setColor(redColor);
-                    holder.icon_follow.startAnimation(resize_big);
-                    holder.icon_follow.startAnimation(resize_small);
+                    holder.num_follow.setText(String.valueOf(num_follows+1));
                     holder.follow = true;
                 }
                 else {
                     holder.icon_follow.setColor(greyColor);
+                    holder.num_follow.setText(String.valueOf(num_follows-1));
                     holder.follow = false;
                 }
                 break;
@@ -125,10 +131,12 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
 
                 if (!holder.like) {
                     holder.icon_like.setColor(blueColor);
+                    holder.num_thumb.setText(String.valueOf(num_thumbs+1));
                     holder.like = true;
                 }
                 else {
                     holder.icon_like.setColor(greyColor);
+                    holder.num_thumb.setText(String.valueOf(num_thumbs-1));
                     holder.like = false;
                 }
                 break;

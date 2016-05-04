@@ -48,6 +48,7 @@ public class HomeListFragment extends Fragment {
 
         mRecyclerView.setHasFixedSize(true);
 
+
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
