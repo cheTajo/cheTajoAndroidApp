@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static FloatingActionButton fab_add;
     public static BottomBar mBottomBar;
+    private boolean startBar = false;
 
 
     @Override
@@ -72,7 +73,9 @@ public class MainActivity extends AppCompatActivity {
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int position) {
-                //SameActionTab(position);
+                if (startBar)
+                    SameActionTab(position);
+                else startBar = true;
             }
 
             @Override
@@ -134,6 +137,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mBottomBar.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        startBar = false;
     }
 }
 

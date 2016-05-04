@@ -1,3 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="/Users/francesco/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.2.2/3c8f6018eaa72d43b261181e801e6f8676c16ef6/jackson-databind-2.2.2.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="3c8f6018eaa72d43b261181e801e6f8676c16ef6">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-databind-2.2.2_2fefff5771a49db59b0270d2f19e0c6a332f6764/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="a0b5d60246cd9d4f3f2443611b3b4c25265840b5">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-23.3.0_f84d4c495d911496df4a8a5292353d11048e628d/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/jp.wasabeef/recyclerview-animators/2.2.3/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8e325e9ba5c23d635d0cfaa76c349fca83101f8a">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/jp.wasabeef-recyclerview-animators-2.2.3_c3e24f1344bcc4aea5fc843992d5cdbb83234847/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/Development/android-sdk-macosx/extras/android/m2repository/com/android/support/support-annotations/23.3.0/support-annotations-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="db7791d75a07fef9844d06236c1c59ba7bf6997c">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-23.3.0_f1bc7e35a4c94f1e7d94544794c3f65e18e573df/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8a034dd16c0dfd75fe86c52c2cd581592acc684a">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-23.3.0_45096e99610521d9ca3283000056fd70875382e6/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/.gradle/caches/modules-2/files-2.1/com.firebase/firebase-client-jvm/2.5.2/91731b8f5868a3e8a8a773f29b8d06b5c358f5bb/firebase-client-jvm-2.5.2.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="91731b8f5868a3e8a8a773f29b8d06b5c358f5bb">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/firebase-client-jvm-2.5.2_6acd1a48bda8e7ca2024a50af8de695d3dc4b8d9/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.android.support/support-v4/23.3.0/jars/libs/internal_impl-23.3.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="4da5a4d697d32497c6f85567a5112e62fdfd0676">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-23.3.0_250e1d64ddd72e3b49e221b2098b9b78b474da14/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.android.support/customtabs/23.2.1/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="0e5a66a941515d873a34065fe44fbba6ef422a1b">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-customtabs-23.2.1_0c06b51fb3e32f8cea511becbf3174690b621174/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/.gradle/caches/modules-2/files-2.1/com.firebase/firebase-client-android/2.5.2/f19f10d6276aa0b380e2d05d2ab3272d693a5433/firebase-client-android-2.5.2.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="f19f10d6276aa0b380e2d05d2ab3272d693a5433">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/firebase-client-android-2.5.2_9c4f6d1394985ea60c1335a79badc2693ea8f772/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="82ce13fd19cdfde0e392f03c27edeba8d4333648">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-23.3.0_16bf51489e96e5d8569646d71e7148b0b8ac9342/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-tasks-1.4.0_681c4db7f278aeb4e2da9e6f876cb243e413878d/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="2820b7eadcdad10d77ee5307b2a93942cdf8bc9f">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_b078ec0f8b1cb911072a4fc4abfe69f327a687a8/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="1b8e03daaa43fb0a4cd57e378167c2fd70454c1e">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-23.3.0_73d54d9e057bbf45be1cfe339a9a9243a41ae997/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.mikepenz/iconics-core/2.5.11/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="98a135c7935e62ac041acc1fcb148973bde828d5">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.mikepenz-iconics-core-2.5.11_c18477f432d68f5504ce2cf628eecfa5f61345a5/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/library-2.4.0_73fd108cfda98bfab8ec54914698336421e364b3/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-applinks-1.4.0_14acc567394611c48d5426b2f4ebf9c2d9377abb/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.mikepenz/google-material-typeface/2.2.0.1.original/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="53e176889382956e3910232309ab7056730553e8">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.mikepenz-google-material-typeface-2.2.0.1.original_2f5bf48287f0d511aeddb2bf835bd535fa03430e/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="debf30ce0a7560396b6235edef77e447006454c2">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-recyclerview-v7-23.3.0_9c627a92a5ff18fc242798ed3ca16d36fb36eabe/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.android.support/design/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="f0001e71cea6ae432a00021c6f727f5ef0f3d27e">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-design-23.3.0_0f5ff61806fea4cdfd6bff618388c8cd7c8045da/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.roughike/bottom-bar/1.3.3/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="febdca0af7e75d9e2d621fd99be05dfbfd2667ed">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.roughike-bottom-bar-1.3.3_7c7e8ca1f3d476777a9e4c568f37bc35950fddd5/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.11.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="86da97c30f50a67ddabe2cf7040713ad17153fce">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.facebook.android-facebook-android-sdk-4.11.0_8a72c7ec6e12dd25e68bb18786fafec172b246a4/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.2.2/285cb9c666f0f0f3dd8a1be04e1f457eb7b15113/jackson-annotations-2.2.2.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="285cb9c666f0f0f3dd8a1be04e1f457eb7b15113">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-annotations-2.2.2_7f3119df692dc1fa3864d7263e7d7b71de333c32/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.2.2/d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b/jackson-core-2.2.2.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-core-2.2.2_551e9cd7ec39a078cb46327ade5eba7e5039b69e/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.melnykov/floatingactionbutton/1.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="8c6ebb7d087d1a30bf84356bd2aecf85309fc024">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.melnykov-floatingactionbutton-1.3.0_91095c5cf1671f9845edb38ebb4906bec943f368/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/23.3.0/jars/classes.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="23be6993826b8fd88bbc8d14928bb3b8960d3d4e">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-23.3.0_b7f6b1e782da1ab26140644958154f488fc24ccd/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="59ec2e7b4c2db6d58a02f6085d94632180b39ea2">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_9d0e70b0d3484097ae8ef2141b1ad832251db194/classes.dex" />
+    </item>
+    <item
+        jar="/Users/francesco/.gradle/caches/modules-2/files-2.1/com.firebase/tubesock/0.0.12/6ec0bbd3e161a73ed672284b587fd32309a86d7a/tubesock-0.0.12.jar"
+        jumboMode="true"
+        revision="23.0.3"
+        sha1="6ec0bbd3e161a73ed672284b587fd32309a86d7a">
+        <dex dex="/Users/francesco/AndroidStudioProjects/AndroidGitProject/cheTajoAndroidApp/app/build/intermediates/transforms/dex/debug/folders/1000/10/tubesock-0.0.12_244517a977619d0e01f2e7dc7b41505756f72e7f/classes.dex" />
+    </item>
+
+</items>
