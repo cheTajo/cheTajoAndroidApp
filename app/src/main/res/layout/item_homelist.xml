@@ -62,6 +62,16 @@
                     app:iiv_color="@color/colorGrey"
                     app:iiv_icon="gmd-favorite" />
 
+                <TextView
+                    android:id="@+id/num_follow"
+                    android:layout_marginStart="3dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/icon_follow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold"/>
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -72,7 +82,7 @@
                 android:layout_weight="3">
 
                 <TextView
-                    android:paddingStart="25dp"
+                    android:paddingStart="15dp"
                     android:layout_centerVertical="true"
                     android:id="@+id/like_text"
                     android:layout_width="wrap_content"
@@ -81,15 +91,24 @@
                     android:textStyle="bold"/>
 
                 <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="6dp"
                     android:id="@+id/icon_like"
                     android:layout_toEndOf="@id/like_text"
                     android:layout_marginStart="6dp"
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     app:iiv_color="@color/colorGrey"
-
                     app:iiv_icon="gmd-thumb_up" />
+
+                <TextView
+                    android:id="@+id/num_thumb"
+                    android:layout_marginStart="3dp"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@id/icon_like"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textStyle="bold"/>
 
             </RelativeLayout>
 
