@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.facebook.FacebookSdk;
 import com.firebase.client.Firebase;
 import com.teamlz.cheTajo.R;
+import com.teamlz.cheTajo.object.Utils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -55,6 +56,11 @@ public class SplashActivity extends AppCompatActivity {
 
         Timer timer = new Timer();
         timer.schedule(task, SPLASH_TIMER);
+
+        /**database examples*/
+        //Utils.addHairDresser(getApplicationContext());
+        //Utils.retrieveHairDressers(getApplicationContext());
+
     }
 
 }

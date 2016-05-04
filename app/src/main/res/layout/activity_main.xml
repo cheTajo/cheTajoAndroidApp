@@ -49,7 +49,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add_white_24dp"
-        app:fab_colorNormal="@color/colorRedDark"
+        app:fab_colorNormal="@color/colorRed"
         app:fab_colorPressed="@color/colorRedDark"
         app:fab_colorRipple="@color/colorRedExtraDark"/>
 
@@ -59,9 +59,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:fab_colorNormal="@color/colorRedDark"
+        app:fab_colorNormal="@color/colorRed"
         android:visibility="invisible"
-        app:fab_colorPressed="@color/colorRedExtraDark"
+        app:fab_colorPressed="@color/colorRedDark"
         app:fab_colorRipple="@color/colorRedExtraDark"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,6 +1,8 @@
 package com.teamlz.cheTajo.adapter;
 
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,7 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         this.dressers = list;
     }
 
-    public static class HairViewHolder extends RecyclerView.ViewHolder implements AdapterView.OnItemClickListener{
+    public static class HairViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener {
 
         protected TextView name;
         protected RelativeLayout relative_follow;
@@ -38,12 +40,15 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         protected IconicsImageView icon_map;
         protected boolean like;
         protected boolean follow;
-        protected TextView num_thumb;
-        protected TextView num_follow;
+        protected TextView text_thumb;
+        protected TextView text_follow;
+        protected int num_thumbs;
+        protected int num_follows;
 
         public HairViewHolder(View itemView) {
             super(itemView);
-
+            itemView.setOnLongClickListener(this);
+            itemView.setOnClickListener(this);
             name = (TextView) itemView.findViewById(R.id.dresser_name);
             relative_follow = (RelativeLayout) itemView.findViewById(R.id.relative_follow);
             relative_like = (RelativeLayout) itemView.findViewById(R.id.relative_like);
@@ -51,15 +56,32 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
             icon_follow = (IconicsImageView) itemView.findViewById(R.id.icon_follow);
             icon_like = (IconicsImageView) itemView.findViewById(R.id.icon_like);
             icon_map = (IconicsImageView) itemView.findViewById(R.id.icon_map);
-            num_follow = (TextView) itemView.findViewById(R.id.num_follow);
-            num_thumb = (TextView) itemView.findViewById(R.id.num_thumb);
+            text_follow = (TextView) itemView.findViewById(R.id.num_follow);
+            text_thumb = (TextView) itemView.findViewById(R.id.num_thumb);
             like = false;
             follow = false;
         }
 
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        public void onClick(View v) {
+            Log.d("Item", " Click");
+        }
 
+        @Override
+        public boolean onLongClick(View v) {
+            Log.d("Long", " Click");
+            Snackbar snackbar = null;
+
+            snackbar = Snackbar.make(v, "Sei un Coglione", Snackbar.LENGTH_INDEFINITE)
+                    .setAction("Si è vero", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    })
+                    .setActionTextColor(v.getResources().getColor(R.color.colorRed));
+            snackbar.show();
+            return true;
         }
     }
 
@@ -71,7 +93,19 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
 
     @Override
     public void onBindViewHolder(final HairViewHolder holder, int position) {
+        int greyColor = holder.itemView.getResources().getColor(R.color.colorGrey);
+
         holder.name.setText(dressers.get(position).toString());
+
+        holder.text_follow.setText("0");
+        holder.text_thumb.setText("0");
+        holder.icon_follow.setColor(greyColor);
+        holder.icon_like.setColor(greyColor);
+
+        holder.num_follows = Integer.parseInt(holder.text_follow.getText().toString());
+        holder.num_thumbs = Integer.parseInt(holder.text_thumb.getText().toString());
+
+
 
         holder.relative_follow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,8 +136,6 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         int blueColor = holder.itemView.getResources().getColor(R.color.blue);
         int redColor = holder.itemView.getResources().getColor(R.color.colorRed);
         int greyColor = holder.itemView.getResources().getColor(R.color.colorGrey);
-        int num_thumbs = Integer.valueOf(holder.num_thumb.getText().toString());
-        int num_follows = Integer.valueOf(holder.num_follow.getText().toString());
 
         switch (id){
 
@@ -114,12 +146,12 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
 
                 if (!holder.follow) {
                     holder.icon_follow.setColor(redColor);
-                    holder.num_follow.setText(String.valueOf(num_follows+1));
+                    holder.text_follow.setText(String.valueOf(holder.num_follows+1));
                     holder.follow = true;
                 }
                 else {
                     holder.icon_follow.setColor(greyColor);
-                    holder.num_follow.setText(String.valueOf(num_follows-1));
+                    holder.text_follow.setText(String.valueOf(holder.num_follows-1));
                     holder.follow = false;
                 }
                 break;
@@ -131,12 +163,12 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
 
                 if (!holder.like) {
                     holder.icon_like.setColor(blueColor);
-                    holder.num_thumb.setText(String.valueOf(num_thumbs+1));
+                    holder.text_thumb.setText(String.valueOf(holder.num_thumbs+1));
                     holder.like = true;
                 }
                 else {
                     holder.icon_like.setColor(greyColor);
-                    holder.num_thumb.setText(String.valueOf(num_thumbs-1));
+                    holder.text_thumb.setText(String.valueOf(holder.num_thumbs-1));
                     holder.like = false;
                 }
                 break;

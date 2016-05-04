@@ -4,9 +4,9 @@
     <color name="colorPrimaryLight">#90CAF9</color>
     <color name="colorPrimaryExtraLight">#E3F2FD</color>
     <color name="colorPrimaryDark">#1565C0</color>
-    <color name="colorPrimaryExtraDark">#0D47A1</color>
-    <color name="colorRed">#F44336</color>
-    <color name="colorRedDark">#D32F2F</color>
+    <color name="colorPrimaryExtraDark">#0d47a1</color>
+    <color name="colorRed">#D32F2F</color>
+    <color name="colorRedDark">#C62828</color>
     <color name="colorRedExtraDark">#B71C1C</color>
     <color name="colorGrey">#757575</color>
     <color name="colorGreyDark">#616161</color>

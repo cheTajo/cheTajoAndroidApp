@@ -48,9 +48,8 @@ public class HomeListFragment extends Fragment {
 
         mRecyclerView.setHasFixedSize(true);
 
-
         // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getActivity());
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
         List<String> examples = new ArrayList<>();
@@ -68,6 +67,8 @@ public class HomeListFragment extends Fragment {
         examples.add("Mia cugina");
 
         mAdapter = new HairDresserAdapter(examples);
+
+        mAdapter.setHasStableIds(true);
 
         mRecyclerView.setAdapter(new SlideInLeftAnimationAdapter(mAdapter));
 
