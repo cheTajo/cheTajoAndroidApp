@@ -20,7 +20,7 @@ import com.teamlz.cheTajo.R;
 import java.util.Arrays;
 import java.util.Map;
 
-public class LoginOrSignupActivity extends AppCompatActivity {
+public class LoginOrSignUpActivity extends AppCompatActivity {
     private AppCompatEditText emailEditText;
     private AppCompatEditText passwordEditText;
     private LoginButton facebookButton;
@@ -109,8 +109,9 @@ public class LoginOrSignupActivity extends AppCompatActivity {
 
             @Override
             public void onError(FirebaseError firebaseError) {
-                Toast.makeText(getApplicationContext(), "Errore di autenticazione!", Toast.LENGTH_LONG).show();
-                return;
+                Toast.makeText(getApplicationContext(), "Errore di autenticazione", Toast.LENGTH_LONG).show();
+                Intent i = new Intent (getApplicationContext(), MainActivity.class);
+                startActivity(i);
             }
         });
     }

@@ -43,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
 
                 //start e new activity
-                Intent intent = new Intent(SplashActivity.this, LoginOrSignupActivity.class);
+                Intent intent = new Intent(SplashActivity.this, LoginOrSignUpActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
