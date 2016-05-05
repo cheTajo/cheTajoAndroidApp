@@ -72,21 +72,21 @@ public class HairDresser {
 
     public void addFollower(String email) {
         this.followers.add(email);
-        incNumFollowers();
+        this.incNumFollowers();
     }
 
     public void removeFollower(String email) {
         this.followers.remove(email);
-        decNumFollowers();
+        this.decNumFollowers();
     }
 
     public void addLike(String email) {
         this.likes.add(email);
-        incNumLikes();
+        this.incNumLikes();
     }
 
     public void removeLike(String email) {
         this.likes.remove(email);
-        decNumLikes();
+        this.decNumLikes();
     }
 }

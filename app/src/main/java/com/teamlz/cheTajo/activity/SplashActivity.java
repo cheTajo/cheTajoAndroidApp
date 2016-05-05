@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.firebase.client.Firebase;
+import com.teamlz.cheTajo.MapsActivity;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.object.Utils;
 
