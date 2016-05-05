@@ -124,49 +124,7 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
-                new MaterialDialog.Builder(thisContext)
 
-                        .title("Registrati")
-                        .content("Username")
-                        .theme(Theme.LIGHT)
-                        .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME)
-                        .input("Nome Cognome", null, new MaterialDialog.InputCallback() {
-                            @Override
-                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
-                                if (input != null) {
-                                    String[] cred = input.toString().split("");
-                                    if (cred.length == 2) {
-                                        credential[0] = cred[0];
-                                        credential[1] = cred[1];
-                                    }
-                                }
-                            }
-                        })
-                        .positiveText("OK")
-                        .negativeText("Annulla")
-                        .onPositive(new MaterialDialog.SingleButtonCallback() {
-                            @Override
-                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
-
-                                myFirebase.createUser(signUpEmail, signUpPassword, new Firebase.ValueResultHandler<Map<String, Object>>() {
-                                    @Override
-                                    public void onSuccess(Map<String, Object> stringObjectMap) {
-                                        myFirebase = myFirebase.child(Utils.USERS);
-                                        Utils.USERTHIS = new User(signUpEmail, credential[0], credential[1]);
-                                        myFirebase.child(Utils.USERTHIS.getFirstName() + " " + Utils.USERTHIS.getLastName()).setValue(Utils.USERTHIS);
-
-                                        Intent i = new Intent (getApplicationContext(), MainActivity.class);
-                                        finish();
-                                        startActivity(i);
-                                    }
-
-                                    @Override
-                                    public void onError(FirebaseError firebaseError) {
-                                        Toast.makeText(getApplicationContext(), "Errore di autenticazione", Toast.LENGTH_LONG).show();
-                                    }
-                                });
-                            }
-                        }).show();
             }
         });
     }
