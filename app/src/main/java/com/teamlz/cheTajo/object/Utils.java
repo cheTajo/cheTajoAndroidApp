@@ -14,7 +14,11 @@ public class Utils {
 
     public static String DRESSERS = "HairDressers";
     public static String USERS = "Users";
-    public static User USERTHIS = new User("example.gmail.com", "example", "starna");
+    public static String NUM_FOLLOWERS = "numFollowers";
+    public static String NUM_LIKES = "numLikes";
+    public static String FOLLOWERS = "followers";
+    public static String LIKES = "likes";
+    public static User USERTHIS = new User("email@example.itcom", "example", "starna");
 
     public static void addHairDresser(Context context){
         Firebase myFirebase = new Firebase(context.getResources().getString(R.string.firebase_url));

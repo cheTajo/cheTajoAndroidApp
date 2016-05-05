@@ -12,7 +12,13 @@ import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseApp;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.MutableData;
+import com.firebase.client.Transaction;
+import com.firebase.client.ValueEventListener;
 import com.mikepenz.iconics.view.IconicsImageView;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.object.HairDresser;
@@ -94,7 +100,7 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
     }
 
     @Override
-    public void onBindViewHolder(final HairViewHolder holder, int position) {
+    public void onBindViewHolder(final HairViewHolder holder, final int position) {
         int greyColor = holder.itemView.getResources().getColor(R.color.colorGrey);
         int blueColor = holder.itemView.getResources().getColor(R.color.blue);
         int redColor = holder.itemView.getResources().getColor(R.color.colorRed);
@@ -108,7 +114,9 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         holder.text_thumb.setText(String.valueOf(holder.num_thumbs));
 
         //retrieve my follows
-        if (dressers.get(position).getFollowers().contains(Utils.USERTHIS.getEmail())) {
+
+        if (Utils.USERTHIS.getEmail() != null &&
+                dressers.get(position).getFollowers().contains(Utils.USERTHIS.getEmail())) {
             holder.follow = true;
             holder.icon_follow.setColor(redColor);
         }
@@ -119,7 +127,8 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         }
 
         //retrieve my likes
-        if (dressers.get(position).getLikes().contains(Utils.USERTHIS.getEmail())) {
+        if (Utils.USERTHIS.getEmail() != null &&
+                dressers.get(position).getLikes().contains(Utils.USERTHIS.getEmail())) {
             holder.like = true;
             holder.icon_like.setColor(blueColor);
         }
@@ -133,36 +142,36 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         holder.relative_follow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickHolder(v.getId(), holder);
+                onItemClickHolder(v.getId(), holder, position);
             }
         });
 
         holder.relative_like.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickHolder(v.getId(), holder);
+                onItemClickHolder(v.getId(), holder, position);
             }
         });
 
         holder.relative_map.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemClickHolder(v.getId(), holder);
+                onItemClickHolder(v.getId(), holder, position);
             }
         });
     }
 
-    public void onItemClickHolder(int id, HairViewHolder holder){
+    public void onItemClickHolder(int id, HairViewHolder holder, int position){
 
         switch (id){
 
             case R.id.relative_follow:
-                clickFollow(holder,holder.follow);
+                clickFollow(holder,holder.follow, position);
                 break;
 
             case R.id.relative_like:
 
-                clickThumb(holder, holder.like);
+                clickThumb(holder, holder.like, position);
                 break;
 
             case R.id.relative_map:
@@ -170,32 +179,39 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         }
     }
 
-    public void clickFollow(HairViewHolder holder, boolean pressed){
+    public void clickFollow(final HairViewHolder holder, final boolean pressed, int position){
         final Animation resize_small = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.resize_small);
         final Animation resize_big = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.resize_big);
-        int redColor = holder.itemView.getResources().getColor(R.color.colorRed);
-        int greyColor = holder.itemView.getResources().getColor(R.color.colorGrey);
+        final int redColor = holder.itemView.getResources().getColor(R.color.colorRed);
+        final int greyColor = holder.itemView.getResources().getColor(R.color.colorGrey);
+        Firebase mFirebase = new Firebase(holder.itemView.getResources().getString(R.string.firebase_url));
+        mFirebase = mFirebase.child(Utils.DRESSERS)
+                    .child(dressers.get(position).getFirstName() + " " + dressers.get(position).getLastName());
 
         holder.icon_follow.startAnimation(resize_big);
 
-        if (!pressed){
-            holder.icon_follow.setColor(redColor);
-            holder.num_follows += 1;
-            holder.text_follow.setText(String.valueOf(holder.num_follows));
-            holder.follow = true;
-        }
+        //mFirebase.child(Utils.FOLLOWERS).push().setValue(Utils.USERTHIS.getEmail());
 
-        else {
-            holder.icon_follow.setColor(greyColor);
-            holder.num_follows -= 1;
-            holder.text_follow.setText(String.valueOf(holder.num_follows));
-            holder.follow = false;
-        }
+        //mFirebase.child(Utils.NUM_FOLLOWERS).runTransaction(new Transaction.Handler()
+
+            if (!pressed){
+                holder.icon_follow.setColor(redColor);
+                holder.num_follows += 1;
+                holder.text_follow.setText(String.valueOf(holder.num_follows));
+                holder.follow = true;
+            }
+
+            else {
+                holder.icon_follow.setColor(greyColor);
+                holder.num_follows -= 1;
+                holder.text_follow.setText(String.valueOf(holder.num_follows));
+                holder.follow = false;
+            }
 
         holder.icon_follow.startAnimation(resize_small);
     }
 
-    public void clickThumb(HairViewHolder holder, boolean pressed){
+    public void clickThumb(HairViewHolder holder, boolean pressed, int position){
         final Animation resize_small = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.resize_small);
         final Animation resize_big = AnimationUtils.loadAnimation(holder.itemView.getContext(), R.anim.resize_big);
         int blueColor = holder.itemView.getResources().getColor(R.color.blue);
