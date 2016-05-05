@@ -11,10 +11,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.melnykov.fab.FloatingActionButton;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
 import com.teamlz.cheTajo.adapter.HairDresserAdapter;
+import com.teamlz.cheTajo.object.HairDresser;
+import com.teamlz.cheTajo.object.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,21 +58,29 @@ public class HomeListFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-        List<String> examples = new ArrayList<>();
-        examples.add("Francesco Starna");
-        examples.add("Lorenzo Sciarra");
-        examples.add("Angelo Marvulli");
-        examples.add("Giulia Rinaldi");
-        examples.add("Dottor Cooper");
-        examples.add("Mia Nonna");
-        examples.add("Il pezzo");
-        examples.add("La Madonna Sciarra");
-        examples.add("Angelo Trentulli");
-        examples.add("giuggy93");
-        examples.add("Dottor Sheldon");
-        examples.add("Mia cugina");
+        final List<HairDresser> dressersList = new ArrayList<>();
 
-        mAdapter = new HairDresserAdapter(examples);
+        mAdapter = new HairDresserAdapter(dressersList);
+
+        Firebase dressersBase = new Firebase(getString(R.string.firebase_url));
+        dressersBase = dressersBase.child(Utils.DRESSERS);
+
+        dressersBase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    HairDresser hd = snapshot.getValue(HairDresser.class);
+                    dressersList.add(hd);
+                }
+
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println(firebaseError);
+            }
+        });
 
         mAdapter.setHasStableIds(true);
 

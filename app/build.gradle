@@ -21,6 +21,7 @@ android {
 
 repositories {
     mavenCentral()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
@@ -45,4 +46,8 @@ dependencies {
     compile 'jp.wasabeef:recyclerview-animators:2.2.3'
     //bottom navigation
     compile 'com.roughike:bottom-bar:1.3.3'
+    //dialog
+    compile ('com.github.afollestad.material-dialogs:commons:0.8.5.8@aar'){
+        transitive = true //qui la guida --> https://github.com/afollestad/material-dialogs#input-dialogs
+    }
 }

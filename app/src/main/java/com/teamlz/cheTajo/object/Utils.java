@@ -1,8 +1,6 @@
 package com.teamlz.cheTajo.object;
 
 import android.content.Context;
-import android.provider.Settings;
-
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -13,6 +11,10 @@ import com.teamlz.cheTajo.R;
  * Created by francesco on 05/05/16.
  */
 public class Utils {
+
+    public static String DRESSERS = "HairDressers";
+    public static String USERS = "Users";
+    public static User USERTHIS;
 
     public static void addHairDresser(Context context){
         Firebase myFirebase = new Firebase(context.getResources().getString(R.string.firebase_url));

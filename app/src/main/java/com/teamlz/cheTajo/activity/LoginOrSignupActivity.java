@@ -1,13 +1,20 @@
 package com.teamlz.cheTajo.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.DialogAction;
+import com.afollestad.materialdialogs.MaterialDialog;
+import com.afollestad.materialdialogs.Theme;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -17,6 +24,8 @@ import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.teamlz.cheTajo.R;
+import com.teamlz.cheTajo.object.User;
+import com.teamlz.cheTajo.object.Utils;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -28,6 +37,8 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
     private AppCompatButton manualLoginButton;
     private AppCompatButton facebookLoginButton;
     private Firebase myFirebase;
+    private String TAG = "LOGIN AND SIGNUP";
+    final Context thisContext = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,6 +112,7 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
     private void logInOrSignUp (String email, String password) {
         final String signUpEmail = email;
         final String signUpPassword = password;
+        final String[] credential = new String[2];
 
         myFirebase.authWithPassword(email, password, new Firebase.AuthResultHandler() {
             @Override
@@ -112,19 +124,49 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
 
             @Override
             public void onAuthenticationError(FirebaseError firebaseError) {
-                myFirebase.createUser(signUpEmail, signUpPassword, new Firebase.ValueResultHandler<Map<String, Object>>() {
-                    @Override
-                    public void onSuccess(Map<String, Object> stringObjectMap) {
-                        Intent i = new Intent (getApplicationContext(), MainActivity.class);
-                        finish();
-                        startActivity(i);
-                    }
+                new MaterialDialog.Builder(thisContext)
 
-                    @Override
-                    public void onError(FirebaseError firebaseError) {
-                        Toast.makeText(getApplicationContext(), "Errore di autenticazione", Toast.LENGTH_LONG).show();
-                    }
-                });
+                        .title("Registrati")
+                        .content("Username")
+                        .theme(Theme.LIGHT)
+                        .inputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PERSON_NAME)
+                        .input("Nome Cognome", null, new MaterialDialog.InputCallback() {
+                            @Override
+                            public void onInput(@NonNull MaterialDialog dialog, CharSequence input) {
+                                if (input != null) {
+                                    String[] cred = input.toString().split("");
+                                    if (cred.length == 2) {
+                                        credential[0] = cred[0];
+                                        credential[1] = cred[1];
+                                    }
+                                }
+                            }
+                        })
+                        .positiveText("OK")
+                        .negativeText("Annulla")
+                        .onPositive(new MaterialDialog.SingleButtonCallback() {
+                            @Override
+                            public void onClick(@NonNull MaterialDialog dialog, @NonNull DialogAction which) {
+
+                                myFirebase.createUser(signUpEmail, signUpPassword, new Firebase.ValueResultHandler<Map<String, Object>>() {
+                                    @Override
+                                    public void onSuccess(Map<String, Object> stringObjectMap) {
+                                        myFirebase = myFirebase.child(Utils.USERS);
+                                        Utils.USERTHIS = new User(signUpEmail, credential[0], credential[1]);
+                                        myFirebase.child(Utils.USERTHIS.getFirstName() + " " + Utils.USERTHIS.getLastName()).setValue(Utils.USERTHIS);
+
+                                        Intent i = new Intent (getApplicationContext(), MainActivity.class);
+                                        finish();
+                                        startActivity(i);
+                                    }
+
+                                    @Override
+                                    public void onError(FirebaseError firebaseError) {
+                                        Toast.makeText(getApplicationContext(), "Errore di autenticazione", Toast.LENGTH_LONG).show();
+                                    }
+                                });
+                            }
+                        }).show();
             }
         });
     }
