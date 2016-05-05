@@ -14,7 +14,7 @@ public class Utils {
 
     public static String DRESSERS = "HairDressers";
     public static String USERS = "Users";
-    public static User USERTHIS;
+    public static User USERTHIS = new User("example.gmail.com", "example", "starna");
 
     public static void addHairDresser(Context context){
         Firebase myFirebase = new Firebase(context.getResources().getString(R.string.firebase_url));
