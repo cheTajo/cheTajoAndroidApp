@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     public static FloatingActionButton fab_add, fab_location;
     public static BottomBar mBottomBar;
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 new BottomBarTab(new IconicsDrawable(this, "gmd-favorite").sizeDp(24), "Preferiti"),
                 new BottomBarTab(new IconicsDrawable(this, "gmd-person").sizeDp(24), "Profilo")
         );
+        //mBottomBar.setFragmentItems(getFragmentManager(), R.id.view_pager, );
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int position) {
