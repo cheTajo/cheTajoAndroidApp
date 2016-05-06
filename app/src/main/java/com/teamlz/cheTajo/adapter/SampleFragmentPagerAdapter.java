@@ -35,7 +35,7 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
 
 
             case 1:
-                return MapsFragment.newInstance(position);
+                return MapsFragment.newInstance();
         }
 
         return null;
