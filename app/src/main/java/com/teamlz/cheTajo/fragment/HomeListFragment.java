@@ -27,7 +27,7 @@ import java.util.List;
 
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
-/**
+/*
  * Created by francesco on 02/05/16.
  */
 public class HomeListFragment extends Fragment {
