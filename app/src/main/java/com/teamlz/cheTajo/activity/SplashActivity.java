@@ -20,7 +20,7 @@ public class SplashActivity extends AppCompatActivity {
     private Firebase.AuthStateListener authStateListener;
     private boolean authenticated;
 
-    public static int SPLASH_TIMER = 1500;
+    public static int SPLASH_TIMER = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
