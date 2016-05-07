@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,7 @@ import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
-import com.melnykov.fab.FloatingActionButton;
 import com.teamlz.cheTajo.R;
-import com.teamlz.cheTajo.activity.MainActivity;
 import com.teamlz.cheTajo.adapter.HairDresserAdapter;
 import com.teamlz.cheTajo.object.HairDresser;
 import com.teamlz.cheTajo.object.Utils;
@@ -31,7 +28,6 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
  * Created by francesco on 02/05/16.
  */
 public class HomeListFragment extends Fragment {
-
     RecyclerView mRecyclerView;
     HairDresserAdapter mAdapter;
     RecyclerView.LayoutManager mLayoutManager;
@@ -86,7 +82,7 @@ public class HomeListFragment extends Fragment {
 
         mRecyclerView.setAdapter(new SlideInLeftAnimationAdapter(mAdapter));
 
-        MainActivity.fab_add.attachToRecyclerView(mRecyclerView);
+        HomeFragment.fab_add.attachToRecyclerView(mRecyclerView);
         return view;
     }
 
