@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import com.teamlz.cheTajo.adapter.SampleFragmentPagerAdapter;
 
 public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener {
     public static FloatingActionButton fab_add, fab_location;
+    private Toolbar toolbar;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -39,6 +42,9 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        toolbar = (Toolbar) view.findViewById(R.id.activity_main_toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.fragment_home_pager);

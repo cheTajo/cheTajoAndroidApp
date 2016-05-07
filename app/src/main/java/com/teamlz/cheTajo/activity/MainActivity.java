@@ -24,7 +24,6 @@ import com.teamlz.cheTajo.fragment.UserProfileFragment;
  */
 
 public class MainActivity extends AppCompatActivity {
-    private Toolbar toolbar;
     private BottomBar mBottomBar;
 
     @Override
@@ -32,8 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
-        setSupportActionBar(toolbar);
+
 
         getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, HomeFragment.newInstance()).commit();
 
@@ -60,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
 
                     case 3:
-                        toolbar.setVisibility(View.INVISIBLE);
                         getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, UserProfileFragment.newInstance()).commit();
                         break;
 
@@ -122,4 +119,3 @@ public class MainActivity extends AppCompatActivity {
         mBottomBar.onSaveInstanceState(outState);
     }
 }
-

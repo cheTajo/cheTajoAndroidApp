@@ -115,7 +115,7 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
         authProgressDialog.setTitle("Attendi");
         authProgressDialog.setMessage("Autenticazione in corso...");
         authProgressDialog.setCancelable(false);
-        authProgressDialog.show();
+        //authProgressDialog.show();
 
         authStateListener = new Firebase.AuthStateListener() {
             @Override
