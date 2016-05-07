@@ -33,7 +33,6 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return HomeListFragment.newIstance();
 
-
             case 1:
                 return MapsFragment.newInstance(position);
         }

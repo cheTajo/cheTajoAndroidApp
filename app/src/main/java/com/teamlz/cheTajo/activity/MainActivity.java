@@ -3,10 +3,12 @@ package com.teamlz.cheTajo.activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, HomeFragment.newInstance()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.activity_main_frame, HomeFragment.newInstance()).commit();
 
         View coordinator = findViewById(R.id.activity_main_coordinator);
         assert (coordinator != null);
@@ -49,16 +51,23 @@ public class MainActivity extends AppCompatActivity {
                 new BottomBarTab(new IconicsDrawable(this, "gmd-person").sizeDp(24), "Profilo")
         );
 
+        final Fragment user = UserProfileFragment.newInstance();
+        final Fragment home = HomeFragment.newInstance();
+
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int position) {
+
                 switch (position){
                     case 0:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, HomeFragment.newInstance()).commit();
+                        Log.d("DIO", "PORCO");
+                        getSupportFragmentManager().beginTransaction().remove(user).commit();
+                        getSupportFragmentManager().beginTransaction().add(R.id.activity_main_frame, home).commit();
                         break;
 
                     case 3:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, UserProfileFragment.newInstance()).commit();
+                        getSupportFragmentManager().beginTransaction().remove(home).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, user).commit();
                         break;
 
                 }
