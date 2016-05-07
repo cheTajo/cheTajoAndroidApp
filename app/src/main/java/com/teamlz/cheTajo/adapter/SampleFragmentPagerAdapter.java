@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.teamlz.cheTajo.activity.MainActivity;
-import com.teamlz.cheTajo.fragment.BlankFragment;
+import com.teamlz.cheTajo.fragment.MapsFragment;
 import com.teamlz.cheTajo.fragment.HomeListFragment;
 
 /*
@@ -35,7 +35,7 @@ public class SampleFragmentPagerAdapter extends FragmentPagerAdapter {
 
 
             case 1:
-                return BlankFragment.newInstance(position);
+                return MapsFragment.newInstance();
         }
 
         return null;

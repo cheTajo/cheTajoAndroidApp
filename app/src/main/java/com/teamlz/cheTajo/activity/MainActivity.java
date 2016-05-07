@@ -1,6 +1,5 @@
 package com.teamlz.cheTajo.activity;
 
-
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -31,7 +30,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     public static FloatingActionButton fab_add, fab_location;
     public static BottomBar mBottomBar;
-    private boolean startBar = false;
 
 
     @Override
@@ -74,17 +72,15 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         mBottomBar.setActiveTabColor(ContextCompat.getColor(this, R.color.colorPrimaryExtraDark));
         mBottomBar.setActiveTabColor(getResources().getColor(R.color.colorRed));
         mBottomBar.setItems(
-                new BottomBarTab(new IconicsDrawable(this, "gmd-person").sizeDp(24), "Profilo"),
+                new BottomBarTab(new IconicsDrawable(this, "gmd-home").sizeDp(24), "Home"),
                 new BottomBarTab(new IconicsDrawable(this, "gmd-history").sizeDp(24), "Recenti"),
                 new BottomBarTab(new IconicsDrawable(this, "gmd-favorite").sizeDp(24), "Preferiti"),
-                new BottomBarTab(new IconicsDrawable(this, "gmd-room").sizeDp(24), "Nearby")
+                new BottomBarTab(new IconicsDrawable(this, "gmd-person").sizeDp(24), "Profilo")
         );
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int position) {
-                if (startBar)
-                    SameActionTab(position);
-                else startBar = true;
+                SameActionTab(position);
             }
 
             @Override
@@ -92,12 +88,11 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 SameActionTab(position);
             }
         });
-
     }
 
     public void SameActionTab(int position){
         switch (position){
-            case 0:
+            case 3:
                 Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
                 startActivity(intent);
         }
@@ -146,12 +141,6 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mBottomBar.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startBar = false;
     }
 
     @Override

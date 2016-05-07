@@ -8,23 +8,37 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
+import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.teamlz.cheTajo.R;
-import com.teamlz.cheTajo.object.Utils;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
+    private Firebase myFirebase;
+    private Firebase.AuthStateListener authStateListener;
+    private boolean authenticated;
 
-    public static int SPLASH_TIMER = 1000;
+    public static int SPLASH_TIMER = 2000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authenticated = false;
 
         //Initialize sdk
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         Firebase.setAndroidContext(this);
+
+        myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
+        myFirebase.addAuthStateListener(new Firebase.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData != null) {
+                    authenticated = true;
+                }
+            }
+        });
 
         setContentView(R.layout.activity_splash);
 
@@ -42,25 +56,18 @@ public class SplashActivity extends AppCompatActivity {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-
-                //start e new activity
-                Intent intent = new Intent(SplashActivity.this, LoginOrSignUpActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                // Close the activity so the user won't able to go back this
-                // activity pressing Back button
+                Intent i;
+                if (!authenticated) i = new Intent(SplashActivity.this, LoginOrSignUpActivity.class);
+                else i = new Intent(SplashActivity.this, MainActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 finish();
-                startActivity(intent);
+                startActivity(i);
             }
         };
 
         Timer timer = new Timer();
         timer.schedule(task, SPLASH_TIMER);
-
-        /**database examples*/
-        //Utils.addHairDresser(getApplicationContext());
-        //Utils.retrieveHairDressers(getApplicationContext());
-
     }
 
 }
