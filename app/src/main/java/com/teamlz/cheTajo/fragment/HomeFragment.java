@@ -3,6 +3,7 @@ package com.teamlz.cheTajo.fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,9 +14,9 @@ import android.view.ViewGroup;
 import com.melnykov.fab.FloatingActionButton;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.teamlz.cheTajo.R;
-import com.teamlz.cheTajo.adapter.SampleFragmentPagerAdapter;
 
 public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener {
+    private Fragment homeListFragment, mapsFragment;
     public static FloatingActionButton fab_add, fab_location;
     private Toolbar toolbar;
 
@@ -26,7 +27,8 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        homeListFragment = HomeListFragment.newIstance();
+        mapsFragment = MapsFragment.newInstance(1);
     }
 
     public static HomeFragment newInstance() {
@@ -49,7 +51,35 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         // Get the ViewPager and set it's PagerAdapter so that it can display items
         ViewPager viewPager = (ViewPager) view.findViewById(R.id.fragment_home_pager);
         assert viewPager != null;
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getFragmentManager()));
+        viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+            @Override
+            public Fragment getItem(int position) {
+
+                switch (position){
+
+                    case 0:
+                        return homeListFragment;
+
+                    default:
+                        return mapsFragment;
+                }
+            }
+
+            @Override
+            public int getCount() {
+                return 2;
+            }
+
+            @Override
+            public CharSequence getPageTitle(int position) {
+                switch (position) {
+                    case 0:
+                        return "Bacheca";
+                    default:
+                        return "Mappa";
+                }
+            }
+        });
 
         // Give TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) view.findViewById(R.id.fragment_home_tab);

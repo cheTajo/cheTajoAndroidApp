@@ -4,10 +4,9 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,17 +24,18 @@ import com.teamlz.cheTajo.fragment.UserProfileFragment;
  * Created by francesco on 02/05/16.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
+    public Fragment homeFragment, userProfileFragment;
     private BottomBar mBottomBar;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        homeFragment = HomeFragment.newInstance();
+        userProfileFragment = UserProfileFragment.newInstance();
 
-
-        getSupportFragmentManager().beginTransaction().add(R.id.activity_main_frame, HomeFragment.newInstance()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.activity_main_frame, homeFragment).commit();
 
         View coordinator = findViewById(R.id.activity_main_coordinator);
         assert (coordinator != null);
@@ -61,12 +61,10 @@ public class MainActivity extends AppCompatActivity {
                 switch (position){
                     case 0:
                         Log.d("DIO", "PORCO");
-                        getSupportFragmentManager().beginTransaction().remove(user).commit();
-                        getSupportFragmentManager().beginTransaction().add(R.id.activity_main_frame, home).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, home).commit();
                         break;
 
                     case 3:
-                        getSupportFragmentManager().beginTransaction().remove(home).commit();
                         getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, user).commit();
                         break;
 
