@@ -28,7 +28,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         homeListFragment = HomeListFragment.newIstance();
-        mapsFragment = MapsFragment.newInstance(1);
+        mapsFragment = MapsFragment.newInstance();
     }
 
     public static HomeFragment newInstance() {
