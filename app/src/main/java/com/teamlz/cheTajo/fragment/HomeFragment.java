@@ -19,25 +19,27 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     private Fragment homeListFragment, mapsFragment;
     public static FloatingActionButton fab_add, fab_location;
     private Toolbar toolbar;
+    private ViewPager viewPager;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        homeListFragment = HomeListFragment.newIstance();
-        mapsFragment = MapsFragment.newInstance();
-    }
-
     public static HomeFragment newInstance() {
-        
+
         Bundle args = new Bundle();
-        
+
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
+    }
+
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        homeListFragment = HomeListFragment.newInstance();
+        mapsFragment = MapsFragment.newInstance();
     }
 
     @Override
@@ -49,7 +51,8 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.fragment_home_pager);
+        viewPager = (ViewPager) view.findViewById(R.id.fragment_home_pager);
+
         assert viewPager != null;
         viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
             @Override
@@ -106,6 +109,20 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     }
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        //Save the fragment's state here
+    }
+
+    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
     }
@@ -126,11 +143,14 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
             case 0:
                 fab_location.hide();
+                fab_location.setVisibility(View.INVISIBLE);
+                fab_add.setVisibility(View.VISIBLE);
                 fab_add.show();
                 break;
 
             case 1:
                 fab_add.hide();
+                fab_add.setVisibility(View.INVISIBLE);
                 fab_location.setVisibility(View.VISIBLE);
                 fab_location.show();
                 break;

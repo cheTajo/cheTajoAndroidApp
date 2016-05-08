@@ -4,8 +4,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
@@ -24,7 +24,7 @@ import com.teamlz.cheTajo.fragment.UserProfileFragment;
  * Created by francesco on 02/05/16.
  */
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
     public Fragment homeFragment, userProfileFragment;
     private BottomBar mBottomBar;
     @Override
@@ -51,9 +51,6 @@ public class MainActivity extends FragmentActivity {
                 new BottomBarTab(new IconicsDrawable(this, "gmd-person").sizeDp(24), "Profilo")
         );
 
-        final Fragment user = UserProfileFragment.newInstance();
-        final Fragment home = HomeFragment.newInstance();
-
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int position) {
@@ -61,24 +58,19 @@ public class MainActivity extends FragmentActivity {
                 switch (position){
                     case 0:
                         Log.d("DIO", "PORCO");
-                        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, home).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, homeFragment).commit();
                         break;
 
                     case 3:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, user).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, userProfileFragment).commit();
                         break;
 
                 }
             }
 
             @Override
-            public void onTabReSelected(int position) {
-                SameActionTab(position);
-            }
+            public void onTabReSelected(int position) {}
         });
-    }
-
-    public void SameActionTab(int position){
     }
 
     @Override
