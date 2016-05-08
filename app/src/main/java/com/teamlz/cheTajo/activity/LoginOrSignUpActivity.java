@@ -2,6 +2,7 @@ package com.teamlz.cheTajo.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatButton;
@@ -20,17 +21,16 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import com.teamlz.cheTajo.R;
+import com.teamlz.cheTajo.fragment.SignUpFragment;
 
-public class LoginOrSignUpActivity extends AppCompatActivity {
+public class LogInOrSignUpActivity extends AppCompatActivity {
+    private Fragment signUpFragment;
     private AppCompatEditText emailEditText;
     private AppCompatEditText passwordEditText;
-    private AppCompatButton manualLoginButton;
-    private AppCompatButton facebookLoginButton;
-
     private Firebase myFirebase;
     private Firebase.AuthStateListener authStateListener;
     private ProgressDialog authProgressDialog;
-    private AuthData facebookAuthData;
+    //private AuthData facebookAuthData;
 
     private LoginButton facebookButton;
     private CallbackManager facebookCallbackManager;
@@ -39,14 +39,17 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_or_sign_up);
+        setContentView(R.layout.activity_log_in_or_sign_up);
 
         //Initialize variables
+        signUpFragment = SignUpFragment.newInstance();
         myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
-        facebookLoginButton = (AppCompatButton) findViewById(R.id.facebook_sign_in_button);
-        manualLoginButton = (AppCompatButton) findViewById(R.id.manual_sign_in_button);
-        emailEditText = (AppCompatEditText) findViewById(R.id.email);
-        passwordEditText = (AppCompatEditText) findViewById(R.id.password);
+        emailEditText = (AppCompatEditText) findViewById(R.id.log_in_email);
+        passwordEditText = (AppCompatEditText) findViewById(R.id.log_in_password);
+
+        AppCompatButton facebookLogInButton = (AppCompatButton) findViewById(R.id.facebook_log_in_button);
+        AppCompatButton manualLogInButton = (AppCompatButton) findViewById(R.id.manual_log_in_button);
+        AppCompatButton goToSignUpLoginButton = (AppCompatButton) findViewById(R.id.go_to_sign_up_button);
 
         myFirebase.unauth();
         LoginManager.getInstance().logOut();
@@ -80,10 +83,11 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
         };
 
         //Set up manual login button
-        assert manualLoginButton != null;
-        manualLoginButton.setOnClickListener(new View.OnClickListener() {
+        assert manualLogInButton != null;
+        manualLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
@@ -103,11 +107,20 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
         });
 
         //Set up facebook login button
-        assert facebookLoginButton != null;
-        facebookLoginButton.setOnClickListener(new View.OnClickListener() {
+        assert facebookLogInButton != null;
+        facebookLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 facebookButton.performClick();
+            }
+        });
+
+        //Set up sign up button
+        assert goToSignUpLoginButton != null;
+        goToSignUpLoginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.log_in_form, signUpFragment).addToBackStack(null).commit();
             }
         });
 
@@ -115,13 +128,12 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
         authProgressDialog.setTitle("Attendi");
         authProgressDialog.setMessage("Autenticazione in corso...");
         authProgressDialog.setCancelable(false);
-        //authProgressDialog.show();
 
         authStateListener = new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 authProgressDialog.hide();
-                facebookAuthData = authData;
+                //facebookAuthData = authData;
             }
         };
         myFirebase.addAuthStateListener(authStateListener);
@@ -132,6 +144,7 @@ public class LoginOrSignUpActivity extends AppCompatActivity {
         super.onDestroy();
         facebookAccessTokenTracker.stopTracking();
         myFirebase.removeAuthStateListener(authStateListener);
+        authProgressDialog.dismiss();
     }
 
     @Override

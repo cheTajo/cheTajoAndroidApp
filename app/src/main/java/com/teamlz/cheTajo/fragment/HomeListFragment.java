@@ -1,7 +1,5 @@
 package com.teamlz.cheTajo.fragment;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,7 +15,6 @@ import com.firebase.client.ValueEventListener;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.adapter.HairDresserAdapter;
 import com.teamlz.cheTajo.object.HairDresser;
-import com.teamlz.cheTajo.object.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,18 +25,23 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
  * Created by francesco on 02/05/16.
  */
 public class HomeListFragment extends Fragment {
-    RecyclerView mRecyclerView;
-    HairDresserAdapter mAdapter;
-    RecyclerView.LayoutManager mLayoutManager;
+    private RecyclerView mRecyclerView;
+    private HairDresserAdapter mAdapter;
+    private List<HairDresser> hairDresserList;
 
     public HomeListFragment(){}
+
+    public static HomeListFragment newInstance(){
+        return new HomeListFragment();
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        hairDresserList = new ArrayList<>();
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -47,26 +49,20 @@ public class HomeListFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_homelist, container, false);
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler);
-
         mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        final List<HairDresser> dressersList = new ArrayList<>();
-
-        mAdapter = new HairDresserAdapter(dressersList);
+        mAdapter = new HairDresserAdapter(hairDresserList);
 
         Firebase dressersBase = new Firebase(getString(R.string.firebase_url));
-        dressersBase = dressersBase.child(Utils.DRESSERS);
+        dressersBase = dressersBase.child("HairDressers");
 
         dressersBase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     HairDresser hd = snapshot.getValue(HairDresser.class);
-                    dressersList.add(hd);
+                    hairDresserList.add(hd);
                 }
 
                 mAdapter.notifyDataSetChanged();
@@ -74,7 +70,6 @@ public class HomeListFragment extends Fragment {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
-                System.out.println(firebaseError);
             }
         });
 
@@ -85,10 +80,4 @@ public class HomeListFragment extends Fragment {
         HomeFragment.fab_add.attachToRecyclerView(mRecyclerView);
         return view;
     }
-
-    public static HomeListFragment newInstance(){
-        return new HomeListFragment();
-    }
-
 }
-

@@ -16,8 +16,8 @@ import com.mikepenz.iconics.IconicsDrawable;
 import com.teamlz.cheTajo.R;
 
 public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener {
-    private Fragment homeListFragment, mapsFragment;
     public static FloatingActionButton fab_add, fab_location;
+    private Fragment homeListFragment, mapsFragment;
     private Toolbar toolbar;
     private ViewPager viewPager;
 
@@ -26,12 +26,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     }
 
     public static HomeFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        HomeFragment fragment = new HomeFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return new HomeFragment();
     }
 
 
@@ -54,7 +49,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         viewPager = (ViewPager) view.findViewById(R.id.fragment_home_pager);
 
         assert viewPager != null;
-        viewPager.setAdapter(new FragmentPagerAdapter(getFragmentManager()) {
+        viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
 

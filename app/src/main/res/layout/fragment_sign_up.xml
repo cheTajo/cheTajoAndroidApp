@@ -1,35 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:background="@color/white"
-    tools:context=".activity.UserProfileActivity">
-
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/app_bar"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay"
-        android:backgroundTint="@color/colorPrimaryDark"/>
+    android:layout_height="match_parent">
 
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/login_form"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
         android:orientation="vertical"
         android:background="@color/white"
         android:layout_margin="@dimen/fab_margin"
-        android:fitsSystemWindows="true"
-        tools:context=".activity.LoginOrSignUpActivity">
+        android:fitsSystemWindows="true">
 
         <android.support.v7.widget.AppCompatEditText
-            android:id="@+id/email"
+            android:id="@+id/sign_up_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/prompt_email"
@@ -37,7 +21,33 @@
             android:textColorHint="@color/colorGrey"
             android:textColor="@color/colorPrimaryDark"
             android:singleLine="true"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/sign_up_first_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_first_name"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/colorGrey"
+            android:textColor="@color/colorPrimaryDark"
+            android:singleLine="true"
+            android:layout_below="@+id/sign_up_email"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true" />
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/sign_up_last_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/prompt_last_name"
+            android:inputType="textPersonName"
+            android:textColorHint="@color/colorGrey"
+            android:textColor="@color/colorPrimaryDark"
+            android:singleLine="true"
+            android:layout_below="@+id/sign_up_first_name"
+            android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true" />
 
         <android.support.v7.widget.AppCompatEditText
@@ -49,7 +59,7 @@
             android:textColorHint="@color/colorGrey"
             android:textColor="@color/colorPrimaryDark"
             android:singleLine="true"
-            android:layout_below="@+id/email"
+            android:layout_below="@+id/sign_up_last_name"
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true" />
 
@@ -58,9 +68,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/button_padding"
-            android:background="@drawable/custom_login_or_signup_button"
-            android:textColor="@color/colorPrimaryExtraLight"
-            android:text="@string/manual_sign_in"
+            android:background="@drawable/custom_button"
+            android:textColor="@color/white"
+            android:text="@string/manual_sign_up"
             android:layout_below="@+id/password"
             android:layout_marginTop="40dp"
             android:layout_centerHorizontal="true"
@@ -73,8 +83,8 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/button_padding"
             android:background="@drawable/custom_facebook_button"
-            android:textColor="@color/colorPrimaryExtraLight"
-            android:text="@string/facebook_sign_in"
+            android:textColor="@color/white"
+            android:text="@string/facebook_sign_up"
             android:layout_below="@+id/manual_sign_in_button"
             android:layout_marginTop="20dp"
             android:layout_centerHorizontal="true"
@@ -89,4 +99,4 @@
             android:layout_below="@+id/facebook_sign_in_button"
             android:layout_centerHorizontal="true" />
     </RelativeLayout>
-</android.support.design.widget.CoordinatorLayout>
+</FrameLayout>

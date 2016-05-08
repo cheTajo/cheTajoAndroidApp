@@ -7,13 +7,11 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 import com.teamlz.cheTajo.R;
 
-/**
+/*
  * Created by francesco on 05/05/16.
  */
 public class Utils {
 
-    public static String DRESSERS = "HairDressers";
-    public static String USERS = "Users";
     public static User USERTHIS = new User("example.gmail.com", "example", "starna");
 
     public static void addHairDresser(Context context){

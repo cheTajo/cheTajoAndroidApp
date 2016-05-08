@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +24,7 @@ import com.teamlz.cheTajo.fragment.UserProfileFragment;
  */
 
 public class MainActivity extends AppCompatActivity {
-    public Fragment homeFragment, userProfileFragment;
+    private Fragment homeFragment, userProfileFragment;
     private BottomBar mBottomBar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (position){
                     case 0:
-                        Log.d("DIO", "PORCO");
                         getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, homeFragment).commit();
                         break;
 

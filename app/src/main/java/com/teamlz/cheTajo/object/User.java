@@ -1,6 +1,6 @@
 package com.teamlz.cheTajo.object;
 
-/**
+/*
  * Created by francesco on 05/05/16.
  */
 public class User {
@@ -13,9 +13,23 @@ public class User {
 
     public User(String email, String firstName, String lastName){
         this.email = email;
-        String firstF = firstName.substring(0, 1);
-        firstF = firstF.toUpperCase();
-        this.firstName = firstF + String.copyValueOf(firstName.toCharArray(), 1, firstName.length()-1);
+        this.firstName = "";
+        this.lastName = "";
+        String temp;
+
+        String[] pezzi = firstName.split(" ");
+        for (int i = 0; i < pezzi.length; i++) {
+            temp = pezzi[i].substring(0, 1).toUpperCase();
+            firstName += temp + String.copyValueOf(pezzi[i].toCharArray(), 1, pezzi[i].length()-1) + " ";
+        }
+        firstName.trim();
+
+        pezzi = lastName.split(" ");
+        for (int i = 0; i < pezzi.length; i++) {
+            temp = pezzi[i].substring(0, 1).toUpperCase();
+            lastName += temp + String.copyValueOf(pezzi[i].toCharArray(), 1, pezzi[i].length()-1) + " ";
+        }
+        firstName.trim();
 
         String firstL = lastName.substring(0, 1);
         firstL = firstL.toUpperCase();
