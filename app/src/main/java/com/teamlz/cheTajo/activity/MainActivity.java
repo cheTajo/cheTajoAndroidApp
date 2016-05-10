@@ -56,11 +56,15 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (position){
                     case 0:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, homeFragment).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                                .replace(R.id.activity_main_frame, homeFragment).commit();
                         break;
 
                     case 3:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.activity_main_frame, userProfileFragment).commit();
+                        getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                                .replace(R.id.activity_main_frame, userProfileFragment).commit();
                         break;
 
                 }

@@ -4,36 +4,30 @@ package com.teamlz.cheTajo.object;
  * Created by francesco on 05/05/16.
  */
 public class User {
+    public static String myEmail;
 
     private String firstName;
     private String lastName;
     private String email;
 
-    public User(){}
-
     public User(String email, String firstName, String lastName){
         this.email = email;
         this.firstName = "";
         this.lastName = "";
-        String temp;
 
-        String[] pezzi = firstName.split(" ");
-        for (int i = 0; i < pezzi.length; i++) {
-            temp = pezzi[i].substring(0, 1).toUpperCase();
-            firstName += temp + String.copyValueOf(pezzi[i].toCharArray(), 1, pezzi[i].length()-1) + " ";
+        String[] parts = firstName.split(" ");
+        for (int i = 0; i < parts.length; i++) {
+            this.firstName += parts[i].substring(0, 1).toUpperCase();
+            this.firstName += parts[i].substring(1).toLowerCase() + " ";
         }
-        firstName.trim();
+        this.firstName = this.firstName.trim();
 
-        pezzi = lastName.split(" ");
-        for (int i = 0; i < pezzi.length; i++) {
-            temp = pezzi[i].substring(0, 1).toUpperCase();
-            lastName += temp + String.copyValueOf(pezzi[i].toCharArray(), 1, pezzi[i].length()-1) + " ";
+        parts = lastName.split(" ");
+        for (int i = 0; i < parts.length; i++) {
+            this.lastName += parts[i].substring(0, 1).toUpperCase();
+            this.lastName += parts[i].substring(1).toLowerCase() + " ";
         }
-        firstName.trim();
-
-        String firstL = lastName.substring(0, 1);
-        firstL = firstL.toUpperCase();
-        this.lastName = firstL + String.copyValueOf(lastName.toCharArray(), 1, lastName.length()-1);
+        this.lastName = this.lastName.trim();
     }
 
     public String getLastName() {

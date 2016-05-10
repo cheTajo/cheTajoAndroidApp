@@ -8,15 +8,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.firebase.client.FirebaseApp;
 import com.mikepenz.iconics.view.IconicsImageView;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.object.HairDresser;
-import com.teamlz.cheTajo.object.Utils;
+import com.teamlz.cheTajo.object.User;
 
 import java.util.List;
 
@@ -108,7 +106,7 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         holder.text_thumb.setText(String.valueOf(holder.num_thumbs));
 
         //retrieve my follows
-        if (dressers.get(position).getFollowers().contains(Utils.USERTHIS.getEmail())) {
+        if (dressers.get(position).getFollowers().contains(User.myEmail)) {
             holder.follow = true;
             holder.icon_follow.setColor(redColor);
         }
@@ -119,7 +117,7 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         }
 
         //retrieve my likes
-        if (dressers.get(position).getLikes().contains(Utils.USERTHIS.getEmail())) {
+        if (dressers.get(position).getLikes().contains(User.myEmail)) {
             holder.like = true;
             holder.icon_like.setColor(blueColor);
         }

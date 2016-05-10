@@ -12,8 +12,6 @@ import com.teamlz.cheTajo.R;
  */
 public class Utils {
 
-    public static User USERTHIS = new User("example.gmail.com", "example", "starna");
-
     public static void addHairDresser(Context context){
         Firebase myFirebase = new Firebase(context.getResources().getString(R.string.firebase_url));
         Firebase dresser = myFirebase.child("HairDressers");

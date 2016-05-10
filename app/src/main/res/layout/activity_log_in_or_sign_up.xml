@@ -25,108 +25,12 @@
             android:layout_centerHorizontal="true" />
 
         <FrameLayout
-            android:id="@+id/log_in_form"
+            android:id="@+id/log_in_or_sign_up_frame"
             android:layout_below="@+id/log_in_icon"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:orientation="vertical"
-                android:background="@color/white"
-                android:layout_margin="@dimen/fab_margin"
-                android:fitsSystemWindows="true">
-
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/log_in_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:textColorHint="@color/colorGrey"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:singleLine="true"
-                    android:layout_centerHorizontal="true" />
-
-                <android.support.v7.widget.AppCompatEditText
-                    android:id="@+id/log_in_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/prompt_password"
-                    android:inputType="textPassword"
-                    android:textColorHint="@color/colorGrey"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:singleLine="true"
-                    android:layout_below="@+id/log_in_email"
-                    android:layout_marginTop="20dp"
-                    android:layout_centerHorizontal="true" />
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/manual_log_in_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/button_padding"
-                    android:background="@drawable/custom_button"
-                    android:textColor="@color/white"
-                    android:text="@string/manual_log_in"
-                    android:layout_below="@+id/log_in_password"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginLeft="@dimen/fab_margin"
-                    android:layout_marginRight="@dimen/fab_margin"/>
-
-                <com.facebook.login.widget.LoginButton
-                    android:id="@+id/facebook_button"
-                    android:visibility="gone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:layout_below="@+id/manual_log_in_button"
-                    android:layout_centerHorizontal="true" />
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/facebook_log_in_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/button_padding"
-                    android:background="@drawable/custom_facebook_button"
-                    android:textColor="@color/white"
-                    android:text="@string/facebook_log_in"
-                    android:layout_below="@+id/manual_log_in_button"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginLeft="@dimen/fab_margin"
-                    android:layout_marginRight="@dimen/fab_margin"/>
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/oppure"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/oppure"
-                    android:textAlignment="center"
-                    android:textColor="@color/colorGrey"
-                    android:layout_below="@+id/facebook_log_in_button"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginLeft="@dimen/fab_margin"
-                    android:layout_marginRight="@dimen/fab_margin" />
-
-                <android.support.v7.widget.AppCompatButton
-                    android:id="@+id/go_to_sign_up_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/button_padding"
-                    android:background="@drawable/custom_button"
-                    android:textColor="@color/white"
-                    android:text="@string/manual_sign_up"
-                    android:layout_below="@+id/oppure"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="30dp"
-                    android:layout_marginLeft="@dimen/fab_margin"
-                    android:layout_marginRight="@dimen/fab_margin"/>
-            </RelativeLayout>
         </FrameLayout>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>
