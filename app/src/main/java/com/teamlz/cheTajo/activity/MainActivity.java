@@ -2,71 +2,47 @@ package com.teamlz.cheTajo.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.melnykov.fab.FloatingActionButton;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
 import com.roughike.bottombar.OnTabClickListener;
 import com.teamlz.cheTajo.R;
-import com.teamlz.cheTajo.adapter.SampleFragmentPagerAdapter;
+import com.teamlz.cheTajo.fragment.HomeFragment;
+import com.teamlz.cheTajo.fragment.UserProfileFragment;
 
 /*
  * Created by francesco on 02/05/16.
  */
 
-public class MainActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener{
-
-    public static FloatingActionButton fab_add, fab_location;
-    public static BottomBar mBottomBar;
-
+public class MainActivity extends AppCompatActivity {
+    private Fragment homeFragment, userProfileFragment;
+    private BottomBar mBottomBar;
+    private FragmentManager manager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
-        setSupportActionBar(toolbar);
+        homeFragment = HomeFragment.newInstance();
+        userProfileFragment = UserProfileFragment.newInstance();
 
-        // Get the ViewPager and set it's PagerAdapter so that it can display items
-        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        assert viewPager != null;
-        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager()));
+        getSupportFragmentManager().beginTransaction().add(R.id.activity_main_frame, homeFragment).commit();
 
-        // Give the TabLayout the ViewPager
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        assert tabLayout != null;
-        tabLayout.setupWithViewPager(viewPager);
-
-        viewPager.addOnPageChangeListener(this);
-
-        fab_add = (FloatingActionButton) findViewById(R.id.fab_add);
-        fab_location = (FloatingActionButton) findViewById(R.id.fab_location);
-        fab_location.setImageDrawable(new IconicsDrawable(this, "gmd-gps_fixed")
-                .sizeDp(24)
-                .color(getResources().getColor(R.color.white)));
-        fab_location.hide();
-
-        fab_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        mBottomBar = BottomBar.attach(findViewById(R.id.main_coordinator), savedInstanceState);
+        View coordinator = findViewById(R.id.activity_main_coordinator);
+        assert (coordinator != null);
+        mBottomBar = BottomBar.attach(coordinator, savedInstanceState);
         mBottomBar.noTopOffset();
         mBottomBar.useFixedMode();
         mBottomBar.setActiveTabColor(ContextCompat.getColor(this, R.color.colorPrimaryExtraDark));
@@ -77,25 +53,30 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
                 new BottomBarTab(new IconicsDrawable(this, "gmd-favorite").sizeDp(24), "Preferiti"),
                 new BottomBarTab(new IconicsDrawable(this, "gmd-person").sizeDp(24), "Profilo")
         );
+
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int position) {
-                SameActionTab(position);
+                if (userProfileFragment.isRemoving()||homeFragment.isRemoving()) return;
+
+                switch (position){
+                    case 0:
+                        getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                                .replace(R.id.activity_main_frame, homeFragment).commit();
+                        break;
+
+                    case 3:
+                        getSupportFragmentManager().beginTransaction()
+                                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+                                .replace(R.id.activity_main_frame, userProfileFragment).commit();
+                        break;
+                }
             }
 
             @Override
-            public void onTabReSelected(int position) {
-                SameActionTab(position);
-            }
+            public void onTabReSelected(int position) {}
         });
-    }
-
-    public void SameActionTab(int position){
-        switch (position){
-            case 3:
-                Intent intent = new Intent(MainActivity.this, UserProfileActivity.class);
-                startActivity(intent);
-        }
     }
 
     @Override
@@ -142,37 +123,4 @@ public class MainActivity extends AppCompatActivity implements ViewPager.OnPageC
         super.onSaveInstanceState(outState);
         mBottomBar.onSaveInstanceState(outState);
     }
-
-    @Override
-    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-    }
-
-    @Override
-    public void onPageSelected(int position) {
-        switchFab(position);
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    public void switchFab(int position){
-
-        switch (position){
-
-            case 0:
-                fab_location.hide();
-                fab_add.show();
-                break;
-
-            case 1:
-                fab_add.hide();
-                fab_location.setVisibility(View.VISIBLE);
-                fab_location.show();
-                break;
-        }
-    }
 }
-

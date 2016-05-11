@@ -1,67 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_coordinator"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main_coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryExtraLight">
 
     <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar"
+        android:visibility="invisible"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true">
-
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/main_toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
-            app:layout_scrollFlags="scroll|enterAlways"
-            android:fitsSystemWindows="true"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark" />
-
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimaryDark"
-                app:tabIndicatorColor="@color/colorPrimaryDark"
-                app:tabMode="fixed"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/colorPrimaryLight"
-                app:tabTextAppearance="@style/CustomTabText"/>
-
+        android:layout_height="wrap_content">
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.view.ViewPager
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        android:id="@+id/view_pager"
+    <FrameLayout
+        android:id="@+id/activity_main_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fab_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:src="@drawable/ic_add_white_24dp"
-        app:fab_colorNormal="@color/colorRed"
-        app:fab_colorPressed="@color/colorRedDark"
-        app:fab_colorRipple="@color/colorRedExtraDark"/>
-
-    <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fab_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        app:fab_colorNormal="@color/colorRed"
-        android:visibility="invisible"
-        app:fab_colorPressed="@color/colorRedDark"
-        app:fab_colorRipple="@color/colorRedExtraDark"/>
+        android:layout_height="match_parent">
+    </FrameLayout>
 
 </android.support.design.widget.CoordinatorLayout>

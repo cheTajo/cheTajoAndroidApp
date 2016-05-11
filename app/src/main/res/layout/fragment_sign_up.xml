@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_margin="@dimen/fab_margin"
+    android:fitsSystemWindows="true">
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/sign_up_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
+        android:textColorHint="@color/colorGrey"
+        android:textColor="@color/colorPrimaryDark"
+        android:singleLine="true"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/sign_up_first_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_first_name"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/colorGrey"
+        android:textColor="@color/colorPrimaryDark"
+        android:singleLine="true"
+        android:layout_below="@+id/sign_up_email"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/sign_up_last_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_last_name"
+        android:inputType="textPersonName"
+        android:textColorHint="@color/colorGrey"
+        android:textColor="@color/colorPrimaryDark"
+        android:singleLine="true"
+        android:layout_below="@+id/sign_up_first_name"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/prompt_password"
+        android:inputType="textPassword"
+        android:textColorHint="@color/colorGrey"
+        android:textColor="@color/colorPrimaryDark"
+        android:singleLine="true"
+        android:layout_below="@+id/sign_up_last_name"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/manual_sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/button_padding"
+        android:background="@drawable/custom_button"
+        android:textColor="@color/white"
+        android:text="@string/manual_sign_up"
+        android:layout_below="@+id/password"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/facebook_sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/button_padding"
+        android:background="@drawable/custom_facebook_button"
+        android:textColor="@color/white"
+        android:text="@string/facebook_sign_up"
+        android:layout_below="@+id/manual_sign_in_button"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"/>
+
+    <com.facebook.login.widget.LoginButton
+        android:id="@+id/facebook_button"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/facebook_sign_in_button"
+        android:layout_centerHorizontal="true" />
+</RelativeLayout>

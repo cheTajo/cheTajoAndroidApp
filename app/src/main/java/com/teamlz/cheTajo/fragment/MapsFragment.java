@@ -2,34 +2,24 @@ package com.teamlz.cheTajo.fragment;
 
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.teamlz.cheTajo.R;
-import com.teamlz.cheTajo.activity.MainActivity;
 
 public class MapsFragment extends Fragment {
 
@@ -58,13 +48,6 @@ public class MapsFragment extends Fragment {
             public void onMapReady(GoogleMap gMap) {
                 googleMap = gMap;
                 if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                    // TODO: Consider calling
-                    //    ActivityCompat#requestPermissions
-                    // here to request the missing permissions, and then overriding
-                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                    //                                          int[] grantResults)
-                    // to handle the case where the user grants the permission. See the documentation
-                    // for ActivityCompat#requestPermissions for more details.
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
@@ -72,7 +55,7 @@ public class MapsFragment extends Fragment {
                 locationButton.setVisibility(View.INVISIBLE);
                 afterMapLoad();
 
-                MainActivity.fab_location.setOnClickListener(new View.OnClickListener() {
+                HomeFragment.fab_location.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         locationButton.performClick();
