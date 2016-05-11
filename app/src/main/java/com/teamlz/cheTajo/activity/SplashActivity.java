@@ -4,14 +4,18 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 import com.teamlz.cheTajo.R;
+import com.teamlz.cheTajo.object.User;
 
+import java.util.LinkedHashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -29,16 +33,26 @@ public class SplashActivity extends AppCompatActivity {
         //Initialize sdk
         FacebookSdk.sdkInitialize(this.getApplicationContext());
         Firebase.setAndroidContext(this);
+        //System.out.println(FacebookSdk.getApplicationSignature(this));
 
         myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
         myFirebase.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
+
+                    String uid = authData.getUid();
+
+                    //facebook
+
+                    //caso no facebook
+
                     //authenticated = true;
                 }
             }
         });
+
+
 
         setContentView(R.layout.activity_splash);
 

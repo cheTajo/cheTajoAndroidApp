@@ -1,6 +1,8 @@
 package com.teamlz.cheTajo.object;
 
 import android.content.Context;
+import android.util.Log;
+
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -46,4 +48,5 @@ public class Utils {
             }
         });
     }
+
 }

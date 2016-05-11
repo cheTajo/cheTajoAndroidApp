@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -57,18 +58,15 @@ public class MainActivity extends AppCompatActivity {
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int position) {
-                if (userProfileFragment.isRemoving()||homeFragment.isRemoving()) return;
 
                 switch (position){
                     case 0:
                         getSupportFragmentManager().beginTransaction()
-                                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                                 .replace(R.id.activity_main_frame, homeFragment).commit();
                         break;
 
                     case 3:
                         getSupportFragmentManager().beginTransaction()
-                                .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                                 .replace(R.id.activity_main_frame, userProfileFragment).commit();
                         break;
                 }
@@ -122,5 +120,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         mBottomBar.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("Doctor Activity", " On back pressed");
+
+        if (mBottomBar.getCurrentTabPosition() != 0) {
+            mBottomBar.selectTabAtPosition(0, false);
+
+        } else super.onBackPressed();
     }
 }

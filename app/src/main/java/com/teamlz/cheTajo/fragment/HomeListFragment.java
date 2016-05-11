@@ -73,6 +73,7 @@ public class HomeListFragment extends Fragment {
 
             @Override
             public void onCancelled(FirebaseError firebaseError) {
+
             }
         });
 

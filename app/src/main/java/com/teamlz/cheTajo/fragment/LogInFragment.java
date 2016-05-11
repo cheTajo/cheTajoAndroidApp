@@ -18,8 +18,10 @@ import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
 import com.firebase.client.AuthData;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
 import com.teamlz.cheTajo.object.User;
@@ -192,13 +194,24 @@ public class LogInFragment extends Fragment {
     }
 
     private void facebookLogIn (AuthData authData) {
-        LinkedHashMap <String, String> token = (LinkedHashMap<String, String>) authData.getAuth().get("token");
-        String email = token.get("email");
-        User.myEmail = email;
+        LinkedHashMap <String, String> cachedUserProfile = (LinkedHashMap<String, String>) authData.getProviderData()
+                                                            .get("cachedUserProfile");
 
-        myFirebase = myFirebase.child("users");
-        //myFirebase.
-        Log.i ("LOGIN_DATA", "\n" + token.get("name") + "\n");
+        /*String email = cachedUserProfile.get ("email");
+        String firstName = cachedUserProfile.get ("first_name");
+        String lastName = cachedUserProfile.get ("last_name");
+
+        final User newUser = new User (email, firstName, lastName);
+
+        User.myEmail = email;
+        User.myFirstName = firstName;
+        User.myLastName = lastName;
+
+        myFirebase.child("users").push().setValue(new User(email, firstName, lastName));
+
+
+        //Log.i ("LOGIN_DATA", authData.getProviderData().get("cachedUserProfile").toString());
+*/
         authProgressDialog.hide();
         Intent i = new Intent(getActivity(), MainActivity.class);
         getActivity().finish();

@@ -5,10 +5,14 @@ package com.teamlz.cheTajo.object;
  */
 public class User {
     public static String myEmail;
+    public static String myFirstName;
+    public static String myLastName;
 
     private String firstName;
     private String lastName;
     private String email;
+
+    public User(){}
 
     public User(String email, String firstName, String lastName){
         this.email = email;
