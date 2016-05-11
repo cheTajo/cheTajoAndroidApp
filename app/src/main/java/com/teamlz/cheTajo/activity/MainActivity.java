@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -11,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.gms.maps.SupportMapFragment;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
@@ -26,6 +28,8 @@ import com.teamlz.cheTajo.fragment.UserProfileFragment;
 public class MainActivity extends AppCompatActivity {
     private Fragment homeFragment, userProfileFragment;
     private BottomBar mBottomBar;
+    private FragmentManager manager;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int position) {
+                if (userProfileFragment.isRemoving()||homeFragment.isRemoving()) return;
 
                 switch (position){
                     case 0:
@@ -66,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
                                 .setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
                                 .replace(R.id.activity_main_frame, userProfileFragment).commit();
                         break;
-
                 }
             }
 
