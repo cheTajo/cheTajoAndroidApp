@@ -15,7 +15,7 @@ public class User {
     public User(){}
 
     public User(String email, String firstName, String lastName){
-        this.email = email;
+        this.email = email.trim();
         this.firstName = "";
         this.lastName = "";
 
