@@ -4,25 +4,21 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
 import com.teamlz.cheTajo.R;
-import com.teamlz.cheTajo.object.User;
 
-import java.util.LinkedHashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
     private Firebase myFirebase;
-    private Firebase.AuthStateListener authStateListener;
     private boolean authenticated;
+    private String id;
 
     public static int SPLASH_TIMER = 2000;
     @Override
@@ -40,19 +36,11 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
-
-                    String uid = authData.getUid();
-
-                    //facebook
-
-                    //caso no facebook
-
+                    id = authData.getUid();
                     //authenticated = true;
                 }
             }
         });
-
-
 
         setContentView(R.layout.activity_splash);
 
@@ -72,7 +60,10 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 Intent i;
                 if (!authenticated) i = new Intent(SplashActivity.this, LogInOrSignUpActivity.class);
-                else i = new Intent(SplashActivity.this, MainActivity.class);
+                else {
+                    i = new Intent(SplashActivity.this, MainActivity.class);
+                    i.putExtra("id", id);
+                }
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 finish();

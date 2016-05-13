@@ -19,14 +19,14 @@ public class Utils {
         Firebase dresser = myFirebase.child("HairDressers");
 
         //add casual dressers
-        dresser.child("Francesco Starna").setValue(new HairDresser("Fs","Francesco", "Starna"));
-        dresser.child("Giulia Rinaldi").setValue(new HairDresser("GR","Giulia", "Rinaldi"));
-        dresser.child("Luciana Silo").setValue(new HairDresser("LS","Luciana", "Silo"));
-        dresser.child("Angelo Marvulli").setValue(new HairDresser("AM","Angelo", "Marvulli"));
-        dresser.child("Lorenzo Sciarra").setValue(new HairDresser("LS","Lorenzo", "Sciarra"));
-        dresser.child("Anna Del Corso").setValue(new HairDresser("ADC","Anna", "Del Corso"));
-        dresser.child("Mannaggia Starnino").setValue(new HairDresser("MS","Mannaggia", "Starnino"));
-        dresser.child("Daniele Nardi").setValue(new HairDresser("DN","Daniele", "Nardi"));
+        dresser.child("Francesco Starna").setValue(new HairDresser("francesco@coglione.it","Francesco", "Starna", "Fs"));
+        dresser.child("Giulia Rinaldi").setValue(new HairDresser("giulia@cogliona.it","Giulia", "Rinaldi", "GR"));
+        dresser.child("Luciana Silo").setValue(new HairDresser("luciana@cogliona.it","Luciana", "Silo", "LS"));
+        dresser.child("Angelo Marvulli").setValue(new HairDresser("angelo@coglione.it","Angelo", "Marvulli", "AM"));
+        dresser.child("Lorenzo Sciarra").setValue(new HairDresser("lorenzo@coglione.it","Lorenzo", "Sciarra", "LS"));
+        dresser.child("Anna Del Corso").setValue(new HairDresser("anna@cogliona.it","Anna", "Del Corso", "ADC"));
+        dresser.child("Mannaggia Starnino").setValue(new HairDresser("mannaggia@coglione.it","Mannaggia", "Starnino", "MS"));
+        dresser.child("Daniele Nardi").setValue(new HairDresser("daniele@coglione.it","Daniele", "Nardi", "DN"));
     }
 
     public static void retrieveHairDressers(Context context){

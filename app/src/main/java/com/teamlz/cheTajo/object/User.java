@@ -4,10 +4,6 @@ package com.teamlz.cheTajo.object;
  * Created by francesco on 05/05/16.
  */
 public class User {
-    public static String myEmail;
-    public static String myFirstName;
-    public static String myLastName;
-
     private String firstName;
     private String lastName;
     private String email;

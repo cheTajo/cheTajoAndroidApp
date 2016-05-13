@@ -4,16 +4,17 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.google.android.gms.maps.SupportMapFragment;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
@@ -21,23 +22,48 @@ import com.roughike.bottombar.OnTabClickListener;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.fragment.HomeFragment;
 import com.teamlz.cheTajo.fragment.UserProfileFragment;
+import com.teamlz.cheTajo.object.User;
 
 /*
  * Created by francesco on 02/05/16.
  */
 
 public class MainActivity extends AppCompatActivity {
+    public static User myUser;
+
     private Fragment homeFragment, userProfileFragment;
     private BottomBar mBottomBar;
-    private FragmentManager manager;
+
+    private Firebase myFirebase;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        homeFragment = HomeFragment.newInstance();
+        //get the user id from the intent
+        String id = getIntent().getStringExtra("id");
+
+        myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
+
+        Firebase userFirebase = myFirebase.child("users").child(id);
+        userFirebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                String firstName = snapshot.child("firstName").getValue().toString();
+                String lastName = snapshot.child("lastName").getValue().toString();
+                String email = snapshot.child("email").getValue().toString();
+
+                myUser = new User(email, firstName, lastName);
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
         userProfileFragment = UserProfileFragment.newInstance();
+
+        homeFragment = HomeFragment.newInstance();
 
         getSupportFragmentManager().beginTransaction().add(R.id.activity_main_frame, homeFragment).commit();
 
@@ -124,11 +150,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Log.d("Doctor Activity", " On back pressed");
-
-        if (mBottomBar.getCurrentTabPosition() != 0) {
-            mBottomBar.selectTabAtPosition(0, false);
-
-        } else super.onBackPressed();
+        if (mBottomBar.getCurrentTabPosition() != 0) mBottomBar.selectTabAtPosition(0, true);
+        else super.onBackPressed();
     }
 }

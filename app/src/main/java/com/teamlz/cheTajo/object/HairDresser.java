@@ -6,10 +6,9 @@ import java.util.List;
 /*
  * Created by francesco on 05/05/16.
  */
-public class HairDresser {
 
-    private String firstName;
-    private String lastName;
+public class HairDresser extends User{
+
     private String shopName;
     private List<String> followers;
     private List<String> likes;
@@ -18,10 +17,9 @@ public class HairDresser {
 
     public HairDresser(){}
 
-    public HairDresser(String shopName, String firstName, String lastName){
+    public HairDresser(String email, String firstName, String lastName, String shopName){
+        super (email, firstName, lastName);
         this.shopName = shopName;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.followers = new ArrayList<>();
         this.followers.add("email@example.com");
         this.likes = new ArrayList<>();
@@ -36,14 +34,6 @@ public class HairDresser {
 
     public int getNumLikes() {
         return numLikes;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public List<String> getFollowers() {

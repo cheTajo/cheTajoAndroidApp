@@ -30,8 +30,8 @@
                     app:iiv_icon="gmd-mail_outline"
                     app:iiv_color="@color/colorGrey"/>
 
-                <TextView
-                    android:id="@+id/email"
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/user_profile_card_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -40,10 +40,10 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorPrimaryDark" />
 
-                <TextView
+                <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/email"
+                    android:layout_below="@id/user_profile_card_email"
                     android:layout_marginStart="@dimen/activity_horizontal_margin"
                     android:layout_marginTop="8dp"
                     android:layout_toEndOf="@id/emailIcon"
@@ -66,7 +66,7 @@
                     app:iiv_icon="gmd-place"
                     app:iiv_color="@color/colorGrey"/>
 
-                <TextView
+                <android.support.v7.widget.AppCompatTextView
                     android:id="@+id/position"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     android:textColor="@color/colorPrimaryDark"/>
 
-                <TextView
+                <android.support.v7.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/position"

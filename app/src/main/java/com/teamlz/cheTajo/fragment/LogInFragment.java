@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +17,10 @@ import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.LoginButton;
 import com.firebase.client.AuthData;
-import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
-import com.teamlz.cheTajo.object.User;
 
 import java.util.LinkedHashMap;
 
@@ -76,12 +72,14 @@ public class LogInFragment extends Fragment {
         myFirebase.unauth();
         LoginManager.getInstance().logOut();
 
+        emailEditText.setText("lorenzo.sciarra1994@gmail.com");
+        passwordEditText.setText("Pentathlon.94");
+
         //Set up manual login button
         assert manualLogInButton != null;
         manualLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
@@ -93,7 +91,7 @@ public class LogInFragment extends Fragment {
                 }
 
                 else if (email.equals("") || password.equals("")) {
-                    Toast.makeText(getActivity(), "Inserisci e-mail e password", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "Tutti i campi sono obbligatori", Toast.LENGTH_LONG).show();
                     return;
                 }
 
@@ -144,7 +142,7 @@ public class LogInFragment extends Fragment {
         facebookLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                facebookButton.performClick();
+                //facebookButton.performClick();
             }
         });
 
@@ -174,13 +172,13 @@ public class LogInFragment extends Fragment {
         authProgressDialog.dismiss();
     }
 
-    private void manualLogIn (final String email, final String password) {
+    private void manualLogIn (String email, String password) {
         myFirebase.authWithPassword(email, password, new Firebase.AuthResultHandler() {
             @Override
             public void onAuthenticated(AuthData authData) {
-                User.myEmail = email;
                 authProgressDialog.hide();
                 Intent i = new Intent(getActivity(), MainActivity.class);
+                i.putExtra("id", authData.getUid());
                 getActivity().finish();
                 startActivity(i);
             }

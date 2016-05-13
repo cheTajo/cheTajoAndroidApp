@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.mikepenz.iconics.view.IconicsImageView;
 import com.teamlz.cheTajo.R;
+import com.teamlz.cheTajo.activity.MainActivity;
 import com.teamlz.cheTajo.object.HairDresser;
 import com.teamlz.cheTajo.object.User;
 
@@ -106,7 +107,7 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         holder.text_thumb.setText(String.valueOf(holder.num_thumbs));
 
         //retrieve my follows
-        if (dressers.get(position).getFollowers().contains(User.myEmail)) {
+        if (dressers.get(position).getFollowers().contains(MainActivity.myUser.getEmail())) {
             holder.follow = true;
             holder.icon_follow.setColor(redColor);
         }
@@ -117,7 +118,7 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         }
 
         //retrieve my likes
-        if (dressers.get(position).getLikes().contains(User.myEmail)) {
+        if (dressers.get(position).getLikes().contains(MainActivity.myUser.getEmail())) {
             holder.like = true;
             holder.icon_like.setColor(blueColor);
         }
