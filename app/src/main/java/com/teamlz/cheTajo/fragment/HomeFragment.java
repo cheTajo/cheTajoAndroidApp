@@ -18,8 +18,6 @@ import com.teamlz.cheTajo.R;
 public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener {
     public static FloatingActionButton fab_add, fab_location;
     private Fragment homeListFragment, mapsFragment;
-    private Toolbar toolbar;
-    private ViewPager viewPager;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -42,19 +40,17 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        toolbar = (Toolbar) view.findViewById(R.id.activity_main_toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.activity_main_toolbar);
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
 
         // Get the ViewPager and set it's PagerAdapter so that it can display items
-        viewPager = (ViewPager) view.findViewById(R.id.fragment_home_pager);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.fragment_home_pager);
 
         assert viewPager != null;
         viewPager.setAdapter(new FragmentPagerAdapter(getChildFragmentManager()) {
             @Override
             public Fragment getItem(int position) {
-
                 switch (position){
-
                     case 0:
                         return homeListFragment;
 
@@ -73,6 +69,7 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
                 switch (position) {
                     case 0:
                         return "Bacheca";
+
                     default:
                         return "Mappa";
                 }
@@ -104,51 +101,27 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        //Save the fragment's state here
-    }
-
-    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
     }
 
     @Override
     public void onPageSelected(int position) {
-        switchFab(position);
-    }
-
-    @Override
-    public void onPageScrollStateChanged(int state) {
-
-    }
-
-    public void switchFab(int position){
-
         switch (position){
-
             case 0:
                 fab_location.hide();
-                fab_location.setVisibility(View.INVISIBLE);
-                fab_add.setVisibility(View.VISIBLE);
                 fab_add.show();
                 break;
 
             case 1:
                 fab_add.hide();
-                fab_add.setVisibility(View.INVISIBLE);
-                fab_location.setVisibility(View.VISIBLE);
+                if (!fab_location.isVisible()) fab_location.setVisibility(View.VISIBLE);
                 fab_location.show();
                 break;
         }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

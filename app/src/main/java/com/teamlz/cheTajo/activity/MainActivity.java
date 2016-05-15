@@ -4,6 +4,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -34,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
     private Fragment homeFragment, userProfileFragment;
     private BottomBar mBottomBar;
 
-    private Firebase myFirebase;
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +43,16 @@ public class MainActivity extends AppCompatActivity {
         //get the user id from the intent
         String id = getIntent().getStringExtra("id");
 
-        myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
+        Firebase myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
+
+        userProfileFragment = UserProfileFragment.newInstance();
+        homeFragment = HomeFragment.newInstance();
+
+        FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
+        trans.add(R.id.activity_main_frame, homeFragment);
+        trans.add(R.id.activity_main_frame, userProfileFragment);
+        trans.hide(userProfileFragment);
+        trans.commit();
 
         Firebase userFirebase = myFirebase.child("users").child(id);
         userFirebase.addValueEventListener(new ValueEventListener() {
@@ -55,17 +63,14 @@ public class MainActivity extends AppCompatActivity {
                 String email = snapshot.child("email").getValue().toString();
 
                 myUser = new User(email, firstName, lastName);
+                UserProfileFragment.toolbar.setTitle(firstName + " " + lastName);
+                UserProfileFragment.emailTextView.setText(email);
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
-        userProfileFragment = UserProfileFragment.newInstance();
-
-        homeFragment = HomeFragment.newInstance();
-
-        getSupportFragmentManager().beginTransaction().add(R.id.activity_main_frame, homeFragment).commit();
 
         View coordinator = findViewById(R.id.activity_main_coordinator);
         assert (coordinator != null);
@@ -84,16 +89,18 @@ public class MainActivity extends AppCompatActivity {
         mBottomBar.setOnTabClickListener(new OnTabClickListener() {
             @Override
             public void onTabSelected(int position) {
-
+                FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
                 switch (position){
                     case 0:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.activity_main_frame, homeFragment).commit();
+                        trans.hide(userProfileFragment);
+                        trans.show(homeFragment);
+                        trans.commit();
                         break;
 
                     case 3:
-                        getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.activity_main_frame, userProfileFragment).commit();
+                        trans.hide(homeFragment);
+                        trans.show(userProfileFragment);
+                        trans.commit();
                         break;
                 }
             }

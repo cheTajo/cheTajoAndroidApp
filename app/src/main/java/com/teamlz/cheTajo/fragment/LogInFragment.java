@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,18 +23,19 @@ import com.firebase.client.FirebaseError;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
 
-import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class LogInFragment extends Fragment {
     private Fragment signUpFragment;
+
     private AppCompatEditText emailEditText;
     private AppCompatEditText passwordEditText;
     private ProgressDialog authProgressDialog;
 
+    LoginButton facebookButton;
     private Firebase myFirebase;
     private Firebase.AuthStateListener authStateListener;
 
-    private LoginButton facebookButton;
     private CallbackManager facebookCallbackManager;
     private AccessTokenTracker facebookAccessTokenTracker;
 
@@ -56,6 +58,9 @@ public class LogInFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_log_in, container, false);
 
+        // Initialize variables
+        signUpFragment = SignUpFragment.newInstance();
+
         emailEditText = (AppCompatEditText) view.findViewById(R.id.log_in_email);
         passwordEditText = (AppCompatEditText) view.findViewById(R.id.log_in_password);
         authProgressDialog = new ProgressDialog(getActivity());
@@ -72,9 +77,6 @@ public class LogInFragment extends Fragment {
         myFirebase.unauth();
         LoginManager.getInstance().logOut();
 
-        emailEditText.setText("lorenzo.sciarra1994@gmail.com");
-        passwordEditText.setText("Pentathlon.94");
-
         //Set up manual login button
         assert manualLogInButton != null;
         manualLogInButton.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +87,7 @@ public class LogInFragment extends Fragment {
 
                 if (email.equals("test")) {
                     Intent i = new Intent(getActivity(), MainActivity.class);
+                    i.putExtra("id", "79b451ed-fb1c-4282-8178-1d7582274a8f");
                     getActivity().finish();
                     startActivity(i);
                     return;
@@ -105,7 +108,6 @@ public class LogInFragment extends Fragment {
         goToSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signUpFragment = SignUpFragment.newInstance();
                 getFragmentManager().beginTransaction()
                         .replace(R.id.log_in_or_sign_up_frame, signUpFragment)
                         .addToBackStack(null).commit();
@@ -191,9 +193,52 @@ public class LogInFragment extends Fragment {
         });
     }
 
+    @SuppressWarnings("unchecked")
     private void facebookLogIn (AuthData authData) {
-        LinkedHashMap <String, String> cachedUserProfile = (LinkedHashMap<String, String>) authData.getProviderData()
-                                                            .get("cachedUserProfile");
+        //String userUid = null;
+
+        Map<String, Object> auth = authData.getAuth();
+        //String facebookUid = authData.getUid();
+        String email = (String) ((Map<String, Object>) auth.get("token")).get("email");
+
+        myFirebase.authWithPassword(email, "wrong", new Firebase.AuthResultHandler() {
+            @Override
+            public void onAuthenticated(AuthData authData) {
+            }
+
+            @Override
+            public void onAuthenticationError(FirebaseError firebaseError) {
+                Log.i("RESULT", firebaseError.getCode() + "");
+                if (firebaseError.getCode() == -17) {
+                    Toast.makeText(getActivity(), "Registrati con la mail di facebook", Toast.LENGTH_LONG).show();
+                }
+                /*else if (firebaseError.getCode() == -16) {
+
+                }*/
+            }
+        });
+
+        authProgressDialog.hide();
+
+        /*Firebase userFirebase = myFirebase.child("users");
+        userFirebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    if (snapshot.child("email").equals(email)) {
+
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });*/
+
+        //LinkedHashMap <String, String> cachedUserProfile = (LinkedHashMap<String, String>) authData.getProviderData()
+        //                                                    .get("cachedUserProfile");
 
         /*String email = cachedUserProfile.get ("email");
         String firstName = cachedUserProfile.get ("first_name");
@@ -210,9 +255,8 @@ public class LogInFragment extends Fragment {
 
         //Log.i ("LOGIN_DATA", authData.getProviderData().get("cachedUserProfile").toString());
 */
-        authProgressDialog.hide();
-        Intent i = new Intent(getActivity(), MainActivity.class);
-        getActivity().finish();
-        startActivity(i);
+        //Intent i = new Intent(getActivity(), MainActivity.class);
+        //getActivity().finish();
+        //startActivity(i);
     }
 }

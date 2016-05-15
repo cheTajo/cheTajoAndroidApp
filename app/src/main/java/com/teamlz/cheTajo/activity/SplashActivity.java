@@ -16,7 +16,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
-    private Firebase myFirebase;
     private boolean authenticated;
     private String id;
 
@@ -31,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         //System.out.println(FacebookSdk.getApplicationSignature(this));
 
-        myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
+        Firebase myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
         myFirebase.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
@@ -53,6 +52,7 @@ public class SplashActivity extends AppCompatActivity {
 
         Typeface roboto = Typeface.createFromAsset(this.getAssets(), "font/Roboto-Regular.ttf");
         TextView text = (TextView) findViewById(R.id.title_splash);
+        assert (text != null);
         text.setTypeface(roboto);
 
         TimerTask task = new TimerTask() {
@@ -64,8 +64,6 @@ public class SplashActivity extends AppCompatActivity {
                     i = new Intent(SplashActivity.this, MainActivity.class);
                     i.putExtra("id", id);
                 }
-                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 finish();
                 startActivity(i);
             }

@@ -1,8 +1,6 @@
 package com.teamlz.cheTajo.adapter;
 
-import android.support.design.widget.Snackbar;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +13,6 @@ import com.mikepenz.iconics.view.IconicsImageView;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
 import com.teamlz.cheTajo.object.HairDresser;
-import com.teamlz.cheTajo.object.User;
 
 import java.util.List;
 
@@ -65,23 +62,10 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
 
         @Override
         public void onClick(View v) {
-            Log.d("Item", " Click");
         }
 
         @Override
         public boolean onLongClick(View v) {
-            Log.d("Long", " Click");
-            Snackbar snackbar = null;
-
-            snackbar = Snackbar.make(v, "Sei un Coglione", Snackbar.LENGTH_INDEFINITE)
-                    .setAction("Si è vero", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
-                    })
-                    .setActionTextColor(v.getResources().getColor(R.color.colorRed));
-            snackbar.show();
             return true;
         }
     }
@@ -98,7 +82,8 @@ public class HairDresserAdapter extends RecyclerView.Adapter<HairDresserAdapter.
         int blueColor = holder.itemView.getResources().getColor(R.color.blue);
         int redColor = holder.itemView.getResources().getColor(R.color.colorRed);
 
-        holder.name.setText(dressers.get(position).getFirstName() + " " + dressers.get(position).getLastName());
+        String name = dressers.get(position).getFirstName() + " " + dressers.get(position).getLastName();
+        holder.name.setText(name);
 
         //retrieve num follows and likes
         holder.num_follows = dressers.get(position).getNumFollowers();
