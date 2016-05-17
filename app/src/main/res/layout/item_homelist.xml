@@ -12,17 +12,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
+        <android.support.v7.widget.AppCompatTextView
             android:layout_margin="@dimen/fab_margin"
-            android:id="@+id/dresser_name"
+            android:id="@+id/home_list_item_shop_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/home_list_item_name_surname"
+            android:text="@string/home_list_item_shop_name"
             android:textColor="@color/colorRedDark"
             android:textSize="20sp"
             android:layout_gravity="center"/>
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:contentDescription="@string/home_list_item_description"
             android:layout_width="match_parent"
             android:layout_height="80dp"
@@ -44,12 +44,13 @@
                 android:orientation="horizontal"
                 android:layout_weight="3">
 
-                <TextView
+                <android.support.v7.widget.AppCompatTextView
                     android:layout_centerVertical="true"
                     android:id="@+id/follow_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_list_item_follow"
+                    android:textColor="@color/colorGrey"
                     android:textStyle="bold"/>
 
                 <com.mikepenz.iconics.view.IconicsImageView
@@ -62,14 +63,15 @@
                     app:iiv_color="@color/colorGrey"
                     app:iiv_icon="gmd-favorite" />
 
-                <TextView
-                    android:id="@+id/num_follow"
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/home_list_item_num_follow"
                     android:layout_marginStart="3dp"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/icon_follow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="@string/zero"
+                    android:textColor="@color/colorGrey"
                     android:textStyle="bold"/>
 
             </RelativeLayout>
@@ -81,13 +83,14 @@
                 android:layout_height="35dp"
                 android:layout_weight="3">
 
-                <TextView
+                <android.support.v7.widget.AppCompatTextView
                     android:paddingStart="15dp"
                     android:layout_centerVertical="true"
                     android:id="@+id/like_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_list_item_like"
+                    android:textColor="@color/colorGrey"
                     android:textStyle="bold"/>
 
                 <com.mikepenz.iconics.view.IconicsImageView
@@ -100,14 +103,15 @@
                     app:iiv_color="@color/colorGrey"
                     app:iiv_icon="gmd-thumb_up" />
 
-                <TextView
-                    android:id="@+id/num_thumb"
+                <android.support.v7.widget.AppCompatTextView
+                    android:id="@+id/home_list_item_num_like"
                     android:layout_marginStart="3dp"
                     android:layout_centerVertical="true"
                     android:layout_toEndOf="@id/icon_like"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:textColor="@color/colorGrey"
+                    android:text="@string/zero"
                     android:textStyle="bold"/>
 
             </RelativeLayout>
@@ -119,13 +123,14 @@
                 android:layout_height="35dp"
                 android:layout_weight="3">
 
-                <TextView
+                <android.support.v7.widget.AppCompatTextView
                     android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
                     android:id="@+id/map_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/home_list_item_map"
+                    android:textColor="@color/colorGrey"
                     android:textStyle="bold"
                     android:gravity="end"/>
 

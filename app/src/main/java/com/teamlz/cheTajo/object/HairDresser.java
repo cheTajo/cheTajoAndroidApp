@@ -7,8 +7,8 @@ import java.util.List;
  * Created by francesco on 05/05/16.
  */
 
-public class HairDresser extends User{
-
+public class HairDresser {
+    private String id;
     private String shopName;
     private List<String> followers;
     private List<String> likes;
@@ -17,15 +17,21 @@ public class HairDresser extends User{
 
     public HairDresser(){}
 
-    public HairDresser(String email, String firstName, String lastName, String shopName){
-        super (email, firstName, lastName);
+    public HairDresser(String id, String shopName){
+        this.id = id;
         this.shopName = shopName;
         this.followers = new ArrayList<>();
-        this.followers.add("email@example.com");
         this.likes = new ArrayList<>();
-        this.likes.add("email@example.com");
         this.numFollowers = 0;
         this.numLikes = 0;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getShopName() {
+        return shopName;
     }
 
     public int getNumFollowers() {
@@ -44,39 +50,39 @@ public class HairDresser extends User{
         return likes;
     }
 
-    private void incNumFollowers() {
+    public void addFollower(String id) {
+        this.followers.add(id);
         this.numFollowers += 1;
     }
 
-    private void decNumFollowers() {
+    public void removeFollower(String id) {
+        this.followers.remove(id);
         this.numFollowers -= 1;
     }
 
-    private void incNumLikes() {
+    public void addLike(String id) {
+        this.likes.add(id);
         this.numLikes += 1;
     }
 
-    private void decNumLikes() {
+    public void removeLike(String id) {
+        this.likes.remove(id);
         this.numLikes -= 1;
     }
 
-    public void addFollower(String email) {
-        this.followers.add(email);
-        this.incNumFollowers();
+    @Override
+    public String toString() {
+        String ret = shopName;
+        //ret += ": LIKES=" + likes.toString() + " FOLLOWERS=" + followers.toString();
+        //ret += " NUMLIKES=" + numLikes + " NUMFOLLOWERS=" + numFollowers;
+        return ret;
     }
 
-    public void removeFollower(String email) {
-        this.followers.remove(email);
-        this.decNumFollowers();
-    }
-
-    public void addLike(String email) {
-        this.likes.add(email);
-        this.incNumLikes();
-    }
-
-    public void removeLike(String email) {
-        this.likes.remove(email);
-        this.decNumLikes();
+    @Override
+    public boolean equals(Object o) {
+        if (!o.getClass().equals(getClass())) return false;
+        HairDresser hd = (HairDresser) o;
+        if (id.equals(hd.id)) return true;
+        return false;
     }
 }

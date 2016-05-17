@@ -31,6 +31,7 @@ import com.teamlz.cheTajo.object.User;
 
 public class MainActivity extends AppCompatActivity {
     public static User myUser;
+    public static String id;
 
     private Fragment homeFragment, userProfileFragment;
     private BottomBar mBottomBar;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //get the user id from the intent
-        String id = getIntent().getStringExtra("id");
+        id = getIntent().getStringExtra("id");
 
         Firebase myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
 

@@ -7,8 +7,9 @@
     <string name="home_list_item_follow">FOLLOW</string>
     <string name="home_list_item_like">LIKE</string>
     <string name="home_list_item_map">MAP</string>
+    <string name="zero">0</string>
     <string name="home_list_item_description">profile picture</string>
-    <string name="home_list_item_name_surname">Nome Cognome</string>
+    <string name="home_list_item_shop_name">Nome Negozio</string>
 
     <!-- Strings related to user profile scrolling content -->
     <string name="user_profile_email">todo@todo.todo</string>

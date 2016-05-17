@@ -11,6 +11,7 @@ import com.facebook.FacebookSdk;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.teamlz.cheTajo.R;
+import com.teamlz.cheTajo.object.Utils;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -30,6 +31,8 @@ public class SplashActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         //System.out.println(FacebookSdk.getApplicationSignature(this));
 
+        setContentView(R.layout.activity_splash);
+
         Firebase myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
         myFirebase.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
@@ -41,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        setContentView(R.layout.activity_splash);
+        //Utils.addHairDresser(this);
 
         //add immersive mode
         getWindow().getDecorView().setSystemUiVisibility(
