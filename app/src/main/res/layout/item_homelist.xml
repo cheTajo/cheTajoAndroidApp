@@ -32,12 +32,14 @@
             android:baselineAligned="false"
             android:layout_marginTop="@dimen/fab_margin"
             android:layout_marginStart="@dimen/fab_margin"
+            android:layout_marginEnd="@dimen/fab_margin"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal">
 
             <RelativeLayout
                 android:clickable="true"
+                android:gravity="start"
                 android:id="@+id/relative_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
@@ -79,12 +81,12 @@
             <RelativeLayout
                 android:id="@+id/relative_like"
                 android:clickable="true"
+                android:gravity="center_horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_weight="3">
 
                 <android.support.v7.widget.AppCompatTextView
-                    android:paddingStart="15dp"
                     android:layout_centerVertical="true"
                     android:id="@+id/like_text"
                     android:layout_width="wrap_content"
@@ -119,13 +121,13 @@
             <RelativeLayout
                 android:id="@+id/relative_map"
                 android:clickable="true"
+                android:gravity="end"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_weight="3">
 
                 <android.support.v7.widget.AppCompatTextView
                     android:layout_centerVertical="true"
-                    android:layout_centerHorizontal="true"
                     android:id="@+id/map_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

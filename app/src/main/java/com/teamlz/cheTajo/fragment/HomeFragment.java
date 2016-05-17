@@ -84,6 +84,10 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         viewPager.addOnPageChangeListener(this);
 
         fab_add = (FloatingActionButton) view.findViewById(R.id.fab_add);
+        fab_add.setImageDrawable(new IconicsDrawable(this.getActivity(), "gmd-add")
+                .sizeDp(18)
+                .color(getResources().getColor(R.color.white)));
+
         fab_location = (FloatingActionButton) view.findViewById(R.id.fab_location);
         fab_location.setImageDrawable(new IconicsDrawable(this.getActivity(), "gmd-gps_fixed")
                 .sizeDp(24)

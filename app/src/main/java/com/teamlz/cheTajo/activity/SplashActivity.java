@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
 import com.facebook.FacebookSdk;
 import com.firebase.client.AuthData;
@@ -13,6 +14,7 @@ import com.firebase.client.Firebase;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.object.Utils;
 
+import java.util.LinkedHashMap;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,8 +22,11 @@ public class SplashActivity extends AppCompatActivity {
     private boolean authenticated;
     private String id;
 
+    private Firebase myFirebase;
+
     public static int SPLASH_TIMER = 2000;
-    @Override
+
+    @SuppressWarnings("unchecked") @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         authenticated = false;
@@ -33,13 +38,26 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        Firebase myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
+        myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
         myFirebase.addAuthStateListener(new Firebase.AuthStateListener() {
             @Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
+                    LinkedHashMap<String, String> profile = (LinkedHashMap<String, String>) authData
+                            .getProviderData()
+                            .get("cachedUserProfile");
+                    Log.i("AUTHDATA", authData.toString());
+
                     id = authData.getUid();
-                    //authenticated = true;
+                    String email = profile.get("email");
+                    String firstName = profile.get("first_name");
+                    String lastName = profile.get("last_name");
+
+                    Firebase userFirebase = myFirebase.child("users").child(id);
+                    userFirebase.child("email").setValue(email);
+                    userFirebase.child("firstName").setValue(firstName);
+                    userFirebase.child("lastName").setValue(lastName);
+                    authenticated = true;
                 }
             }
         });
@@ -54,7 +72,7 @@ public class SplashActivity extends AppCompatActivity {
         //finish immersive mode
 
         Typeface roboto = Typeface.createFromAsset(this.getAssets(), "font/Roboto-Regular.ttf");
-        TextView text = (TextView) findViewById(R.id.title_splash);
+        AppCompatTextView text = (AppCompatTextView) findViewById(R.id.title_splash);
         assert (text != null);
         text.setTypeface(roboto);
 

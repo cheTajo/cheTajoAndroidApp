@@ -1,11 +1,11 @@
 package com.teamlz.cheTajo.fragment;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +21,7 @@ import com.mikepenz.iconics.view.IconicsImageView;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
 import com.teamlz.cheTajo.object.HairDresser;
+import com.teamlz.cheTajo.object.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,9 +34,11 @@ import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 public class HomeListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<HairDresser> hairDresserList;
-    private String myId = MainActivity.id;
+    private String myId;
+    private User myUser;
 
     private Firebase hairDresserFirebase;
+    private Firebase userFirebase;
 
     public HomeListFragment(){}
 
@@ -56,18 +59,54 @@ public class HomeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_homelist, container, false);
 
+        myId = MainActivity.id;
+        Firebase myFirebase = new Firebase(getString(R.string.firebase_url));
+
+        hairDresserFirebase = myFirebase.child("hairDressers");
+        hairDresserFirebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    HairDresser hd = snapshot.getValue(HairDresser.class);
+                    if (hairDresserList.contains(hd)) hairDresserList.remove(hd);
+                    if (hd.getFollowers() == null) hd.initFollowers();
+                    if (hd.getLikes() == null) hd.initLikes();
+                    hairDresserList.add(hd);
+                }
+                mRecyclerView.getAdapter().notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
+
+        userFirebase = myFirebase.child("users").child(myId);
+        userFirebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                myUser = snapshot.getValue(User.class);
+                if (myUser.getFollowed() == null) myUser.initFollowed();
+                if (myUser.getLiked() == null) myUser.initLiked();
+            }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(new SlideInLeftAnimationAdapter(new RecyclerView.Adapter() {
-
-
             private int grey = getResources().getColor(R.color.colorGrey);
-            private int blue = getResources().getColor(R.color.blue);
+            private int blue = getResources().getColor(R.color.colorPrimaryDark);
             private int red = getResources().getColor(R.color.colorRed);
 
             private Animation resizeSmall = AnimationUtils.loadAnimation(getContext(), R.anim.resize_small);
             private Animation resizeBig = AnimationUtils.loadAnimation(getContext(), R.anim.resize_big);
+
+            private Typeface roboto = Typeface.createFromAsset(getContext().getAssets(), "font/Roboto-Regular.ttf");
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -79,21 +118,20 @@ public class HomeListFragment extends Fragment {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 
-                final Firebase myHdFirebase;
                 final IconicsImageView followIcon;
                 final IconicsImageView likeIcon;
 
                 final AppCompatTextView numLikeText;
                 final AppCompatTextView numFollowText;
 
-                Log.i("LISTA", hairDresserList.toString());
                 final HairDresser myHd = hairDresserList.get(position);
-                myHdFirebase = hairDresserFirebase.child(myHd.getId());
+                final Firebase myHdFirebase = hairDresserFirebase.child(myHd.getId());
 
-                // Initialize hairdresser name
+                // Initialize shop name
                 AppCompatTextView nameText = (AppCompatTextView) holder.itemView
                         .findViewById(R.id.home_list_item_shop_name);
                 nameText.setText(myHd.getShopName());
+                nameText.setTypeface(roboto);
 
                 // Initialize hairdresser followers number
                 numFollowText = (AppCompatTextView) holder.itemView
@@ -129,15 +167,18 @@ public class HomeListFragment extends Fragment {
                         followIcon.startAnimation(resizeBig);
 
                         if (followIcon.getIcon().getColor() == grey) {
-                            myHd.addFollower(myId);
                             followIcon.setColor(red);
+                            myUser.addFollowed(myHd.getId());
+                            myHd.addFollower(myId);
                         }
 
                         else {
-                            myHd.removeFollower(myId);
                             followIcon.setColor(grey);
+                            myUser.removeFollowed(myHd.getId());
+                            myHd.removeFollower(myId);
                         }
 
+                        userFirebase.child("followed").setValue(myUser.getFollowed());
                         myHdFirebase.child("followers").setValue(myHd.getFollowers());
                         myHdFirebase.child("numFollowers").setValue(myHd.getNumFollowers());
                         numFollowText.setText(String.valueOf(myHd.getNumFollowers()));
@@ -154,15 +195,18 @@ public class HomeListFragment extends Fragment {
                         likeIcon.startAnimation(resizeBig);
 
                         if (likeIcon.getIcon().getColor() == grey) {
-                            myHd.addLike(myId);
                             likeIcon.setColor(blue);
+                            myUser.addLiked(myHd.getId());
+                            myHd.addLike(myId);
                         }
 
                         else {
-                            myHd.removeLike(myId);
                             likeIcon.setColor(grey);
+                            myUser.removeLiked(myHd.getId());
+                            myHd.removeLike(myId);
                         }
 
+                        userFirebase.child("liked").setValue(myUser.getLiked());
                         myHdFirebase.child("likes").setValue(myHd.getLikes());
                         myHdFirebase.child("numLikes").setValue(myHd.getNumLikes());
                         numLikeText.setText(String.valueOf(myHd.getNumLikes()));
@@ -184,27 +228,6 @@ public class HomeListFragment extends Fragment {
                 return hairDresserList.size();
             }
         }));
-
-        //mRecyclerView.getAdapter().setHasStableIds(true);
-
-        Firebase myFirebase = new Firebase(getString(R.string.firebase_url));
-        hairDresserFirebase = myFirebase.child("hairDressers");
-
-        hairDresserFirebase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    HairDresser hd = snapshot.getValue(HairDresser.class);
-                    if (hairDresserList.contains(hd)) return;
-                    hairDresserList.add(hd);
-                }
-                mRecyclerView.getAdapter().notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-            }
-        });
 
         HomeFragment.fab_add.attachToRecyclerView(mRecyclerView);
         return view;

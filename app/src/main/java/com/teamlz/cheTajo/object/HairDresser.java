@@ -42,6 +42,14 @@ public class HairDresser {
         return numLikes;
     }
 
+    public void initFollowers() {
+        followers = new ArrayList<>();
+    }
+
+    public void initLikes() {
+        likes = new ArrayList<>();
+    }
+
     public List<String> getFollowers() {
         return followers;
     }

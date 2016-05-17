@@ -4,9 +4,9 @@
     <string name="email">e-mail</string>
 
     <!-- Strings related to home list items -->
-    <string name="home_list_item_follow">FOLLOW</string>
-    <string name="home_list_item_like">LIKE</string>
-    <string name="home_list_item_map">MAP</string>
+    <string name="home_list_item_follow">Follow</string>
+    <string name="home_list_item_like">Like</string>
+    <string name="home_list_item_map">Map</string>
     <string name="zero">0</string>
     <string name="home_list_item_description">profile picture</string>
     <string name="home_list_item_shop_name">Nome Negozio</string>
@@ -15,7 +15,6 @@
     <string name="user_profile_email">todo@todo.todo</string>
     <string name="user_profile_address_example">via Colvento, 0</string>
     <string name="user_profile_address">indirizzo</string>
-
 
     <!-- Strings related to login -->
     <string name="facebook_app_id">1662438997370784</string>

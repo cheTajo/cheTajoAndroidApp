@@ -1,12 +1,19 @@
 package com.teamlz.cheTajo.object;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 /*
  * Created by francesco on 05/05/16.
  */
-public class User {
+public class User implements Serializable{
     private String firstName;
     private String lastName;
     private String email;
+
+    private List<String> followed;
+    private List<String> liked;
 
     public User(){}
 
@@ -14,18 +21,20 @@ public class User {
         this.email = email.trim();
         this.firstName = "";
         this.lastName = "";
+        followed = new ArrayList<>();
+        liked = new ArrayList<>();
 
         String[] parts = firstName.split(" ");
-        for (int i = 0; i < parts.length; i++) {
-            this.firstName += parts[i].substring(0, 1).toUpperCase();
-            this.firstName += parts[i].substring(1).toLowerCase() + " ";
+        for (String part : parts) {
+            this.firstName += part.substring(0, 1).toUpperCase();
+            this.firstName += part.substring(1).toLowerCase() + " ";
         }
         this.firstName = this.firstName.trim();
 
         parts = lastName.split(" ");
-        for (int i = 0; i < parts.length; i++) {
-            this.lastName += parts[i].substring(0, 1).toUpperCase();
-            this.lastName += parts[i].substring(1).toLowerCase() + " ";
+        for (String part : parts) {
+            this.lastName += part.substring(0, 1).toUpperCase();
+            this.lastName += part.substring(1).toLowerCase() + " ";
         }
         this.lastName = this.lastName.trim();
     }
@@ -40,6 +49,38 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public void initFollowed() {
+        followed = new ArrayList<>();
+    }
+
+    public void initLiked() {
+        liked = new ArrayList<>();
+    }
+
+    public List<String> getFollowed() {
+        return followed;
+    }
+
+    public List<String> getLiked() {
+        return liked;
+    }
+
+    public void addFollowed (String id) {
+        followed.add(id);
+    }
+
+    public void removeFollowed (String id) {
+        followed.remove(id);
+    }
+
+    public void addLiked (String id) {
+        liked.add(id);
+    }
+
+    public void removeLiked (String id) {
+        liked.remove(id);
     }
 
     public void setEmail(String email) {
