@@ -44,7 +44,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        //Utils.addHairDresser(this);
+        Utils.addHairDresser(this);
 
         //add immersive mode
         getWindow().getDecorView().setSystemUiVisibility(

@@ -63,7 +63,7 @@ public class HomeListFragment extends Fragment {
 
 
             private int grey = getResources().getColor(R.color.colorGrey);
-            //private int blue = getResources().getColor(R.color.blue);
+            private int blue = getResources().getColor(R.color.blue);
             private int red = getResources().getColor(R.color.colorRed);
 
             private Animation resizeSmall = AnimationUtils.loadAnimation(getContext(), R.anim.resize_small);
@@ -108,6 +108,7 @@ public class HomeListFragment extends Fragment {
                 // Initialize hairdresser follow icon
                 followIcon = (IconicsImageView) holder.itemView
                         .findViewById(R.id.icon_follow);
+                followIcon.setColor(grey);
                 if (myHd.getFollowers() != null && myHd.getFollowers().contains(myId)) {
                     followIcon.setColor(red);
                 }
@@ -115,8 +116,9 @@ public class HomeListFragment extends Fragment {
                 // Initialize hairdresser like icon
                 likeIcon = (IconicsImageView) holder.itemView
                         .findViewById(R.id.icon_like);
+                likeIcon.setColor(grey);
                 if (myHd.getLikes() != null && myHd.getLikes().contains(myId)) {
-                    likeIcon.setColor(red);
+                    likeIcon.setColor(blue);
                 }
 
                 RelativeLayout followLayout = (RelativeLayout) holder.itemView
@@ -153,7 +155,7 @@ public class HomeListFragment extends Fragment {
 
                         if (likeIcon.getIcon().getColor() == grey) {
                             myHd.addLike(myId);
-                            likeIcon.setColor(red);
+                            likeIcon.setColor(blue);
                         }
 
                         else {
