@@ -60,22 +60,14 @@ public class HomeListFragment extends Fragment {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(new SlideInLeftAnimationAdapter(new RecyclerView.Adapter() {
+
+
             private int grey = getResources().getColor(R.color.colorGrey);
             //private int blue = getResources().getColor(R.color.blue);
             private int red = getResources().getColor(R.color.colorRed);
 
             private Animation resizeSmall = AnimationUtils.loadAnimation(getContext(), R.anim.resize_small);
             private Animation resizeBig = AnimationUtils.loadAnimation(getContext(), R.anim.resize_big);
-
-            private HairDresser myHd;
-
-            private Firebase myHdFirebase;
-
-            private IconicsImageView followIcon;
-            private IconicsImageView likeIcon;
-
-            private AppCompatTextView numFollowText;
-            private AppCompatTextView numLikeText;
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -86,8 +78,16 @@ public class HomeListFragment extends Fragment {
 
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+                final Firebase myHdFirebase;
+                final IconicsImageView followIcon;
+                final IconicsImageView likeIcon;
+
+                final AppCompatTextView numLikeText;
+                final AppCompatTextView numFollowText;
+
                 Log.i("LISTA", hairDresserList.toString());
-                myHd = hairDresserList.get(position);
+                final HairDresser myHd = hairDresserList.get(position);
                 myHdFirebase = hairDresserFirebase.child(myHd.getId());
 
                 // Initialize hairdresser name
