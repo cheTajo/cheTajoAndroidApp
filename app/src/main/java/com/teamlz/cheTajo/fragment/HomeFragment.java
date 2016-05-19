@@ -17,7 +17,7 @@ import com.teamlz.cheTajo.R;
 
 @SuppressWarnings("deprecation")
 public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener {
-    public static FloatingActionButton fab_add, fab_location;
+    public static FloatingActionButton fab_location;
     private Fragment homeListFragment, mapsFragment;
 
     public HomeFragment() {
@@ -84,25 +84,12 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
 
         viewPager.addOnPageChangeListener(this);
 
-        fab_add = (FloatingActionButton) view.findViewById(R.id.fab_add);
-        fab_add.setImageDrawable(new IconicsDrawable(this.getActivity(), "gmd-add")
-                .sizeDp(18)
-                .color(getResources().getColor(R.color.white)));
-
         fab_location = (FloatingActionButton) view.findViewById(R.id.fab_location);
         fab_location.setImageDrawable(new IconicsDrawable(this.getActivity(), "gmd-gps_fixed")
                 .sizeDp(24)
                 .color(getResources().getColor(R.color.white)));
         fab_location.hide();
-
-        fab_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         return view;
-
     }
 
     @Override
@@ -114,11 +101,9 @@ public class HomeFragment extends Fragment implements ViewPager.OnPageChangeList
         switch (position){
             case 0:
                 fab_location.hide();
-                fab_add.show();
                 break;
 
             case 1:
-                fab_add.hide();
                 if (!fab_location.isVisible()) fab_location.setVisibility(View.VISIBLE);
                 fab_location.show();
                 break;

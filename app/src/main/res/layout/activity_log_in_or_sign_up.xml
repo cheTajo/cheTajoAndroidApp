@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
+        <android.support.v7.widget.AppCompatImageView
             android:id="@+id/log_in_icon"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -25,13 +25,17 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
 
-        <FrameLayout
-            android:id="@+id/log_in_or_sign_up_frame"
-            android:layout_below="@+id/log_in_icon"
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_marginTop="20dp"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/log_in_icon"
+            android:layout_marginTop="20dp">
 
-        </FrameLayout>
+            <android.support.v7.widget.ContentFrameLayout
+                android:id="@+id/log_in_or_sign_up_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </android.support.v7.widget.ContentFrameLayout>
+        </android.support.v4.widget.NestedScrollView>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

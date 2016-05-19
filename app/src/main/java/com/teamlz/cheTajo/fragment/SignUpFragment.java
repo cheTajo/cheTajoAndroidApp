@@ -100,7 +100,7 @@ public class SignUpFragment extends Fragment {
                                 authProgressDialog.hide();
                                 signUpFragment = SignUpFragment.newInstance();
                                 getFragmentManager().beginTransaction()
-                                        .replace(R.id.log_in_or_sign_up_frame, signUpFragment)
+                                        .replace(R.id.log_in_or_sign_up_view, signUpFragment)
                                         .commit();
                             }
                         });

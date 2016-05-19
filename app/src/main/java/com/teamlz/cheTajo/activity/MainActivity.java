@@ -2,6 +2,7 @@ package com.teamlz.cheTajo.activity;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -11,6 +12,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.facebook.login.LoginManager;
+import com.firebase.client.Firebase;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
@@ -25,9 +28,11 @@ import com.teamlz.cheTajo.fragment.UserProfileFragment;
 @SuppressWarnings("deprecation")
 public class MainActivity extends AppCompatActivity {
     public static String id;
+    private BottomBar mBottomBar;
+
+    private Firebase myFirbase;
 
     private Fragment homeFragment, userProfileFragment;
-    private BottomBar mBottomBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
 
         userProfileFragment = UserProfileFragment.newInstance();
         homeFragment = HomeFragment.newInstance();
+
+        myFirbase = new Firebase(getResources().getString(R.string.firebase_url));
 
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         trans.add(R.id.activity_main_frame, homeFragment);
@@ -56,8 +63,8 @@ public class MainActivity extends AppCompatActivity {
 
         mBottomBar.setItems(
                 new BottomBarTab(new IconicsDrawable(this, "gmd-home").sizeDp(24), "Home"),
-                new BottomBarTab(new IconicsDrawable(this, "gmd-history").sizeDp(24), "Recenti"),
                 new BottomBarTab(new IconicsDrawable(this, "gmd-favorite").sizeDp(24), "Preferiti"),
+                new BottomBarTab(new IconicsDrawable(this, "gmd-history").sizeDp(24), "Recenti"),
                 new BottomBarTab(new IconicsDrawable(this, "gmd-person").sizeDp(24), "Profilo")
         );
 
@@ -113,7 +120,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
 
-            case R.id.action_settings:
+            case R.id.action_log_out:
+                myFirbase.unauth();
+                LoginManager.getInstance().logOut();
+                Intent i = new Intent(this, LogInOrSignUpActivity.class);
+                finish();
+                startActivity(i);
                 break;
 
             case R.id.action_search:

@@ -16,6 +16,6 @@ public class LogInOrSignUpActivity extends AppCompatActivity {
         //Initialize variables
         LogInFragment logInFragment = LogInFragment.newInstance();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.log_in_or_sign_up_frame, logInFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.log_in_or_sign_up_view, logInFragment).commit();
     }
 }

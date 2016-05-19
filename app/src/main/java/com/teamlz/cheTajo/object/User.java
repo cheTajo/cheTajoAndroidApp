@@ -14,7 +14,6 @@ public class User implements Serializable{
     private String email;
 
     private List<String> followed;
-    private List<String> liked;
 
     public User(){}
 
@@ -23,7 +22,6 @@ public class User implements Serializable{
         this.firstName = "";
         this.lastName = "";
         followed = new ArrayList<>();
-        liked = new ArrayList<>();
 
         String[] parts = firstName.split(" ");
         for (String part : parts) {
@@ -56,16 +54,8 @@ public class User implements Serializable{
         followed = new ArrayList<>();
     }
 
-    public void initLiked() {
-        liked = new ArrayList<>();
-    }
-
     public List<String> getFollowed() {
         return followed;
-    }
-
-    public List<String> getLiked() {
-        return liked;
     }
 
     public void addFollowed (String id) {
@@ -74,14 +64,6 @@ public class User implements Serializable{
 
     public void removeFollowed (String id) {
         followed.remove(id);
-    }
-
-    public void addLiked (String id) {
-        liked.add(id);
-    }
-
-    public void removeLiked (String id) {
-        liked.remove(id);
     }
 
     public void setEmail(String email) {

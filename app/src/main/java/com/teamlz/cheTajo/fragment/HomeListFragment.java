@@ -9,9 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.ImageView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -71,7 +68,6 @@ public class HomeListFragment extends Fragment {
                     HairDresser hd = snapshot.getValue(HairDresser.class);
                     if (hairDresserList.contains(hd)) hairDresserList.remove(hd);
                     if (hd.getFollowers() == null) hd.initFollowers();
-                    if (hd.getLikes() == null) hd.initLikes();
                     hairDresserList.add(hd);
                 }
                 mRecyclerView.getAdapter().notifyDataSetChanged();
@@ -88,7 +84,6 @@ public class HomeListFragment extends Fragment {
             public void onDataChange(DataSnapshot snapshot) {
                 myUser = snapshot.getValue(User.class);
                 if (myUser.getFollowed() == null) myUser.initFollowed();
-                if (myUser.getLiked() == null) myUser.initLiked();
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) {
@@ -101,13 +96,9 @@ public class HomeListFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         mRecyclerView.setAdapter(new SlideInLeftAnimationAdapter(new RecyclerView.Adapter() {
             private int grey = getResources().getColor(R.color.colorGrey);
-            private int blue = getResources().getColor(R.color.colorPrimaryDark);
             private int red = getResources().getColor(R.color.colorRed);
 
             private Typeface roboto = Typeface.createFromAsset(getContext().getAssets(), "font/Roboto-Regular.ttf");
-
-            private Animation resizeSmall = AnimationUtils.loadAnimation(getContext(), R.anim.resize_small);
-            private Animation resizeBig = AnimationUtils.loadAnimation(getContext(), R.anim.resize_big);
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -132,11 +123,6 @@ public class HomeListFragment extends Fragment {
                         .findViewById(R.id.home_list_item_num_follow);
                 numFollowText.setText(String.valueOf(myHd.getFollowers().size()));
 
-                // Initialize hairdresser like number
-                final AppCompatTextView numLikeText = (AppCompatTextView) holder.itemView
-                        .findViewById(R.id.home_list_item_num_like);
-                numLikeText.setText(String.valueOf(myHd.getLikes().size()));
-
                 // Initialize hairdresser follow icon
                 final IconicsImageView followIcon = (IconicsImageView) holder.itemView
                         .findViewById(R.id.icon_follow);
@@ -144,16 +130,20 @@ public class HomeListFragment extends Fragment {
                 if (myHd.getFollowers() != null && myHd.getFollowers().contains(myId)) {
                     followIcon.setColor(red);
                 }
-                followIcon.setOnClickListener(new View.OnClickListener() {
+
+                final AppCompatTextView textFollow = (AppCompatTextView) holder.itemView
+                        .findViewById(R.id.follow_text);
+                textFollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        followIcon.setClickable(false);
-                        followIcon.startAnimation(resizeBig);
+                        textFollow.setClickable(false);
 
                         if (followIcon.getIcon().getColor() == grey) {
                             followIcon.setColor(red);
-                            myUser.addFollowed(myHd.getId());
-                            myHd.addFollower(myId);
+                            if (!myUser.getFollowed().contains(myHd.getId()))
+                                myUser.addFollowed(myHd.getId());
+                            if (!myHd.getFollowers().contains(myId))
+                                myHd.addFollower(myId);
                         }
 
                         else {
@@ -165,41 +155,7 @@ public class HomeListFragment extends Fragment {
                         userFirebase.child("followed").setValue(myUser.getFollowed());
                         myHdFirebase.child("followers").setValue(myHd.getFollowers());
                         numFollowText.setText(String.valueOf(myHd.getFollowers().size()));
-                        followIcon.startAnimation(resizeSmall);
-                        followIcon.setClickable(true);
-                    }
-                });
-
-                // Initialize hairdresser like icon
-                final IconicsImageView likeIcon = (IconicsImageView) holder.itemView
-                        .findViewById(R.id.icon_like);
-                likeIcon.setColor(grey);
-                if (myHd.getLikes() != null && myHd.getLikes().contains(myId)) {
-                    likeIcon.setColor(blue);
-                }
-                likeIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        likeIcon.setClickable(false);
-                        likeIcon.startAnimation(resizeBig);
-
-                        if (likeIcon.getIcon().getColor() == grey) {
-                            likeIcon.setColor(red);
-                            myUser.addLiked(myHd.getId());
-                            myHd.addLike(myId);
-                        }
-
-                        else {
-                            likeIcon.setColor(grey);
-                            myUser.removeLiked(myHd.getId());
-                            myHd.removeLike(myId);
-                        }
-
-                        userFirebase.child("liked").setValue(myUser.getLiked());
-                        myHdFirebase.child("likes").setValue(myHd.getLikes());
-                        numLikeText.setText(String.valueOf(myHd.getLikes().size()));
-                        likeIcon.startAnimation(resizeSmall);
-                        likeIcon.setClickable(true);
+                        textFollow.setClickable(true);
                     }
                 });
             }
@@ -209,8 +165,6 @@ public class HomeListFragment extends Fragment {
                 return hairDresserList.size();
             }
         }));
-
-        HomeFragment.fab_add.attachToRecyclerView(mRecyclerView);
         return view;
     }
 }

@@ -40,16 +40,6 @@
         android:layout_height="match_parent" />
 
     <com.melnykov.fab.FloatingActionButton
-        android:id="@+id/fab_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        app:fab_colorNormal="@color/colorRed"
-        app:fab_colorPressed="@color/colorRedDark"
-        app:fab_colorRipple="@color/colorRedExtraDark"/>
-
-    <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

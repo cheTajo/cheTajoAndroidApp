@@ -109,7 +109,7 @@ public class LogInFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 getFragmentManager().beginTransaction()
-                        .replace(R.id.log_in_or_sign_up_frame, signUpFragment)
+                        .replace(R.id.log_in_or_sign_up_view, signUpFragment)
                         .addToBackStack(null).commit();
             }
         });
