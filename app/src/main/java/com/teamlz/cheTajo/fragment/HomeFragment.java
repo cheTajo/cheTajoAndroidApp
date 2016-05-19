@@ -15,6 +15,7 @@ import com.melnykov.fab.FloatingActionButton;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.teamlz.cheTajo.R;
 
+@SuppressWarnings("deprecation")
 public class HomeFragment extends Fragment implements ViewPager.OnPageChangeListener {
     public static FloatingActionButton fab_add, fab_location;
     private Fragment homeListFragment, mapsFragment;

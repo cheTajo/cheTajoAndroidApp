@@ -7,6 +7,7 @@ import java.util.List;
 /*
  * Created by francesco on 05/05/16.
  */
+@SuppressWarnings("unused")
 public class User implements Serializable{
     private String firstName;
     private String lastName;

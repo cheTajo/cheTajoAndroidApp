@@ -22,7 +22,7 @@ import com.teamlz.cheTajo.fragment.UserProfileFragment;
 /*
  * Created by francesco on 02/05/16.
  */
-
+@SuppressWarnings("deprecation")
 public class MainActivity extends AppCompatActivity {
     public static String id;
 
@@ -94,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                 (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {

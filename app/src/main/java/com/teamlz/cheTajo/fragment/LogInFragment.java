@@ -194,16 +194,15 @@ public class LogInFragment extends Fragment {
 
     @SuppressWarnings("unchecked")
     private void facebookLogIn (AuthData authData) {
-        LinkedHashMap<String, String> profile = (LinkedHashMap<String, String>) authData
+        LinkedHashMap<String, Object> profile = (LinkedHashMap<String, Object>) authData
                 .getProviderData()
                 .get("cachedUserProfile");
 
-        Log.i("USER", profile.toString());
-
+        Log.i("PROFILE", profile.toString());
         String id = authData.getUid();
-        String email = profile.get("email");
-        String firstName = profile.get("first_name");
-        String lastName = profile.get("last_name");
+        String email = (String) profile.get("email");
+        String firstName = (String) profile.get("first_name");
+        String lastName = (String) profile.get("last_name");
 
         Firebase userFirebase = myFirebase.child("users").child(id);
         userFirebase.child("email").setValue(email);

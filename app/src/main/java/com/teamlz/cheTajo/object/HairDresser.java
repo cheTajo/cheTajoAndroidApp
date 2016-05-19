@@ -6,7 +6,7 @@ import java.util.List;
 /*
  * Created by francesco on 05/05/16.
  */
-
+@SuppressWarnings("unused")
 public class HairDresser {
     private String id;
     private String shopName;
@@ -79,18 +79,9 @@ public class HairDresser {
     }
 
     @Override
-    public String toString() {
-        String ret = shopName;
-        //ret += ": LIKES=" + likes.toString() + " FOLLOWERS=" + followers.toString();
-        //ret += " NUMLIKES=" + numLikes + " NUMFOLLOWERS=" + numFollowers;
-        return ret;
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (!o.getClass().equals(getClass())) return false;
         HairDresser hd = (HairDresser) o;
-        if (id.equals(hd.id)) return true;
-        return false;
+        return (id.equals(hd.id));
     }
 }

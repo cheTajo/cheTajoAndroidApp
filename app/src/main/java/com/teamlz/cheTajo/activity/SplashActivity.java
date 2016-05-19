@@ -5,14 +5,12 @@ import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
-import android.util.Log;
 import android.view.View;
 
 import com.facebook.FacebookSdk;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.teamlz.cheTajo.R;
-import com.teamlz.cheTajo.object.Utils;
 
 import java.util.LinkedHashMap;
 import java.util.Timer;
@@ -46,7 +44,6 @@ public class SplashActivity extends AppCompatActivity {
                     LinkedHashMap<String, String> profile = (LinkedHashMap<String, String>) authData
                             .getProviderData()
                             .get("cachedUserProfile");
-                    Log.i("AUTHDATA", authData.toString());
 
                     id = authData.getUid();
                     String email = profile.get("email");
@@ -62,7 +59,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
 
-        Utils.addHairDresser(this);
+        //Utils.addHairDresser(this);
 
         //add immersive mode
         getWindow().getDecorView().setSystemUiVisibility(

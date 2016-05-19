@@ -1,9 +1,12 @@
 package com.teamlz.cheTajo.fragment;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +21,12 @@ import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
 import com.teamlz.cheTajo.object.User;
 
-public class UserProfileFragment extends Fragment {
-    private CollapsingToolbarLayout toolbar;
+import java.io.InputStream;
+import java.net.URL;
+
+@SuppressWarnings("deprecation")
+public class UserProfileFragment extends Fragment{
+    private Toolbar toolbar;
     private AppCompatTextView emailTextView;
 
     private User myUser;
@@ -40,9 +47,11 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_user_profile, container, false);
 
-        toolbar = (CollapsingToolbarLayout) view.findViewById(R.id.user_profile_toolbar);
+        toolbar = (Toolbar) view.findViewById(R.id.user_profile_toolbar);
         emailTextView = (AppCompatTextView) view.findViewById(R.id.user_profile_card_email);
 
         Firebase myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
@@ -61,9 +70,23 @@ public class UserProfileFragment extends Fragment {
             }
         });
 
+        AppCompatImageView profileImageView = (AppCompatImageView) view.findViewById(R.id.user_profile_image);
+        String url = "https://graph.facebook.com/<facebook_user_id>/picture?type=large";
+        String id = MainActivity.id.replace("facebook:", "");
+        url = url.replace("<facebook_user_id>", id);
+        Drawable image = null;
+        try {
+            InputStream is = (InputStream) new URL(url)
+                    .getContent();
+            image = Drawable.createFromStream(is, "src name");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        profileImageView.setImageDrawable(image);
+
         FloatingActionButton fab_settings = (FloatingActionButton) view.findViewById(R.id.fab_settings);
         fab_settings.setImageDrawable(new IconicsDrawable(this.getActivity(), "gmd-create")
-                .sizeDp(24)
+                .sizeDp(18)
                 .color(getResources().getColor(R.color.white)));
 
         fab_settings.setOnClickListener(new View.OnClickListener() {

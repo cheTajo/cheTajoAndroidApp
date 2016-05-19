@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,12 @@ public class SignUpFragment extends Fragment {
     private SignUpFragment signUpFragment;
 
     private Firebase myFirebase;
-    private boolean flag;
+
+    private String email;
+    private String password;
+    private String firstName;
+    private String lastName;
+
     public SignUpFragment() {}
 
     public static SignUpFragment newInstance() {
@@ -52,7 +56,6 @@ public class SignUpFragment extends Fragment {
         signUpPassword = (AppCompatEditText) view.findViewById(R.id.sign_up_password);
 
         myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
-        flag = true;
 
         authProgressDialog = new ProgressDialog(getActivity());
         authProgressDialog.setTitle("Attendi");
@@ -64,10 +67,10 @@ public class SignUpFragment extends Fragment {
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String email = signUpEmail.getText().toString().trim();
-                final String password = signUpPassword.getText().toString();
-                final String firstName = signUpFirstName.getText().toString().trim();
-                final String lastName = signUpLastName.getText().toString().trim();
+                email = signUpEmail.getText().toString().trim();
+                password = signUpPassword.getText().toString();
+                firstName = signUpFirstName.getText().toString().trim();
+                lastName = signUpLastName.getText().toString().trim();
 
                 if (email.equals("") || firstName.equals("") || lastName.equals("") || password.equals("")) {
                     Toast.makeText(getActivity(), "Tutti i campi sono obbligatori", Toast.LENGTH_LONG).show();
@@ -79,18 +82,14 @@ public class SignUpFragment extends Fragment {
                 myFirebase.createUser(email, password, new Firebase.ResultHandler() {
                     @Override
                     public void onSuccess() {
-                        flag = true;
-                        Log.i("REGISTRAZIONE", "SUCCESSO");
-
                         myFirebase.authWithPassword(email, password, new Firebase.AuthResultHandler() {
                             @Override
                             public void onAuthenticated(AuthData authData) {
-                                Log.i("LOGIN", "SUCCESSO");
                                 String uid = authData.getUid();
                                 User newUser = new User(email, firstName, lastName);
                                 myFirebase.child("users").child(uid).setValue(newUser);
-                                authProgressDialog.hide();
 
+                                authProgressDialog.hide();
                                 Intent i = new Intent(getActivity(), MainActivity.class);
                                 getActivity().finish();
                                 startActivity(i);
@@ -98,7 +97,6 @@ public class SignUpFragment extends Fragment {
 
                             @Override
                             public void onAuthenticationError(FirebaseError firebaseError) {
-                                Log.i("LOGIN", "FALLITA:" + firebaseError.toString());
                                 authProgressDialog.hide();
                                 signUpFragment = SignUpFragment.newInstance();
                                 getFragmentManager().beginTransaction()
@@ -111,12 +109,9 @@ public class SignUpFragment extends Fragment {
                     @Override
                     public void onError(FirebaseError firebaseError) {
                         authProgressDialog.hide();
-                        Log.i("REGISTRAZIONE", "FALLITO");
-                        flag = false;
                         Toast.makeText(getActivity(), "Registrazione fallita", Toast.LENGTH_LONG).show();
                     }
                 });
-                if (!flag) return;
             }
 
         });

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CheTajo</string>
     <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
     <string name="email">e-mail</string>
 
     <!-- Strings related to home list items -->
@@ -11,7 +12,8 @@
     <string name="home_list_item_description">profile picture</string>
     <string name="home_list_item_shop_name">Nome Negozio</string>
 
-    <!-- Strings related to user profile scrolling content -->
+    <!-- Strings related to user profile -->
+    <string name="user_profile_image_description">immagine del profilo</string>
     <string name="user_profile_email">todo@todo.todo</string>
     <string name="user_profile_address_example">via Colvento, 0</string>
     <string name="user_profile_address">indirizzo</string>
