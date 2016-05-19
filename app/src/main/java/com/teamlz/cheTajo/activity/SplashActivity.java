@@ -11,6 +11,7 @@ import com.facebook.FacebookSdk;
 import com.firebase.client.AuthData;
 import com.firebase.client.Firebase;
 import com.teamlz.cheTajo.R;
+import com.teamlz.cheTajo.object.Utils;
 
 import java.util.LinkedHashMap;
 import java.util.Timer;

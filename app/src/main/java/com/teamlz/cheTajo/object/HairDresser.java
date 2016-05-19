@@ -12,8 +12,6 @@ public class HairDresser {
     private String shopName;
     private List<String> followers;
     private List<String> likes;
-    private int numFollowers;
-    private int numLikes;
 
     public HairDresser(){}
 
@@ -22,8 +20,6 @@ public class HairDresser {
         this.shopName = shopName;
         this.followers = new ArrayList<>();
         this.likes = new ArrayList<>();
-        this.numFollowers = 0;
-        this.numLikes = 0;
     }
 
     public String getId() {
@@ -32,14 +28,6 @@ public class HairDresser {
 
     public String getShopName() {
         return shopName;
-    }
-
-    public int getNumFollowers() {
-        return numFollowers;
-    }
-
-    public int getNumLikes() {
-        return numLikes;
     }
 
     public void initFollowers() {
@@ -60,22 +48,18 @@ public class HairDresser {
 
     public void addFollower(String id) {
         this.followers.add(id);
-        this.numFollowers += 1;
     }
 
     public void removeFollower(String id) {
         this.followers.remove(id);
-        this.numFollowers -= 1;
     }
 
     public void addLike(String id) {
         this.likes.add(id);
-        this.numLikes += 1;
     }
 
     public void removeLike(String id) {
         this.likes.remove(id);
-        this.numLikes -= 1;
     }
 
     @Override

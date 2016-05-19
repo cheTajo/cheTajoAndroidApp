@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -104,10 +104,10 @@ public class HomeListFragment extends Fragment {
             private int blue = getResources().getColor(R.color.colorPrimaryDark);
             private int red = getResources().getColor(R.color.colorRed);
 
+            private Typeface roboto = Typeface.createFromAsset(getContext().getAssets(), "font/Roboto-Regular.ttf");
+
             private Animation resizeSmall = AnimationUtils.loadAnimation(getContext(), R.anim.resize_small);
             private Animation resizeBig = AnimationUtils.loadAnimation(getContext(), R.anim.resize_big);
-
-            private Typeface roboto = Typeface.createFromAsset(getContext().getAssets(), "font/Roboto-Regular.ttf");
 
             @Override
             public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -130,12 +130,12 @@ public class HomeListFragment extends Fragment {
                 // Initialize hairdresser followers number
                 final AppCompatTextView numFollowText = (AppCompatTextView) holder.itemView
                         .findViewById(R.id.home_list_item_num_follow);
-                numFollowText.setText(String.valueOf(myHd.getNumFollowers()));
+                numFollowText.setText(String.valueOf(myHd.getFollowers().size()));
 
                 // Initialize hairdresser like number
                 final AppCompatTextView numLikeText = (AppCompatTextView) holder.itemView
                         .findViewById(R.id.home_list_item_num_like);
-                numLikeText.setText(String.valueOf(myHd.getNumLikes()));
+                numLikeText.setText(String.valueOf(myHd.getLikes().size()));
 
                 // Initialize hairdresser follow icon
                 final IconicsImageView followIcon = (IconicsImageView) holder.itemView
@@ -144,21 +144,10 @@ public class HomeListFragment extends Fragment {
                 if (myHd.getFollowers() != null && myHd.getFollowers().contains(myId)) {
                     followIcon.setColor(red);
                 }
-
-                // Initialize hairdresser like icon
-                final IconicsImageView likeIcon = (IconicsImageView) holder.itemView
-                        .findViewById(R.id.icon_like);
-                likeIcon.setColor(grey);
-                if (myHd.getLikes() != null && myHd.getLikes().contains(myId)) {
-                    likeIcon.setColor(blue);
-                }
-
-                final RelativeLayout followLayout = (RelativeLayout) holder.itemView
-                        .findViewById(R.id.relative_follow);
-                followLayout.setOnClickListener(new View.OnClickListener() {
+                followIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        followLayout.setClickable(false);
+                        followIcon.setClickable(false);
                         followIcon.startAnimation(resizeBig);
 
                         if (followIcon.getIcon().getColor() == grey) {
@@ -175,23 +164,27 @@ public class HomeListFragment extends Fragment {
 
                         userFirebase.child("followed").setValue(myUser.getFollowed());
                         myHdFirebase.child("followers").setValue(myHd.getFollowers());
-                        myHdFirebase.child("numFollowers").setValue(myHd.getNumFollowers());
-                        numFollowText.setText(String.valueOf(myHd.getNumFollowers()));
+                        numFollowText.setText(String.valueOf(myHd.getFollowers().size()));
                         followIcon.startAnimation(resizeSmall);
-                        followLayout.setClickable(true);
+                        followIcon.setClickable(true);
                     }
                 });
 
-                final RelativeLayout likeLayout = (RelativeLayout) holder.itemView
-                        .findViewById(R.id.relative_like);
-                likeLayout.setOnClickListener(new View.OnClickListener() {
+                // Initialize hairdresser like icon
+                final IconicsImageView likeIcon = (IconicsImageView) holder.itemView
+                        .findViewById(R.id.icon_like);
+                likeIcon.setColor(grey);
+                if (myHd.getLikes() != null && myHd.getLikes().contains(myId)) {
+                    likeIcon.setColor(blue);
+                }
+                likeIcon.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        likeLayout.setClickable(false);
+                        likeIcon.setClickable(false);
                         likeIcon.startAnimation(resizeBig);
 
                         if (likeIcon.getIcon().getColor() == grey) {
-                            likeIcon.setColor(blue);
+                            likeIcon.setColor(red);
                             myUser.addLiked(myHd.getId());
                             myHd.addLike(myId);
                         }
@@ -204,18 +197,9 @@ public class HomeListFragment extends Fragment {
 
                         userFirebase.child("liked").setValue(myUser.getLiked());
                         myHdFirebase.child("likes").setValue(myHd.getLikes());
-                        myHdFirebase.child("numLikes").setValue(myHd.getNumLikes());
-                        numLikeText.setText(String.valueOf(myHd.getNumLikes()));
+                        numLikeText.setText(String.valueOf(myHd.getLikes().size()));
                         likeIcon.startAnimation(resizeSmall);
-                        likeLayout.setClickable(true);
-                    }
-                });
-
-                RelativeLayout mapLayout = (RelativeLayout) holder.itemView
-                        .findViewById(R.id.relative_map);
-                mapLayout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
+                        likeIcon.setClickable(true);
                     }
                 });
             }
