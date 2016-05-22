@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.action_log_out:
-                myFirbase.unauth();
-                LoginManager.getInstance().logOut();
+                //myFirbase.unauth();
+                //LoginManager.getInstance().logOut();
                 Intent i = new Intent(this, LogInOrSignUpActivity.class);
                 finish();
                 startActivity(i);

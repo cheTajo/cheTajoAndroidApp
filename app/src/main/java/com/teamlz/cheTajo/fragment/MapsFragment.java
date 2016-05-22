@@ -6,10 +6,16 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -20,15 +26,24 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.teamlz.cheTajo.R;
+import com.teamlz.cheTajo.object.HairDresser;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class MapsFragment extends Fragment {
 
     MapView mMapView;
     private GoogleMap googleMap;
+    private Firebase myFirebase;
+    private Firebase hairDressersFirebase;
+    private List<HairDresser> hairDresserList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        hairDresserList=new ArrayList<>();
         // inflat and return the layout
         View v = inflater.inflate(R.layout.fragment_maps, container,
                 false);
@@ -68,15 +83,11 @@ public class MapsFragment extends Fragment {
         return v;
     }
 
-    private void afterMapLoad() {
-
-        // latitude and longitude
-        double latitude = 37.3669574;
-        double longitude = -5.9823761;
+    private void setMarker(HairDresser hd){
 
         // create marker
         MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("Figaro qua, Figaro là");
+                new LatLng(hd.getLatitude(), hd.getLongitude())).title(hd.getShopName());
 
         // Changing marker icon
         marker.icon(BitmapDescriptorFactory
@@ -84,10 +95,38 @@ public class MapsFragment extends Fragment {
 
         // adding marker
         googleMap.addMarker(marker);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
+    }
+
+    private void afterMapLoad() {
+
+        //add marker for all hairdressers
+        myFirebase= new Firebase(getString(R.string.firebase_url));
+        hairDressersFirebase=myFirebase.child("hairDressers");
+        hairDressersFirebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    HairDresser hd = snapshot.getValue(HairDresser.class);
+                    if(!hairDresserList.contains(hd)) hairDresserList.add(hd);
+                }
+
+                Iterator<HairDresser> i=hairDresserList.iterator();
+                while(i.hasNext()){
+                    setMarker(i.next());
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+            }
+        });
+
+        //Zoom camera
+        /*CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(latitude, longitude)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
+                .newCameraPosition(cameraPosition));*/
+
     }
 
     public static MapsFragment newInstance() {

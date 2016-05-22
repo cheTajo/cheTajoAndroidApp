@@ -11,6 +11,8 @@ public class HairDresser {
     private String id;
     private String shopName;
     private List<String> followers;
+    private double longitude;
+    private double latitude;
 
     public HairDresser(){}
 
@@ -35,6 +37,14 @@ public class HairDresser {
     public List<String> getFollowers() {
         return followers;
     }
+
+    public void setLongitude(double longitude){ this.longitude=longitude; }
+
+    public void setLatitude(double latitude){ this.latitude=latitude; }
+
+    public double getLongitude(){ return longitude; }
+
+    public double getLatitude(){ return latitude; }
 
     public void addFollower(String id) {
         this.followers.add(id);
