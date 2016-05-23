@@ -11,10 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.melnykov.fab.FloatingActionButton;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.teamlz.cheTajo.R;
@@ -54,8 +55,8 @@ public class UserProfileFragment extends Fragment{
         toolbar = (Toolbar) view.findViewById(R.id.user_profile_toolbar);
         emailTextView = (AppCompatTextView) view.findViewById(R.id.user_profile_card_email);
 
-        Firebase myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
-        Firebase userFirebase = myFirebase.child("users").child(MainActivity.id);
+        DatabaseReference myFirebase = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userFirebase = myFirebase.child("users").child(MainActivity.id);
         userFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
@@ -64,9 +65,9 @@ public class UserProfileFragment extends Fragment{
                 toolbar.setTitle(title);
                 emailTextView.setText(myUser.getEmail());
             }
+
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
 

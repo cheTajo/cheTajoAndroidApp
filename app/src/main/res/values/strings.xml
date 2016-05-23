@@ -28,9 +28,9 @@
     <string name="manual_sign_up">Registrati</string>
     <string name="facebook_log_in">Accedi tramite Facebook</string>
     <string name="facebook_sign_up">Registrati tramite Facebook</string>
-    <string name="firebase_url">https://scorching-fire-8714.firebaseio.com</string>
+    <string name="firebase_url">https://scorching-fire-8714.firebaseio.com/</string>
     <string name="oppure">Oppure</string>
 
     <!-- Strings related to google maps -->
-    <string name="google_app_id">AIzaSyANgWpSHwqkAlVp6bmisVSa8KPxPxuMYgs</string>
+    <!--<string name="google_app_id">AIzaSyANgWpSHwqkAlVp6bmisVSa8KPxPxuMYgs</string> -->
 </resources>

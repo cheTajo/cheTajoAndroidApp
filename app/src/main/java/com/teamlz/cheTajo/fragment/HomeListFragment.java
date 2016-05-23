@@ -10,10 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.iconics.view.IconicsImageView;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
@@ -35,8 +36,8 @@ public class HomeListFragment extends Fragment {
     private String myId;
     private User myUser;
 
-    private Firebase hairDresserFirebase;
-    private Firebase userFirebase;
+    private DatabaseReference hairDresserFirebase;
+    private DatabaseReference userFirebase;
 
     public HomeListFragment(){}
 
@@ -58,7 +59,7 @@ public class HomeListFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_homelist, container, false);
 
         myId = MainActivity.id;
-        Firebase myFirebase = new Firebase(getString(R.string.firebase_url));
+        DatabaseReference myFirebase = FirebaseDatabase.getInstance().getReference();
 
         hairDresserFirebase = myFirebase.child("hairDressers");
         hairDresserFirebase.addValueEventListener(new ValueEventListener() {
@@ -74,20 +75,21 @@ public class HomeListFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
         userFirebase = myFirebase.child("users").child(myId);
         userFirebase.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                myUser = snapshot.getValue(User.class);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                myUser = dataSnapshot.getValue(User.class);
                 if (myUser.getFollowed() == null) myUser.initFollowed();
-            }
+        }
+
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
 
@@ -110,7 +112,7 @@ public class HomeListFragment extends Fragment {
             @Override
             public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
                 final HairDresser myHd = hairDresserList.get(position);
-                final Firebase myHdFirebase = hairDresserFirebase.child(myHd.getId());
+                final DatabaseReference myHdFirebase = hairDresserFirebase.child(myHd.getId());
 
                 // Initialize shop name
                 AppCompatTextView nameText = (AppCompatTextView) holder.itemView

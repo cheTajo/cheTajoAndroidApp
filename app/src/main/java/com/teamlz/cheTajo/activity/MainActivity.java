@@ -12,8 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.facebook.login.LoginManager;
-import com.firebase.client.Firebase;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.roughike.bottombar.BottomBar;
 import com.roughike.bottombar.BottomBarTab;
@@ -30,8 +28,6 @@ public class MainActivity extends AppCompatActivity {
     public static String id;
     private BottomBar mBottomBar;
 
-    private Firebase myFirbase;
-
     private Fragment homeFragment, userProfileFragment;
 
     @Override
@@ -44,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
         userProfileFragment = UserProfileFragment.newInstance();
         homeFragment = HomeFragment.newInstance();
-
-        myFirbase = new Firebase(getResources().getString(R.string.firebase_url));
 
         FragmentTransaction trans = getSupportFragmentManager().beginTransaction();
         trans.add(R.id.activity_main_frame, homeFragment);
@@ -121,8 +115,6 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.action_log_out:
-                //myFirbase.unauth();
-                //LoginManager.getInstance().logOut();
                 Intent i = new Intent(this, LogInOrSignUpActivity.class);
                 finish();
                 startActivity(i);

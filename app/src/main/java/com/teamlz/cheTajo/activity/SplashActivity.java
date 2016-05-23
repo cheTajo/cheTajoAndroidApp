@@ -2,14 +2,18 @@ package com.teamlz.cheTajo.activity;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.View;
 
 import com.facebook.FacebookSdk;
-import com.firebase.client.AuthData;
-import com.firebase.client.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.object.Utils;
 
@@ -21,7 +25,9 @@ public class SplashActivity extends AppCompatActivity {
     private boolean authenticated;
     private String id;
 
-    private Firebase myFirebase;
+    private DatabaseReference myFirebase;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     public static int SPLASH_TIMER = 2000;
 
@@ -32,14 +38,22 @@ public class SplashActivity extends AppCompatActivity {
 
         //Initialize sdk
         FacebookSdk.sdkInitialize(this.getApplicationContext());
-        Firebase.setAndroidContext(this);
         //System.out.println(FacebookSdk.getApplicationSignature(this));
 
         setContentView(R.layout.activity_splash);
 
-        myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
-        myFirebase.addAuthStateListener(new Firebase.AuthStateListener() {
+        myFirebase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener= new FirebaseAuth.AuthStateListener() {
             @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) return;
+
+                Log.i("USER", user.toString());
+            }
+
+            /*@Override
             public void onAuthStateChanged(AuthData authData) {
                 if (authData != null) {
                     LinkedHashMap<String, String> profile = (LinkedHashMap<String, String>) authData
@@ -57,8 +71,8 @@ public class SplashActivity extends AppCompatActivity {
                     userFirebase.child("lastName").setValue(lastName);
                     authenticated = true;
                 }
-            }
-        });
+            }*/
+        };
 
         //Utils.addHairDresser(this);
 
@@ -92,4 +106,45 @@ public class SplashActivity extends AppCompatActivity {
         timer.schedule(task, SPLASH_TIMER);
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) return;
+
+                Log.i("USER", user.toString());
+            }
+
+            /*@Override
+            public void onAuthStateChanged(AuthData authData) {
+                if (authData != null) {
+                    LinkedHashMap<String, String> profile = (LinkedHashMap<String, String>) authData
+                            .getProviderData()
+                            .get("cachedUserProfile");
+
+                    id = authData.getUid();
+                    String email = profile.get("email");
+                    String firstName = profile.get("first_name");
+                    String lastName = profile.get("last_name");
+
+                    Firebase userFirebase = myFirebase.child("users").child(id);
+                    userFirebase.child("email").setValue(email);
+                    userFirebase.child("firstName").setValue(firstName);
+                    userFirebase.child("lastName").setValue(lastName);
+                    authenticated = true;
+                }
+            }*/
+        });
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
 }

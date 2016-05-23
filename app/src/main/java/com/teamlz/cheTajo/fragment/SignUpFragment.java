@@ -3,6 +3,7 @@ package com.teamlz.cheTajo.fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
@@ -11,9 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.firebase.client.AuthData;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
 import com.teamlz.cheTajo.object.User;
@@ -25,9 +32,9 @@ public class SignUpFragment extends Fragment {
     private AppCompatEditText signUpPassword;
     private ProgressDialog authProgressDialog;
 
-    private SignUpFragment signUpFragment;
-
-    private Firebase myFirebase;
+    private DatabaseReference myFirebase;
+    private FirebaseAuth mAuth;
+    private FirebaseAuth.AuthStateListener mAuthListener;
 
     private String email;
     private String password;
@@ -55,7 +62,25 @@ public class SignUpFragment extends Fragment {
         signUpLastName = (AppCompatEditText) view.findViewById(R.id.sign_up_last_name);
         signUpPassword = (AppCompatEditText) view.findViewById(R.id.sign_up_password);
 
-        myFirebase = new Firebase(getResources().getString(R.string.firebase_url));
+        myFirebase = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                if (firebaseAuth.getCurrentUser() == null) return;
+
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                String uid = user.getUid();
+                User newUser = new User(email, firstName, lastName);
+                myFirebase.child("users").child(uid).setValue(newUser);
+
+                authProgressDialog.hide();
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                i.putExtra("id", uid);
+                getActivity().finish();
+                startActivity(i);
+            }
+        };
 
         authProgressDialog = new ProgressDialog(getActivity());
         authProgressDialog.setTitle("Attendi");
@@ -78,44 +103,24 @@ public class SignUpFragment extends Fragment {
                 }
 
                 authProgressDialog.show();
-
-                myFirebase.createUser(email, password, new Firebase.ResultHandler() {
-                    @Override
-                    public void onSuccess() {
-                        myFirebase.authWithPassword(email, password, new Firebase.AuthResultHandler() {
-                            @Override
-                            public void onAuthenticated(AuthData authData) {
-                                String uid = authData.getUid();
-                                User newUser = new User(email, firstName, lastName);
-                                myFirebase.child("users").child(uid).setValue(newUser);
-
-                                authProgressDialog.hide();
-                                Intent i = new Intent(getActivity(), MainActivity.class);
-                                getActivity().finish();
-                                startActivity(i);
-                            }
-
-                            @Override
-                            public void onAuthenticationError(FirebaseError firebaseError) {
-                                authProgressDialog.hide();
-                                signUpFragment = SignUpFragment.newInstance();
-                                getFragmentManager().beginTransaction()
-                                        .replace(R.id.log_in_or_sign_up_view, signUpFragment)
-                                        .commit();
-                            }
-                        });
-                    }
-
-                    @Override
-                    public void onError(FirebaseError firebaseError) {
-                        authProgressDialog.hide();
-                        Toast.makeText(getActivity(), "Registrazione fallita", Toast.LENGTH_LONG).show();
-                    }
-                });
+                createUser(email, password);
             }
-
         });
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
     }
 
     @Override
@@ -123,4 +128,19 @@ public class SignUpFragment extends Fragment {
         super.onDestroy();
         authProgressDialog.dismiss();
     }
+
+    public void createUser(String email, String password){
+        mAuth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (!task.isSuccessful()){
+                        Toast.makeText(getActivity(), "Registrazione fallita", Toast.LENGTH_LONG).show();
+                        authProgressDialog.hide();
+                    }
+
+                }
+            });
+    }
 }
+

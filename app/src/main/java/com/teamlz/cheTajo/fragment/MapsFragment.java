@@ -6,51 +6,48 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.firebase.client.DataSnapshot;
-import com.firebase.client.Firebase;
-import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.object.HairDresser;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class MapsFragment extends Fragment {
-
-    MapView mMapView;
-    private GoogleMap googleMap;
-    private Firebase myFirebase;
-    private Firebase hairDressersFirebase;
     private List<HairDresser> hairDresserList;
+
+    private MapView mMapView;
+    private GoogleMap googleMap;
+    private View locationButton;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         hairDresserList=new ArrayList<>();
-        // inflat and return the layout
-        View v = inflater.inflate(R.layout.fragment_maps, container,
-                false);
+        View v = inflater.inflate(R.layout.fragment_maps, container, false);
+
         mMapView = (MapView) v.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
-        mMapView.onResume();// needed to get the map to display immediately
+        // needed to get the map to display immediately
+        mMapView.onResume();
 
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -62,11 +59,14 @@ public class MapsFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap gMap) {
                 googleMap = gMap;
-                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
                 googleMap.setMyLocationEnabled(true);
-                final View locationButton = ((View) mMapView.findViewById(new Integer(1)).getParent()).findViewById(new Integer(2));
+                locationButton = ((View) mMapView
+                        .findViewById(Integer.valueOf("1"))
+                        .getParent()).findViewById(Integer.valueOf("2"));
                 locationButton.setVisibility(View.INVISIBLE);
                 afterMapLoad();
 
@@ -100,24 +100,24 @@ public class MapsFragment extends Fragment {
     private void afterMapLoad() {
 
         //add marker for all hairdressers
-        myFirebase= new Firebase(getString(R.string.firebase_url));
-        hairDressersFirebase=myFirebase.child("hairDressers");
+        DatabaseReference myFirebase= FirebaseDatabase.getInstance().getReference();
+        DatabaseReference hairDressersFirebase=myFirebase.child("hairDressers");
         hairDressersFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     HairDresser hd = snapshot.getValue(HairDresser.class);
-                    if(!hairDresserList.contains(hd)) hairDresserList.add(hd);
+                    if(hairDresserList.contains(hd)) hairDresserList.remove(hd);
+                    hairDresserList.add(hd);
                 }
 
-                Iterator<HairDresser> i=hairDresserList.iterator();
-                while(i.hasNext()){
-                    setMarker(i.next());
+                for (HairDresser aHairDresserList : hairDresserList) {
+                    setMarker(aHairDresserList);
                 }
             }
 
             @Override
-            public void onCancelled(FirebaseError firebaseError) {
+            public void onCancelled(DatabaseError databaseError) {
             }
         });
 
