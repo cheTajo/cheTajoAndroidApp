@@ -50,7 +50,7 @@ public class SplashActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) return;
 
-                Log.i("USER", user.toString());
+                Log.i("USER", user.getProviderData().toString());
             }
 
             /*@Override

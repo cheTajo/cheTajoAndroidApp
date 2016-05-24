@@ -2,6 +2,7 @@ package com.teamlz.cheTajo.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -238,6 +240,7 @@ public class LogInFragment extends Fragment {
 
     @SuppressWarnings("unchecked")
     private void facebookLogIn (AccessToken accessToken) {
+        Log.i("ACCESSTOKEN", accessToken.toString());
         AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
         mAuth.signInWithCredential(credential)
             .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
@@ -247,20 +250,43 @@ public class LogInFragment extends Fragment {
                         Toast.makeText(getActivity(), "Autenticazione fallita", Toast.LENGTH_LONG).show();
                         return;
                     }
-                    FirebaseUser user = task.getResult().getUser();
-                    List providerData = user.getProviderData();
-                    String id = task.getResult().getUser().getUid();
-                    String email = user.getEmail();
-                    Log.i("NAME", providerData.toString());
-                    Log.i("ID", id);
-                    Log.i("EMAIL", email);
 
+                    FirebaseUser user = task.getResult().getUser();
+
+                    String uid = user.getUid();
 
                     authProgressDialog.hide();
-                    /*Intent i = new Intent(getActivity(), MainActivity.class);
-                    i.putExtra("id", id);
+
+                    Intent i = new Intent(getActivity(), MainActivity.class);
+                    i.putExtra("id", uid);
                     getActivity().finish();
-                    startActivity(i);*/
+                    startActivity(i);
+                    /*if (user != null) {
+                        int i = 0;
+                        for (UserInfo profile : user.getProviderData()) {
+                            // Id of the provider (ex: google.com)
+                            String providerId = profile.getProviderId();
+
+                            // UID specific to the provider
+                            String uid = profile.getUid();
+
+                            // Name, email address, and profile photo Url
+                            String name = profile.getDisplayName();
+                            String email = profile.getEmail();
+                            Uri photoUrl = profile.getPhotoUrl();
+
+                            Log.i("POSITION", i +"");
+                            Log.i("QUALCOSA", photoUrl + "");
+                            Log.i("NAME", name + "");
+                            Log.i("ID", uid+"");
+                            Log.i("EMAIL", email+"");
+                            i++;
+                        }
+
+                    }*/
+
+                    //String id = task.getResult().getUser().getUid();
+                    //String email = user.getEmail();
 
                 }
         });
