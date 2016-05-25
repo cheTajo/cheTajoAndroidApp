@@ -171,7 +171,7 @@ public class MapsFragment extends Fragment {
 
         cheTajoInfoAdpater() {
             mymarkerview = getLayoutInflater(null)
-                    .inflate(R.layout.custommarkerinfo, null);
+                    .inflate(R.layout.custom_marker_info, null);
         }
 
         public View getInfoWindow(Marker marker) {

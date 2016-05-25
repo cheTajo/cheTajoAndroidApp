@@ -1,5 +1,6 @@
 package com.teamlz.cheTajo.fragment;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
@@ -33,6 +35,9 @@ import com.teamlz.cheTajo.activity.MainActivity;
 
 public class LogInFragment extends Fragment {
     private Fragment signUpFragment;
+    private Fragment hairDresserSignUpFragment;
+
+    private View view;
 
     private AppCompatEditText emailEditText;
     private AppCompatEditText passwordEditText;
@@ -62,10 +67,11 @@ public class LogInFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_log_in, container, false);
+        view = inflater.inflate(R.layout.fragment_log_in, container, false);
 
         // Initialize variables
-        signUpFragment = SignUpFragment.newInstance();
+        signUpFragment = UserSignUpFragment.newInstance();
+        hairDresserSignUpFragment = HairDresserSignUpFragment.newInstance();
 
         emailEditText = (AppCompatEditText) view.findViewById(R.id.log_in_email);
         passwordEditText = (AppCompatEditText) view.findViewById(R.id.log_in_password);
@@ -91,6 +97,7 @@ public class LogInFragment extends Fragment {
         AppCompatButton facebookLogInButton = (AppCompatButton) view.findViewById(R.id.facebook_log_in_button);
         AppCompatButton manualLogInButton = (AppCompatButton) view.findViewById(R.id.manual_log_in_button);
         AppCompatButton goToSignUpButton = (AppCompatButton) view.findViewById(R.id.go_to_sign_up_button);
+        AppCompatButton goToHdSignUpButton = (AppCompatButton) view.findViewById(R.id.hairdresser_sign_up_button);
 
         authProgressDialog.setTitle("Attendi");
         authProgressDialog.setMessage("Autenticazione in corso...");
@@ -102,6 +109,8 @@ public class LogInFragment extends Fragment {
         manualLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard(view);
+
                 String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
 
@@ -175,6 +184,18 @@ public class LogInFragment extends Fragment {
                         .addToBackStack(null).commit();
             }
         });
+
+        //Set up hairdresser sign up button
+        assert goToHdSignUpButton != null;
+        goToHdSignUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.log_in_or_sign_up_view, hairDresserSignUpFragment)
+                        .addToBackStack(null).commit();
+            }
+        });
+
         return view;
     }
 
@@ -204,5 +225,13 @@ public class LogInFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         authProgressDialog.dismiss();
+    }
+
+    public void hideKeyboard(View view) {
+        if(getActivity().getCurrentFocus() != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getActivity()
+                    .getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

@@ -3,6 +3,7 @@
     <string name="action_log_out">Log out</string>
     <string name="action_search">Search</string>
     <string name="email">e-mail</string>
+    <string name="example">example</string>
 
     <!-- Strings related to home list items -->
     <string name="home_list_item_follow">Follow</string>
@@ -24,13 +25,15 @@
     <string name="prompt_password">Password</string>
     <string name="prompt_first_name">Nome</string>
     <string name="prompt_last_name">Cognome</string>
+    <string name="prompt_shop_name">Nome dell\'attività</string>
+    <string name="prompt_address">Indirizzo (facoltativo)</string>
     <string name="manual_log_in">Accedi</string>
     <string name="manual_sign_up">Registrati</string>
     <string name="facebook_log_in">Accedi tramite Facebook</string>
-    <string name="facebook_sign_up">Registrati tramite Facebook</string>
+    <string name="hairdresser_sign_up">Registra la tua attività</string>
     <string name="firebase_url">https://scorching-fire-8714.firebaseio.com/</string>
     <string name="oppure">Oppure</string>
 
-    <!-- Strings related to google maps -->
-    <!--<string name="google_app_id">AIzaSyANgWpSHwqkAlVp6bmisVSa8KPxPxuMYgs</string> -->
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

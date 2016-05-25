@@ -13,6 +13,7 @@ public class Utils {
     public static void addHairDresser(Context context){
         DatabaseReference myFirebase = FirebaseDatabase.getInstance().getReference();
 
+
         HairDresser myHd = new HairDresser("52f0091c-74bb-4552-a4aa-46a582728c20", "Un Angelo per capello");
         /*myHd.addFollower("79b451ed-fb1c-4282-8178-1d7582274a8f");
         myHd.addFollower("7b2a5b26-690b-46c6-88d6-470bb74f342e");

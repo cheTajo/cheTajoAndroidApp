@@ -26,6 +26,7 @@ import com.teamlz.cheTajo.object.User;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
 /*
@@ -95,7 +96,7 @@ public class HomeListFragment extends Fragment {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
-        mRecyclerView.setAdapter(new SlideInLeftAnimationAdapter(new RecyclerView.Adapter() {
+        mRecyclerView.setAdapter(new AlphaInAnimationAdapter(new RecyclerView.Adapter() {
             private int grey = getResources().getColor(R.color.colorGrey);
             private int red = getResources().getColor(R.color.colorRed);
 
