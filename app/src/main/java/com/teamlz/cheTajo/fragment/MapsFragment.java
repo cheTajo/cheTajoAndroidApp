@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import com.google.firebase.database.DataSnapshot;
@@ -114,6 +117,7 @@ public class MapsFragment extends Fragment {
                 for (HairDresser aHairDresserList : hairDresserList) {
                     setMarker(aHairDresserList);
                 }
+                googleMap.setInfoWindowAdapter(new cheTajoInfoAdpater());
             }
 
             @Override
@@ -160,5 +164,29 @@ public class MapsFragment extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    class cheTajoInfoAdpater implements GoogleMap.InfoWindowAdapter {
+        private final View mymarkerview;
+
+        cheTajoInfoAdpater() {
+            mymarkerview = getLayoutInflater(null)
+                    .inflate(R.layout.custommarkerinfo, null);
+        }
+
+        public View getInfoWindow(Marker marker) {
+            render(marker, mymarkerview);
+            return mymarkerview;
+        }
+
+        public View getInfoContents(Marker marker) {
+            return null;
+        }
+
+        private void render(Marker marker, View view) {
+            TextView name = (TextView) view.findViewById(R.id.marker_name);
+            ImageView photo = (ImageView) view.findViewById(R.id.marker_photo);
+            name.setText(marker.getTitle());
+        }
     }
 }
