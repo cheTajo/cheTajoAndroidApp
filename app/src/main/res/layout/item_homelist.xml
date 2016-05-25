@@ -38,114 +38,86 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:clickable="true"
                 android:gravity="center"
-                android:id="@+id/relative_follow"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:orientation="horizontal"
                 android:layout_weight="1.6">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/follow_text"
+                <RelativeLayout
+                    android:id="@+id/relative_follow"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_list_item_follow"
-                    android:textColor="@color/colorGrey"
-                    android:textStyle="bold"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:clickable="true">
 
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/icon_follow"
-                    android:layout_marginStart="6dp"
-                    android:layout_toEndOf="@id/follow_text"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    app:iiv_color="@color/colorGrey"
-                    app:iiv_icon="gmd-favorite" />
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/follow_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_list_item_follow"
+                        android:textColor="@color/colorGrey"
+                        android:textStyle="bold"/>
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/home_list_item_num_follow"
-                    android:layout_marginStart="3dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/icon_follow"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/zero"
-                    android:textColor="@color/colorGrey"
-                    android:textStyle="bold"/>
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/icon_follow"
+                        android:layout_marginStart="6dp"
+                        android:layout_toEndOf="@id/follow_text"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        app:iiv_color="@color/colorGrey"
+                        app:iiv_icon="gmd-favorite" />
 
+                    <android.support.v7.widget.AppCompatTextView
+                        android:id="@+id/home_list_item_num_follow"
+                        android:layout_marginStart="3dp"
+                        android:layout_centerVertical="true"
+                        android:layout_toEndOf="@id/icon_follow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/zero"
+                        android:textColor="@color/colorGrey"
+                        android:textStyle="bold"/>
+                </RelativeLayout>
             </RelativeLayout>
 
-        <!--    <RelativeLayout
-                android:id="@+id/relative_like"
-                android:clickable="true"
-                android:gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:layout_weight="3">
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/like_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_list_item_like"
-                    android:textColor="@color/colorGrey"
-                    android:textStyle="bold"/>
-
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_marginTop="6dp"
-                    android:id="@+id/icon_like"
-                    android:layout_toEndOf="@id/like_text"
-                    android:layout_marginStart="6dp"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    app:iiv_color="@color/colorGrey"
-                    app:iiv_icon="gmd-thumb_up" />
-
-                <android.support.v7.widget.AppCompatTextView
-                    android:id="@+id/home_list_item_num_like"
-                    android:layout_marginStart="3dp"
-                    android:layout_centerVertical="true"
-                    android:layout_toEndOf="@id/icon_like"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/colorGrey"
-                    android:text="@string/zero"
-                    android:textStyle="bold"/>
-
-            </RelativeLayout> -->
-
             <RelativeLayout
-                android:id="@+id/relative_map"
-                android:clickable="true"
                 android:gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:layout_weight="2">
 
-                <android.support.v7.widget.AppCompatTextView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/map_text"
+                <RelativeLayout
+                    android:id="@+id/relative_map"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_list_item_map"
-                    android:textColor="@color/colorGrey"
-                    android:textStyle="bold"
-                    android:gravity="end"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:clickable="true">
 
-                <com.mikepenz.iconics.view.IconicsImageView
-                    android:layout_centerVertical="true"
-                    android:id="@+id/icon_map"
-                    android:layout_marginStart="6dp"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_toEndOf="@id/map_text"
-                    app:iiv_color="@color/colorGrey"
-                    app:iiv_icon="gmd-room" />
+                    <android.support.v7.widget.AppCompatTextView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/map_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/home_list_item_map"
+                        android:textColor="@color/colorGrey"
+                        android:textStyle="bold"
+                        android:gravity="end"/>
 
+                    <com.mikepenz.iconics.view.IconicsImageView
+                        android:layout_centerVertical="true"
+                        android:id="@+id/icon_map"
+                        android:layout_marginStart="6dp"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_toEndOf="@id/map_text"
+                        app:iiv_color="@color/colorGrey"
+                        app:iiv_icon="gmd-room" />
+                </RelativeLayout>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

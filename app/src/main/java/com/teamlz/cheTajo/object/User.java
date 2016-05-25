@@ -9,56 +9,22 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public class User implements Serializable{
-    private String firstName;
-    private String lastName;
-    private String email;
-
     private List<String> followed;
+    private List<String> likes;
 
     public User(){}
 
-    public User(String email, String firstName, String lastName){
-        this.email = email.trim();
-        this.firstName = "";
-        this.lastName = "";
-        followed = new ArrayList<>();
-
-        String[] parts = firstName.split(" ");
-        for (String part : parts) {
-            this.firstName += part.substring(0, 1).toUpperCase();
-            this.firstName += part.substring(1).toLowerCase() + " ";
-        }
-        this.firstName = this.firstName.trim();
-
-        parts = lastName.split(" ");
-        for (String part : parts) {
-            this.lastName += part.substring(0, 1).toUpperCase();
-            this.lastName += part.substring(1).toLowerCase() + " ";
-        }
-        this.lastName = this.lastName.trim();
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void initFollowed() {
-        followed = new ArrayList<>();
+    public User(List<String> f) {
+        followed = f;
     }
 
     public List<String> getFollowed() {
+        if (followed == null) followed = new ArrayList<>();
         return followed;
     }
 
     public void addFollowed (String id) {
+        if (followed == null) followed = new ArrayList<>();
         followed.add(id);
     }
 
@@ -66,15 +32,17 @@ public class User implements Serializable{
         followed.remove(id);
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public List<String> getLikes() {
+        return likes;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void addLike (String id) {
+        if (likes == null) likes = new ArrayList<>();
+        likes.add(id);
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void removeLike (String id) {
+        if (likes == null) likes = new ArrayList<>();
+        likes.remove(id);
     }
 }

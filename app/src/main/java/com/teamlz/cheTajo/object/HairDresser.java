@@ -30,14 +30,6 @@ public class HairDresser {
         return shopName;
     }
 
-    public void initFollowers() {
-        followers = new ArrayList<>();
-    }
-
-    public List<String> getFollowers() {
-        return followers;
-    }
-
     public void setLongitude(double longitude){ this.longitude=longitude; }
 
     public void setLatitude(double latitude){ this.latitude=latitude; }
@@ -46,11 +38,18 @@ public class HairDresser {
 
     public double getLatitude(){ return latitude; }
 
+    public List<String> getFollowers() {
+        if (followers == null) followers = new ArrayList<>();
+        return followers;
+    }
+
     public void addFollower(String id) {
+        if (followers == null) followers = new ArrayList<>();
         this.followers.add(id);
     }
 
     public void removeFollower(String id) {
+        if (followers == null) followers = new ArrayList<>();
         this.followers.remove(id);
     }
 

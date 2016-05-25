@@ -25,7 +25,6 @@ import com.teamlz.cheTajo.fragment.UserProfileFragment;
  */
 @SuppressWarnings("deprecation")
 public class MainActivity extends AppCompatActivity {
-    public static String id;
     private BottomBar mBottomBar;
 
     private Fragment homeFragment, userProfileFragment;
@@ -34,9 +33,6 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //get the user id from the intent
-        id = getIntent().getStringExtra("id");
 
         userProfileFragment = UserProfileFragment.newInstance();
         homeFragment = HomeFragment.newInstance();

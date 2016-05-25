@@ -2,42 +2,34 @@ package com.teamlz.cheTajo.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatEditText;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
 import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.EmailAuthProvider;
 import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserInfo;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
-
-import java.util.LinkedHashMap;
-import java.util.List;
 
 public class LogInFragment extends Fragment {
     private Fragment signUpFragment;
@@ -46,12 +38,12 @@ public class LogInFragment extends Fragment {
     private AppCompatEditText passwordEditText;
     private ProgressDialog authProgressDialog;
 
-    private DatabaseReference myFirebase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
     private LoginButton facebookButton;
     private CallbackManager facebookCallbackManager;
+    private AccessTokenTracker facebookAccessTokenTracker;
 
     public LogInFragment() {
         // Required empty public constructor
@@ -79,12 +71,20 @@ public class LogInFragment extends Fragment {
         passwordEditText = (AppCompatEditText) view.findViewById(R.id.log_in_password);
         authProgressDialog = new ProgressDialog(getActivity());
 
-        myFirebase = FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) return;
+
                 authProgressDialog.hide();
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                getActivity().finish();
+                startActivity(i);
             }
         };
 
@@ -96,8 +96,6 @@ public class LogInFragment extends Fragment {
         authProgressDialog.setMessage("Autenticazione in corso...");
         authProgressDialog.setCancelable(false);
 
-        FirebaseAuth.getInstance().signOut();
-        LoginManager.getInstance().logOut();
 
         //Set up manual login button
         assert manualLogInButton != null;
@@ -121,7 +119,49 @@ public class LogInFragment extends Fragment {
                 }
 
                 authProgressDialog.show();
-                manualLogIn (email, password);
+                EmailAuthProvider.getCredential(email, password);
+                mAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) return;
+                        Toast.makeText(getActivity(), "Autenticazione Fallita", Toast.LENGTH_LONG).show();
+                        authProgressDialog.hide();
+                    }
+                });
+            }
+        });
+
+        //Set up facebook button
+        facebookButton = (LoginButton) view.findViewById(R.id.facebook_button);
+        facebookButton.setFragment(this);
+        facebookCallbackManager = CallbackManager.Factory.create();
+        facebookAccessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                if (currentAccessToken != null) {
+                    authProgressDialog.show();
+                    AuthCredential credential = FacebookAuthProvider.getCredential(currentAccessToken.getToken());
+                    mAuth.signInWithCredential(credential)
+                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) return;
+                                Toast.makeText(getActivity(), "Autenticazione Fallita", Toast.LENGTH_LONG).show();
+                                authProgressDialog.hide();
+                            }
+                        });
+                }
+                else FirebaseAuth.getInstance().signOut();
+            }
+        };
+
+        //Set up facebook login button
+        assert facebookLogInButton != null;
+        facebookLogInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                facebookButton.performClick();
             }
         });
 
@@ -133,61 +173,6 @@ public class LogInFragment extends Fragment {
                 getFragmentManager().beginTransaction()
                         .replace(R.id.log_in_or_sign_up_view, signUpFragment)
                         .addToBackStack(null).commit();
-            }
-        });
-
-        //Set up facebook button
-        facebookButton = (LoginButton) view.findViewById(R.id.facebook_button);
-        facebookButton.setFragment(this);
-        facebookButton.setReadPermissions("email", "public_profile");
-        facebookCallbackManager = CallbackManager.Factory.create();
-        facebookButton.registerCallback(facebookCallbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                facebookLogIn(loginResult.getAccessToken());
-            }
-
-            @Override
-            public void onCancel() {
-                authProgressDialog.hide();
-                Toast.makeText(getActivity(), "Autenticazione cancellata", Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                authProgressDialog.hide();
-                Toast.makeText(getActivity(), "Autenticazione fallita", Toast.LENGTH_LONG).show();
-            }
-        });
-        /*facebookAccessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                if (currentAccessToken != null) {
-                    authProgressDialog.show();
-                    myFirebase.authWithOAuthToken("facebook", currentAccessToken.getToken(), new Firebase.AuthResultHandler() {
-                        @Override
-                        public void onAuthenticated(AuthData authData) {
-                            facebookLogIn (authData);
-                        }
-
-                        @Override
-                        public void onAuthenticationError(FirebaseError firebaseError) {
-                            authProgressDialog.hide();
-                            Toast.makeText(getActivity(), "Autenticazione fallita", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-                else FirebaseAuth.getInstance().signOut();
-            }
-        };*/
-
-        //Set up facebook login button
-        assert facebookLogInButton != null;
-        facebookLogInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                facebookButton.performClick();
-                authProgressDialog.show();
             }
         });
         return view;
@@ -203,6 +188,7 @@ public class LogInFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
+        facebookAccessTokenTracker.startTracking();
     }
 
     @Override
@@ -210,6 +196,7 @@ public class LogInFragment extends Fragment {
         super.onStop();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
+            facebookAccessTokenTracker.stopTracking();
         }
     }
 
@@ -217,97 +204,5 @@ public class LogInFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         authProgressDialog.dismiss();
-    }
-
-    private void manualLogIn (String email, String password) {
-        mAuth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    authProgressDialog.hide();
-                    if (!task.isSuccessful()) {
-                        Toast.makeText(getActivity(), "Autenticazione fallita", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    Intent i = new Intent(getActivity(), MainActivity.class);
-                    i.putExtra("id", task.getResult().getUser().getUid());
-                    getActivity().finish();
-                    startActivity(i);
-                }
-            });
-    }
-
-    @SuppressWarnings("unchecked")
-    private void facebookLogIn (AccessToken accessToken) {
-        Log.i("ACCESSTOKEN", accessToken.toString());
-        AuthCredential credential = FacebookAuthProvider.getCredential(accessToken.getToken());
-        mAuth.signInWithCredential(credential)
-            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (!task.isSuccessful()){
-                        Toast.makeText(getActivity(), "Autenticazione fallita", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-
-                    FirebaseUser user = task.getResult().getUser();
-
-                    String uid = user.getUid();
-
-                    authProgressDialog.hide();
-
-                    Intent i = new Intent(getActivity(), MainActivity.class);
-                    i.putExtra("id", uid);
-                    getActivity().finish();
-                    startActivity(i);
-                    /*if (user != null) {
-                        int i = 0;
-                        for (UserInfo profile : user.getProviderData()) {
-                            // Id of the provider (ex: google.com)
-                            String providerId = profile.getProviderId();
-
-                            // UID specific to the provider
-                            String uid = profile.getUid();
-
-                            // Name, email address, and profile photo Url
-                            String name = profile.getDisplayName();
-                            String email = profile.getEmail();
-                            Uri photoUrl = profile.getPhotoUrl();
-
-                            Log.i("POSITION", i +"");
-                            Log.i("QUALCOSA", photoUrl + "");
-                            Log.i("NAME", name + "");
-                            Log.i("ID", uid+"");
-                            Log.i("EMAIL", email+"");
-                            i++;
-                        }
-
-                    }*/
-
-                    //String id = task.getResult().getUser().getUid();
-                    //String email = user.getEmail();
-
-                }
-        });
-
-        /*LinkedHashMap<String, Object> profile = (LinkedHashMap<String, Object>) authData
-                .getProviderData()
-                .get("cachedUserProfile");
-        Log.i("PROFILE", profile.toString());
-        String id = authData.getUid();
-        String email = (String) profile.get("email");
-        String firstName = (String) profile.get("first_name");
-        String lastName = (String) profile.get("last_name");
-
-        Firebase userFirebase = myFirebase.child("users").child(id);
-        userFirebase.child("email").setValue(email);
-        userFirebase.child("firstName").setValue(firstName);
-        userFirebase.child("lastName").setValue(lastName);
-
-        Intent i = new Intent(getActivity(), MainActivity.class);
-        i.putExtra("id", id);
-        getActivity().finish();
-        startActivity(i);*/
     }
 }

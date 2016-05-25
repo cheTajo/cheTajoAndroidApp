@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "735620566520",
+    "firebase_url": "https://scorching-fire-8714.firebaseio.com",
+    "project_id": "scorching-fire-8714",
+    "storage_bucket": "scorching-fire-8714.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735620566520:android:65aec048b814fc35",
+        "android_client_info": {
+          "package_name": "com.teamlz.cheTajo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735620566520-pmo0o9efsk185dqdqotr5000bi6rf0s7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBF859wSzydL6j9oiZLWNNaWIiJF4NHjgg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -9,7 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.iconics.view.IconicsImageView;
 import com.teamlz.cheTajo.R;
-import com.teamlz.cheTajo.activity.MainActivity;
 import com.teamlz.cheTajo.object.HairDresser;
 import com.teamlz.cheTajo.object.User;
 
@@ -34,7 +36,7 @@ public class HomeListFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<HairDresser> hairDresserList;
     private String myId;
-    private User myUser;
+    private User databaseUser;
 
     private DatabaseReference hairDresserFirebase;
     private DatabaseReference userFirebase;
@@ -58,8 +60,10 @@ public class HomeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_homelist, container, false);
 
-        myId = MainActivity.id;
         DatabaseReference myFirebase = FirebaseDatabase.getInstance().getReference();
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        assert (user != null);
+        myId = user.getUid();
 
         hairDresserFirebase = myFirebase.child("hairDressers");
         hairDresserFirebase.addValueEventListener(new ValueEventListener() {
@@ -68,29 +72,24 @@ public class HomeListFragment extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     HairDresser hd = snapshot.getValue(HairDresser.class);
                     if (hairDresserList.contains(hd)) hairDresserList.remove(hd);
-                    if (hd.getFollowers() == null) hd.initFollowers();
                     hairDresserList.add(hd);
                 }
                 mRecyclerView.getAdapter().notifyDataSetChanged();
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
         userFirebase = myFirebase.child("users").child(myId);
         userFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                myUser = dataSnapshot.getValue(User.class);
-                if (myUser.getFollowed() == null) myUser.initFollowed();
-        }
+                databaseUser = dataSnapshot.getValue(User.class);
+            }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
+            public void onCancelled(DatabaseError databaseError) {}
         });
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler);
@@ -133,31 +132,40 @@ public class HomeListFragment extends Fragment {
                     followIcon.setColor(red);
                 }
 
-                final AppCompatTextView textFollow = (AppCompatTextView) holder.itemView
-                        .findViewById(R.id.follow_text);
-                textFollow.setOnClickListener(new View.OnClickListener() {
+                final RelativeLayout relativeFollow = (RelativeLayout) holder.itemView
+                        .findViewById(R.id.relative_follow);
+                relativeFollow.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        textFollow.setClickable(false);
+                        relativeFollow.setClickable(false);
 
                         if (followIcon.getIcon().getColor() == grey) {
                             followIcon.setColor(red);
-                            if (!myUser.getFollowed().contains(myHd.getId()))
-                                myUser.addFollowed(myHd.getId());
+                            if (databaseUser == null) {
+                                List<String> l = new ArrayList<>();
+                                l.add(myHd.getId());
+                                userFirebase.child("followed").setValue(l);
+                            }
+                            else if (!databaseUser.getFollowed().contains(myHd.getId())) {
+                                databaseUser.addFollowed(myHd.getId());
+                                userFirebase.child("followed")
+                                        .setValue(databaseUser.getFollowed());
+                            }
+
                             if (!myHd.getFollowers().contains(myId))
                                 myHd.addFollower(myId);
                         }
-
                         else {
                             followIcon.setColor(grey);
-                            myUser.removeFollowed(myHd.getId());
+                            databaseUser.removeFollowed(myHd.getId());
+                            userFirebase.child("followed")
+                                    .setValue(databaseUser.getFollowed());
                             myHd.removeFollower(myId);
                         }
 
-                        userFirebase.child("followed").setValue(myUser.getFollowed());
                         myHdFirebase.child("followers").setValue(myHd.getFollowers());
                         numFollowText.setText(String.valueOf(myHd.getFollowers().size()));
-                        textFollow.setClickable(true);
+                        relativeFollow.setClickable(true);
                     }
                 });
             }

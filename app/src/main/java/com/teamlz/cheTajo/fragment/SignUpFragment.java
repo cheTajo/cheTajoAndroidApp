@@ -12,18 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
-import com.teamlz.cheTajo.object.User;
 
 public class SignUpFragment extends Fragment {
     private AppCompatEditText signUpEmail;
@@ -32,7 +31,6 @@ public class SignUpFragment extends Fragment {
     private AppCompatEditText signUpPassword;
     private ProgressDialog authProgressDialog;
 
-    private DatabaseReference myFirebase;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -62,21 +60,22 @@ public class SignUpFragment extends Fragment {
         signUpLastName = (AppCompatEditText) view.findViewById(R.id.sign_up_last_name);
         signUpPassword = (AppCompatEditText) view.findViewById(R.id.sign_up_password);
 
-        myFirebase = FirebaseDatabase.getInstance().getReference();
+        FirebaseAuth.getInstance().signOut();
+        LoginManager.getInstance().logOut();
+
         mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                if (firebaseAuth.getCurrentUser() == null) return;
-
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                String uid = user.getUid();
-                User newUser = new User(email, firstName, lastName);
-                myFirebase.child("users").child(uid).setValue(newUser);
+                if (user == null) return;
+
+                user.updateProfile( new UserProfileChangeRequest.Builder()
+                        .setDisplayName(firstName + " " + lastName)
+                        .build());
 
                 authProgressDialog.hide();
                 Intent i = new Intent(getActivity(), MainActivity.class);
-                i.putExtra("id", uid);
                 getActivity().finish();
                 startActivity(i);
             }
@@ -103,7 +102,15 @@ public class SignUpFragment extends Fragment {
                 }
 
                 authProgressDialog.show();
-                createUser(email, password);
+                mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) return;
+                            Toast.makeText(getActivity(), "Registrazione fallita", Toast.LENGTH_LONG).show();
+                            authProgressDialog.hide();
+                        }
+                    });
             }
         });
         return view;
@@ -127,20 +134,6 @@ public class SignUpFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         authProgressDialog.dismiss();
-    }
-
-    public void createUser(String email, String password){
-        mAuth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (!task.isSuccessful()){
-                        Toast.makeText(getActivity(), "Registrazione fallita", Toast.LENGTH_LONG).show();
-                        authProgressDialog.hide();
-                    }
-
-                }
-            });
     }
 }
 
