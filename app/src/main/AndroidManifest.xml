@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.teamlz.cheTajo" >
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.teamlz.cheTajo">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -44,7 +45,8 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+            android:theme="@style/FacebookInvisibleProgressBar"
+            tools:replace="android:theme" />
         <activity
             android:name=".activity.LogInOrSignUpActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

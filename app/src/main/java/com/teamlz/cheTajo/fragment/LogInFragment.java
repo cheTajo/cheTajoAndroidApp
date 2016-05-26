@@ -18,7 +18,6 @@ import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.login.LoginManager;
-import com.facebook.login.widget.LoginButton;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -33,6 +32,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
 
+import java.util.Arrays;
+
 public class LogInFragment extends Fragment {
     private Fragment signUpFragment;
     private Fragment hairDresserSignUpFragment;
@@ -46,13 +47,11 @@ public class LogInFragment extends Fragment {
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
-    private LoginButton facebookButton;
     private CallbackManager facebookCallbackManager;
-    private AccessTokenTracker facebookAccessTokenTracker;
+    private LoginManager loginManager;
+    private AccessTokenTracker tokenTracker;
 
-    public LogInFragment() {
-        // Required empty public constructor
-    }
+    public LogInFragment() {}
 
     public static LogInFragment newInstance() {
         return new LogInFragment();
@@ -77,10 +76,15 @@ public class LogInFragment extends Fragment {
         passwordEditText = (AppCompatEditText) view.findViewById(R.id.log_in_password);
         authProgressDialog = new ProgressDialog(getActivity());
 
-        FirebaseAuth.getInstance().signOut();
-        LoginManager.getInstance().logOut();
+        authProgressDialog.setTitle("Attendi");
+        authProgressDialog.setMessage("Autenticazione in corso...");
+        authProgressDialog.setCancelable(false);
+
+        facebookCallbackManager = CallbackManager.Factory.create();
+        loginManager = LoginManager.getInstance();
 
         mAuth = FirebaseAuth.getInstance();
+        mAuth.signOut();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -94,17 +98,29 @@ public class LogInFragment extends Fragment {
             }
         };
 
-        AppCompatButton facebookLogInButton = (AppCompatButton) view.findViewById(R.id.facebook_log_in_button);
+        //Set up facebook log in
+        loginManager.logOut();
+        tokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                if (currentAccessToken != null) {
+                    authProgressDialog.show();
+                    AuthCredential credential = FacebookAuthProvider.getCredential(currentAccessToken.getToken());
+                    mAuth.signInWithCredential(credential)
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) return;
+                                    Toast.makeText(getActivity(), "Autenticazione Fallita", Toast.LENGTH_LONG).show();
+                                    authProgressDialog.hide();
+                                }
+                            });
+                }
+            }
+        };
+
+        //Set up manual log in
         AppCompatButton manualLogInButton = (AppCompatButton) view.findViewById(R.id.manual_log_in_button);
-        AppCompatButton goToSignUpButton = (AppCompatButton) view.findViewById(R.id.go_to_sign_up_button);
-        AppCompatButton goToHdSignUpButton = (AppCompatButton) view.findViewById(R.id.hairdresser_sign_up_button);
-
-        authProgressDialog.setTitle("Attendi");
-        authProgressDialog.setMessage("Autenticazione in corso...");
-        authProgressDialog.setCancelable(false);
-
-
-        //Set up manual login button
         assert manualLogInButton != null;
         manualLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +132,6 @@ public class LogInFragment extends Fragment {
 
                 if (email.equals("test")) {
                     Intent i = new Intent(getActivity(), MainActivity.class);
-                    i.putExtra("id", "79b451ed-fb1c-4282-8178-1d7582274a8f");
                     getActivity().finish();
                     startActivity(i);
                     return;
@@ -128,57 +143,37 @@ public class LogInFragment extends Fragment {
                 }
 
                 authProgressDialog.show();
-                EmailAuthProvider.getCredential(email, password);
-                mAuth.signInWithEmailAndPassword(email, password)
+                AuthCredential credential = EmailAuthProvider.getCredential(email, password);
+                mAuth.signInWithCredential(credential)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) return;
-                        Toast.makeText(getActivity(), "Autenticazione Fallita", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity(), "Autenticazione fallita", Toast.LENGTH_LONG).show();
                         authProgressDialog.hide();
                     }
                 });
             }
         });
 
-        //Set up facebook button
-        facebookButton = (LoginButton) view.findViewById(R.id.facebook_button);
-        facebookButton.setFragment(this);
-        facebookCallbackManager = CallbackManager.Factory.create();
-        facebookAccessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-                if (currentAccessToken != null) {
-                    authProgressDialog.show();
-                    AuthCredential credential = FacebookAuthProvider.getCredential(currentAccessToken.getToken());
-                    mAuth.signInWithCredential(credential)
-                        .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) return;
-                                Toast.makeText(getActivity(), "Autenticazione Fallita", Toast.LENGTH_LONG).show();
-                                authProgressDialog.hide();
-                            }
-                        });
-                }
-                else FirebaseAuth.getInstance().signOut();
-            }
-        };
-
         //Set up facebook login button
+        AppCompatButton facebookLogInButton = (AppCompatButton) view.findViewById(R.id.facebook_log_in_button);
         assert facebookLogInButton != null;
         facebookLogInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                facebookButton.performClick();
+                authProgressDialog.show();
+                loginManager.logInWithReadPermissions(LogInFragment.this, Arrays.asList("email", "public_profile"));
             }
         });
 
         //Set up sign up button
+        AppCompatButton goToSignUpButton = (AppCompatButton) view.findViewById(R.id.go_to_sign_up_button);
         assert goToSignUpButton != null;
         goToSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard(view);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.log_in_or_sign_up_view, signUpFragment)
                         .addToBackStack(null).commit();
@@ -186,10 +181,12 @@ public class LogInFragment extends Fragment {
         });
 
         //Set up hairdresser sign up button
+        AppCompatButton goToHdSignUpButton = (AppCompatButton) view.findViewById(R.id.hairdresser_sign_up_button);
         assert goToHdSignUpButton != null;
         goToHdSignUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard(view);
                 getFragmentManager().beginTransaction()
                         .replace(R.id.log_in_or_sign_up_view, hairDresserSignUpFragment)
                         .addToBackStack(null).commit();
@@ -209,15 +206,15 @@ public class LogInFragment extends Fragment {
     public void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-        facebookAccessTokenTracker.startTracking();
+        tokenTracker.startTracking();
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        tokenTracker.stopTracking();
         if (mAuthListener != null) {
             mAuth.removeAuthStateListener(mAuthListener);
-            facebookAccessTokenTracker.stopTracking();
         }
     }
 

@@ -1,27 +1,31 @@
 {
   "project_info": {
-    "project_number": "735620566520",
-    "firebase_url": "https://scorching-fire-8714.firebaseio.com",
-    "project_id": "scorching-fire-8714",
-    "storage_bucket": "scorching-fire-8714.appspot.com"
+    "project_number": "113459654977",
+    "firebase_url": "https://numeric-cinema-130215.firebaseio.com",
+    "project_id": "numeric-cinema-130215",
+    "storage_bucket": "numeric-cinema-130215.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:735620566520:android:65aec048b814fc35",
+        "mobilesdk_app_id": "1:113459654977:android:65aec048b814fc35",
         "android_client_info": {
           "package_name": "com.teamlz.cheTajo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "735620566520-pmo0o9efsk185dqdqotr5000bi6rf0s7.apps.googleusercontent.com",
+          "client_id": "113459654977-5kj7vtimg39dm63dfg4tgm97mts8pome.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "113459654977-gpsgmi3gbsoc2q01q2l16saj9ff23cmg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBF859wSzydL6j9oiZLWNNaWIiJF4NHjgg"
+          "current_key": "AIzaSyC0nPXPBT9uU7bSTRsS8zsMRmxvMhyAXa0"
         }
       ],
       "services": {

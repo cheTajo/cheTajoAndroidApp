@@ -96,15 +96,6 @@
         android:layout_marginLeft="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin" />
 
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/facebook_button"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/oppure"
-        android:layout_centerHorizontal="true" />
-
     <android.support.v7.widget.AppCompatButton
         android:id="@+id/facebook_log_in_button"
         android:layout_width="match_parent"

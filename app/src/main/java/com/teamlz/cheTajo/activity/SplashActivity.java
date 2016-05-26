@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
         authenticated = false;
 
         //Initialize sdk
-        FacebookSdk.sdkInitialize(this.getApplicationContext());
+        FacebookSdk.sdkInitialize(getApplicationContext());
         //System.out.println(FacebookSdk.getApplicationSignature(this));
 
         setContentView(R.layout.activity_splash);
