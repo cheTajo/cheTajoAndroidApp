@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInLeftAnimationAdapter;
 
 /*
  * Created by francesco on 02/05/16.
@@ -61,12 +61,28 @@ public class HomeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_homelist, container, false);
 
-        DatabaseReference myFirebase = FirebaseDatabase.getInstance().getReference();
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         assert (user != null);
         myId = user.getUid();
 
-        hairDresserFirebase = myFirebase.child("hairDressers");
+        FirebaseDatabase myFirebase = FirebaseDatabase.getInstance();
+
+        DatabaseReference connectedRef = myFirebase.getReference(".info/connected");
+        connectedRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                boolean connected = snapshot.getValue(Boolean.class);
+                if (connected) Log.i("STATUS", "CONNECTED");
+                else Log.i("STATUS", "NOT CONNECTED");
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                System.err.println("Listener was cancelled");
+            }
+        });
+
+        hairDresserFirebase = myFirebase.getReference("hairDressers");
         hairDresserFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -82,7 +98,7 @@ public class HomeListFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {}
         });
 
-        userFirebase = myFirebase.child("users").child(myId);
+        userFirebase = myFirebase.getReference("users").child(myId);
         userFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -90,7 +106,8 @@ public class HomeListFragment extends Fragment {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {}
+            public void onCancelled(DatabaseError databaseError) {
+            }
         });
 
         mRecyclerView = (RecyclerView) view.findViewById(R.id.list_recycler);
@@ -142,15 +159,9 @@ public class HomeListFragment extends Fragment {
 
                         if (followIcon.getIcon().getColor() == grey) {
                             followIcon.setColor(red);
-                            if (databaseUser == null) {
-                                List<String> l = new ArrayList<>();
-                                l.add(myHd.getId());
-                                userFirebase.child("followed").setValue(l);
-                            }
-                            else if (!databaseUser.getFollowed().contains(myHd.getId())) {
+
+                            if (!databaseUser.getFollowed().contains(myHd.getId())) {
                                 databaseUser.addFollowed(myHd.getId());
-                                userFirebase.child("followed")
-                                        .setValue(databaseUser.getFollowed());
                             }
 
                             if (!myHd.getFollowers().contains(myId))
@@ -159,11 +170,10 @@ public class HomeListFragment extends Fragment {
                         else {
                             followIcon.setColor(grey);
                             databaseUser.removeFollowed(myHd.getId());
-                            userFirebase.child("followed")
-                                    .setValue(databaseUser.getFollowed());
                             myHd.removeFollower(myId);
                         }
 
+                        userFirebase.child("followed").setValue(databaseUser.getFollowed());
                         myHdFirebase.child("followers").setValue(myHd.getFollowers());
                         numFollowText.setText(String.valueOf(myHd.getFollowers().size()));
                         relativeFollow.setClickable(true);

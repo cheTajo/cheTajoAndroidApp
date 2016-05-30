@@ -34,51 +34,30 @@
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true" />
 
-    <android.support.v7.widget.LinearLayoutCompat
-        android:id="@+id/manual_linear"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        android:layout_below="@+id/log_in_password">
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/manual_log_in_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/button_padding"
-            android:background="@drawable/custom_button"
-            android:textColor="@color/white"
-            android:text="@string/manual_log_in"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="@dimen/fab_margin"
-            android:layout_marginRight="@dimen/fab_margin"
-            android:layout_weight="2"/>
-
-        <android.support.v7.widget.AppCompatButton
-            android:id="@+id/go_to_sign_up_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/button_padding"
-            android:background="@drawable/custom_button"
-            android:textColor="@color/white"
-            android:text="@string/manual_sign_up"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="@dimen/fab_margin"
-            android:layout_marginRight="@dimen/fab_margin"
-            android:layout_weight="2"/>
-    </android.support.v7.widget.LinearLayoutCompat>
-
     <android.support.v7.widget.AppCompatButton
-        android:id="@+id/hairdresser_sign_up_button"
+        android:id="@+id/manual_log_in_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/button_padding"
         android:background="@drawable/custom_button"
         android:textColor="@color/white"
-        android:text="@string/hairdresser_sign_up"
+        android:layout_below="@id/log_in_password"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/manual_linear"
+        android:text="@string/manual_log_in"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/fab_margin"
+        android:layout_marginRight="@dimen/fab_margin"/>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/go_to_sign_up_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/button_padding"
+        android:background="@drawable/custom_button"
+        android:textColor="@color/white"
+        android:text="@string/manual_sign_up"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/manual_log_in_button"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/fab_margin"
         android:layout_marginRight="@dimen/fab_margin"/>
@@ -90,7 +69,7 @@
         android:text="@string/oppure"
         android:textAlignment="center"
         android:textColor="@color/colorGrey"
-        android:layout_below="@+id/hairdresser_sign_up_button"
+        android:layout_below="@+id/go_to_sign_up_button"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="@dimen/fab_margin"

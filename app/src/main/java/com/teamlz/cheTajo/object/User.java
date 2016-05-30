@@ -11,11 +11,23 @@ import java.util.List;
 public class User implements Serializable{
     private List<String> followed;
     private List<String> likes;
+    private boolean hairDresser;
 
-    public User(){}
+    public User(){
+        hairDresser = false;
+    }
 
     public User(List<String> f) {
         followed = f;
+        hairDresser = false;
+    }
+
+    public boolean isHairDresser() {
+        return hairDresser;
+    }
+
+    public void setIsHairDresser(boolean b) {
+        hairDresser = b;
     }
 
     public List<String> getFollowed() {

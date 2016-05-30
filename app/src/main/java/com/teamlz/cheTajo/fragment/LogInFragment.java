@@ -29,14 +29,20 @@ import com.google.firebase.auth.FacebookAuthProvider;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.MainActivity;
+import com.teamlz.cheTajo.object.User;
 
 import java.util.Arrays;
 
 public class LogInFragment extends Fragment {
+    private String uid;
     private Fragment signUpFragment;
-    private Fragment hairDresserSignUpFragment;
 
     private View view;
 
@@ -46,6 +52,8 @@ public class LogInFragment extends Fragment {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
+    private DatabaseReference userFirebase;
 
     private CallbackManager facebookCallbackManager;
     private LoginManager loginManager;
@@ -69,8 +77,7 @@ public class LogInFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_log_in, container, false);
 
         // Initialize variables
-        signUpFragment = UserSignUpFragment.newInstance();
-        hairDresserSignUpFragment = HairDresserSignUpFragment.newInstance();
+        signUpFragment = SignUpFragment.newInstance();
 
         emailEditText = (AppCompatEditText) view.findViewById(R.id.log_in_email);
         passwordEditText = (AppCompatEditText) view.findViewById(R.id.log_in_password);
@@ -83,6 +90,10 @@ public class LogInFragment extends Fragment {
         facebookCallbackManager = CallbackManager.Factory.create();
         loginManager = LoginManager.getInstance();
 
+        FirebaseDatabase myFirebase = FirebaseDatabase.getInstance();
+        userFirebase = myFirebase.getReference("users");
+
+
         mAuth = FirebaseAuth.getInstance();
         mAuth.signOut();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
@@ -90,6 +101,18 @@ public class LogInFragment extends Fragment {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user == null) return;
+
+                uid = user.getUid();
+                userFirebase.child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        User u = dataSnapshot.getValue(User.class);
+                        if (u == null) userFirebase.child(uid).setValue(new User());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {}
+                });
 
                 authProgressDialog.hide();
                 Intent i = new Intent(getActivity(), MainActivity.class);
@@ -179,20 +202,6 @@ public class LogInFragment extends Fragment {
                         .addToBackStack(null).commit();
             }
         });
-
-        //Set up hairdresser sign up button
-        AppCompatButton goToHdSignUpButton = (AppCompatButton) view.findViewById(R.id.hairdresser_sign_up_button);
-        assert goToHdSignUpButton != null;
-        goToHdSignUpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hideKeyboard(view);
-                getFragmentManager().beginTransaction()
-                        .replace(R.id.log_in_or_sign_up_view, hairDresserSignUpFragment)
-                        .addToBackStack(null).commit();
-            }
-        });
-
         return view;
     }
 
