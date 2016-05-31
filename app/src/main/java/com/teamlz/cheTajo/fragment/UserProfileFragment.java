@@ -22,12 +22,16 @@ import android.widget.Toast;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.melnykov.fab.FloatingActionButton;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.object.HairDresser;
+import com.teamlz.cheTajo.object.Notify;
 
 import java.io.InputStream;
 import java.net.URL;
@@ -36,6 +40,7 @@ import java.util.List;
 @SuppressWarnings("deprecation")
 public class UserProfileFragment extends Fragment{
     private String uid;
+    private HairDresser myHd;
 
     private View view;
     private AppCompatEditText shopNameText;
@@ -75,6 +80,35 @@ public class UserProfileFragment extends Fragment{
         hdFirebase = myFirebase.getReference("hairDressers").child(uid);
         userFirebase = myFirebase.getReference("users").child(uid);
 
+        hdFirebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                HairDresser hd = dataSnapshot.getValue(HairDresser.class);
+                if (hd == null) return;
+
+                if (myHd == null || hd.getFollowers() == null){
+                    myHd = hd;
+                    return;
+                }
+
+                if (hd.getFollowers().size() < myHd.getFollowers().size()) {
+                    myHd = hd;
+                    return;
+                }
+
+                if (hd.getFollowers().size() > myHd.getFollowers().size()) {
+                    int newNum = hd.getFollowers().size();
+                    int oldNum = myHd.getFollowers().size();
+                    int numFollowers = newNum - oldNum;
+                    Notify not = new Notify(numFollowers);
+                    not.sendNotification(view);
+                    myHd = hd;
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {}
+        });
+
         AppCompatImageView profileImageView = (AppCompatImageView) view.findViewById(R.id.user_profile_image);
         String id = user.getProviderData().get(1).getUid();
         String url = "https://graph.facebook.com/" + id + "/picture?type=large";
@@ -112,6 +146,7 @@ public class UserProfileFragment extends Fragment{
                 }
                 hdFirebase.setValue(hd);
                 userFirebase.child("hairDresser").setValue(true);
+                myHd = hd;
             }
         });
 
