@@ -22,6 +22,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.mikepenz.iconics.view.IconicsImageView;
 import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.object.HairDresser;
+import com.teamlz.cheTajo.object.Notify;
 import com.teamlz.cheTajo.object.User;
 
 import java.util.ArrayList;
