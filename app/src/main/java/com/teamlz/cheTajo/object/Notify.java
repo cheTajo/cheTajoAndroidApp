@@ -1,15 +1,18 @@
 package com.teamlz.cheTajo.object;
 
 import android.content.Intent;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 import android.view.View;
 import android.app.PendingIntent;
 import android.app.NotificationManager;
+import android.app.Notification;
 import android.content.Context;
 
+
+import com.teamlz.cheTajo.R;
 import com.teamlz.cheTajo.activity.SplashActivity;
 
 public class Notify{
@@ -23,9 +26,6 @@ public class Notify{
         // Use NotificationCompat.Builder to set up our notification.
         NotificationCompat.Builder builder = new NotificationCompat.Builder(view.getContext());
 
-        //icon appears in device notification bar and right hand corner of notification
-        builder.setSmallIcon(android.R.drawable.btn_star_big_on);
-
         // This intent is fired when notification is clicked
         Intent intent = new Intent(view.getContext(), SplashActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(view.getContext(), 0, intent, 0);
@@ -34,7 +34,14 @@ public class Notify{
         builder.setContentIntent(pendingIntent);
 
         // Large icon appears on the left of the notification
-        builder.setLargeIcon(BitmapFactory.decodeFile("@drawable/che_tajo_icon_red.png"));
+        BitmapDrawable d = (BitmapDrawable) view.getContext().getDrawable(R.drawable.che_tajo_icon_red);
+        assert (d != null);
+        builder.setLargeIcon(d.getBitmap());
+
+
+        //icon appears in device notification bar and right hand corner of notification
+        builder.setSmallIcon(R.drawable.che_tajo_icon_red);
+
 
         // Content title, which appears in large type at the top of the notification
         builder.setContentTitle("CheTajo: nuovo follower");
@@ -54,10 +61,14 @@ public class Notify{
         builder.setAutoCancel(true);
 
         NotificationManager notificationManager = (NotificationManager) view.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification noty = builder.build();
+
+        int smallIconId = view.getContext().getResources().getIdentifier("right_icon", "id", android.R.class.getPackage().getName());
+        if (smallIconId != 0) {
+            noty.contentView.setViewVisibility(smallIconId, View.INVISIBLE);
+        }
 
         // Will display the notification in the notification bar
-        notificationManager.notify(0, builder.build());
-
-
+        notificationManager.notify(0, noty);
     }
 }
